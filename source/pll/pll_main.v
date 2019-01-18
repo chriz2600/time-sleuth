@@ -24,6 +24,21 @@ module pll_main(
     wire [7:0] pll_rom_address_out;
     wire pll_write_rom_ena;
     wire pll_lockloss;
+    wire [7:0] data_crossed;
+
+    reg control_clock_2 = 0;
+    always @(posedge control_clock) begin
+        control_clock_2 <= ~control_clock_2;
+    end
+
+    data_cross #(
+        .WIDTH(8)
+    ) data_cross (
+        .clkIn(control_clock),
+        .clkOut(control_clock_2),
+        .dataIn(data),
+        .dataOut(data_crossed)
+    );
 
     edge_detect pll_lockloss_check(
         .async_sig(~pll_locked),
@@ -47,7 +62,7 @@ module pll_main(
     );
 
     pll_reconf pll_reconf(
-        .clock(control_clock),
+        .clock(control_clock_2),
         .reconfig(pll_reconfig),
         .busy(pll_reconf_busy),
         .data_in(9'b0),
@@ -71,10 +86,10 @@ module pll_main(
     );
 
     pll_reconf_rom reconf_rom(
-        .clock(control_clock),
+        .clock(control_clock_2),
         .address(pll_rom_address_out),
         .read_ena(pll_write_rom_ena),
-        .data(data),
+        .data(data_crossed),
         .q(pll_rom_data_in),
         .reconfig(pll_reconfig),
         .trigger_read(pll_write_from_rom),

@@ -33,14 +33,14 @@ module lagtester(
         .locked(pll_locked)
     );
 
-    // video video(
-    //     .clock(internal_clock),
-    //     .red(DVI_RED),
-    //     .green(DVI_GREEN),
-    //     .blue(DVI_BLUE),
-    //     .de(DVI_DE),
-    //     .hsync(DVI_HSYNC),
-    //     .vsync(DVI_VSYNC)
-    // );
+    video video(
+        .clock(internal_clock),
+        .red(DVI_RED),
+        .green(DVI_GREEN),
+        .blue(DVI_BLUE),
+        .de(DVI_DE),
+        .hsync(DVI_HSYNC),
+        .vsync(DVI_VSYNC)
+    );
 
 endmodule

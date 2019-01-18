@@ -51,7 +51,23 @@ set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
-set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
+set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "50.0 %"
+set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
+
+########################################################
+# timing optimization
+########################################################
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+
+set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 16.0
+set_global_assignment -name ROUTER_EFFORT_MULTIPLIER 8.0
+set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name FITTER_EFFORT "AUTO FIT"
+set_global_assignment -name SEED 12
 
 ########################################################
 # source files
@@ -61,9 +77,12 @@ set_global_assignment -name VERILOG_FILE source/lagtester.v
 set_global_assignment -name QSYS_FILE source/osc/osc.qsys
 set_global_assignment -name QIP_FILE source/pll/pll.qip
 set_global_assignment -name QIP_FILE source/pll/pll_reconf.qip
+set_global_assignment -name QIP_FILE source/misc/data_fifo.qip
 set_global_assignment -name VERILOG_FILE source/pll/pll_main.v
 set_global_assignment -name VERILOG_FILE source/pll/pll_reconf_rom.v
 set_global_assignment -name VERILOG_FILE source/misc/edge_detect.v
+set_global_assignment -name VERILOG_FILE source/misc/data_cross.v
+set_global_assignment -name VERILOG_FILE source/video.v
 
 ########################################################
 # pin assignments

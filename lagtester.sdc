@@ -9,6 +9,7 @@ create_generated_clock -multiply_by 14 -divide_by 15 -name output_clock -source 
 # internal clock #
 ##################
 create_clock -name int_osc_clk -period 55MHz [get_pins -compatibility {control_clock_gen|int_osc_0|oscillator_dut|clkout}]
+create_generated_clock -name pll_reconfig_clock -source [get_pins -compatibility {control_clock_gen|int_osc_0|oscillator_dut|clkout}] -divide_by 2 -multiply_by 1 "pll_main:pll|control_clock_2"  
 
 derive_pll_clocks
 derive_clock_uncertainty
@@ -26,7 +27,7 @@ set tSU 2.0
 set tH 1.5
 set adv_clock_delay 0.0
 set dvi_outputs [get_ports {DVI_RED* DVI_GREEN* DVI_BLUE* DVI_DE DVI_HSYNC DVI_VSYNC}]
-set_output_delay -clock output_clock -reference_pin [get_ports DIV_CLOCK] -max [expr $tSU - $adv_clock_delay] $dvi_outputs
+set_output_delay -clock output_clock -reference_pin [get_ports DVI_CLOCK] -max [expr $tSU - $adv_clock_delay] $dvi_outputs
 set_output_delay -clock output_clock -reference_pin [get_ports DVI_CLOCK] -min [expr 0 - $tH - $adv_clock_delay ] $dvi_outputs
 set_false_path -setup -rise_from [get_clocks data_clock] -fall_to [get_clocks output_clock]
 set_false_path -setup -fall_from [get_clocks data_clock] -rise_to [get_clocks output_clock]

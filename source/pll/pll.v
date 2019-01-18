@@ -184,7 +184,7 @@ module pll (
 		altpll_component.port_extclk3 = "PORT_UNUSED",
 		altpll_component.self_reset_on_loss_lock = "OFF",
 		altpll_component.width_clock = 5,
-		altpll_component.scan_chain_mif_file = "config/default.mif";
+		altpll_component.scan_chain_mif_file = "pll/config/default.mif";
 
 
 endmodule
@@ -264,7 +264,7 @@ endmodule
 // Retrieval info: PRIVATE: PLL_PFDENA_CHECK STRING "0"
 // Retrieval info: PRIVATE: PLL_TARGET_HARCOPY_CHECK NUMERIC "0"
 // Retrieval info: PRIVATE: PRIMARY_CLK_COMBO STRING "inclk0"
-// Retrieval info: PRIVATE: RECONFIG_FILE STRING "config/default.mif"
+// Retrieval info: PRIVATE: RECONFIG_FILE STRING "pll/config/default.mif"
 // Retrieval info: PRIVATE: SACN_INPUTS_CHECK STRING "1"
 // Retrieval info: PRIVATE: SCAN_FEATURE_ENABLED STRING "1"
 // Retrieval info: PRIVATE: SELF_RESET_LOCK_LOSS STRING "0"
@@ -348,7 +348,7 @@ endmodule
 // Retrieval info: CONSTANT: PORT_extclk3 STRING "PORT_UNUSED"
 // Retrieval info: CONSTANT: SELF_RESET_ON_LOSS_LOCK STRING "OFF"
 // Retrieval info: CONSTANT: WIDTH_CLOCK NUMERIC "5"
-// Retrieval info: CONSTANT: scan_chain_mif_file STRING "config/default.mif"
+// Retrieval info: CONSTANT: scan_chain_mif_file STRING "pll/config/default.mif"
 // Retrieval info: USED_PORT: @clk 0 0 5 0 OUTPUT_CLK_EXT VCC "@clk[4..0]"
 // Retrieval info: USED_PORT: areset 0 0 0 0 INPUT GND "areset"
 // Retrieval info: USED_PORT: c0 0 0 0 0 OUTPUT_CLK_EXT VCC "c0"
@@ -380,6 +380,6 @@ endmodule
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll.bsf FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll_inst.v FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll_bb.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL config/default.mif TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL pll/config/default.mif TRUE
 // Retrieval info: LIB_FILE: altera_mf
 // Retrieval info: CBX_MODULE_PREFIX: ON
