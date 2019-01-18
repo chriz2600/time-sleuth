@@ -23,17 +23,16 @@ module pll_main(
     wire pll_rom_data_in;
     wire [7:0] pll_rom_address_out;
     wire pll_write_rom_ena;
-
-    reg pll_lockloss;
+    wire pll_lockloss;
 
     edge_detect pll_lockloss_check(
         .async_sig(~pll_locked),
-        .clk(control_clock2),
+        .clk(control_clock),
         .rise(pll_lockloss)
     );
 
     pll pll (
-        .inclk0(clock_gen),
+        .inclk0(clock),
         .c0(clock_out),
         .c1(clock_out_video),
         .locked(pll_locked),

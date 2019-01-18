@@ -1,5 +1,15 @@
 module lagtester(
     input clock,
+
+    input [2:0] RES_CONFIG,
+
+    output [7:0] DVI_RED,
+    output [7:0] DVI_GREEN,
+    output [7:0] DVI_BLUE,
+    output DVI_DE,
+    output DVI_HSYNC,
+    output DVI_VSYNC,
+
     output DVI_CLOCK
 );
 
@@ -16,12 +26,21 @@ module lagtester(
         .clock(clock),
         .control_clock(control_clock),
         .reset(1'b0),
-        .data(8'd0), 
+        .data({ 5'd0, RES_CONFIG }),
 
         .clock_out(internal_clock),
         .clock_out_video(DVI_CLOCK),
         .locked(pll_locked)
     );
 
+    // video video(
+    //     .clock(internal_clock),
+    //     .red(DVI_RED),
+    //     .green(DVI_GREEN),
+    //     .blue(DVI_BLUE),
+    //     .de(DVI_DE),
+    //     .hsync(DVI_HSYNC),
+    //     .vsync(DVI_VSYNC)
+    // );
 
 endmodule

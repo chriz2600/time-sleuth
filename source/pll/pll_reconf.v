@@ -33,18 +33,18 @@
 //refer to the applicable agreement for further details.
 
 
-//altpll_reconfig CBX_AUTO_BLACKBOX="ALL" device_family="MAX 10" busy clock counter_param counter_type data_in data_out pll_areset pll_areset_in pll_configupdate pll_scanclk pll_scanclkena pll_scandata pll_scandataout pll_scandone read_param reconfig reset write_param
-//VERSION_BEGIN 18.1 cbx_altera_syncram_nd_impl 2018:09:12:13:04:24:SJ cbx_altpll_reconfig 2018:09:12:13:04:24:SJ cbx_altsyncram 2018:09:12:13:04:24:SJ cbx_cycloneii 2018:09:12:13:04:24:SJ cbx_lpm_add_sub 2018:09:12:13:04:24:SJ cbx_lpm_compare 2018:09:12:13:04:24:SJ cbx_lpm_counter 2018:09:12:13:04:24:SJ cbx_lpm_decode 2018:09:12:13:04:24:SJ cbx_lpm_mux 2018:09:12:13:04:24:SJ cbx_mgl 2018:09:12:13:10:36:SJ cbx_nadder 2018:09:12:13:04:24:SJ cbx_stratix 2018:09:12:13:04:24:SJ cbx_stratixii 2018:09:12:13:04:24:SJ cbx_stratixiii 2018:09:12:13:04:24:SJ cbx_stratixv 2018:09:12:13:04:24:SJ cbx_util_mgl 2018:09:12:13:04:24:SJ  VERSION_END
+//altpll_reconfig CBX_AUTO_BLACKBOX="ALL" device_family="MAX 10" busy clock counter_param counter_type data_in data_out pll_areset pll_areset_in pll_configupdate pll_scanclk pll_scanclkena pll_scandata pll_scandataout pll_scandone read_param reconfig reset reset_rom_address rom_address_out rom_data_in write_from_rom write_param write_rom_ena
+//VERSION_BEGIN 18.1 cbx_altera_syncram_nd_impl 2018:09:12:13:04:09:SJ cbx_altpll_reconfig 2018:09:12:13:04:09:SJ cbx_altsyncram 2018:09:12:13:04:09:SJ cbx_cycloneii 2018:09:12:13:04:09:SJ cbx_lpm_add_sub 2018:09:12:13:04:09:SJ cbx_lpm_compare 2018:09:12:13:04:09:SJ cbx_lpm_counter 2018:09:12:13:04:09:SJ cbx_lpm_decode 2018:09:12:13:04:09:SJ cbx_lpm_mux 2018:09:12:13:04:09:SJ cbx_mgl 2018:09:12:14:15:07:SJ cbx_nadder 2018:09:12:13:04:09:SJ cbx_stratix 2018:09:12:13:04:09:SJ cbx_stratixii 2018:09:12:13:04:09:SJ cbx_stratixiii 2018:09:12:13:04:09:SJ cbx_stratixv 2018:09:12:13:04:09:SJ cbx_util_mgl 2018:09:12:13:04:09:SJ  VERSION_END
 // synthesis VERILOG_INPUT_VERSION VERILOG_2001
 // altera message_off 10463
 
 
-//synthesis_resources = altsyncram 1 lpm_add_sub 2 lpm_compare 1 lpm_counter 7 lpm_decode 1 lut 3 reg 80 
+//synthesis_resources = altsyncram 1 lpm_add_sub 2 lpm_compare 1 lpm_counter 8 lpm_decode 1 lut 3 reg 102 
 //synopsys translate_off
 `timescale 1 ps / 1 ps
 //synopsys translate_on
 (* ALTERA_ATTRIBUTE = {"ADV_NETLIST_OPT_ALLOWED=\"NEVER_ALLOW\";suppress_da_rule_internal=C106;{-to le_comb10} PLL_SCAN_RECONFIG_COUNTER_REMAP_LCELL=2;{-to le_comb8} PLL_SCAN_RECONFIG_COUNTER_REMAP_LCELL=0;{-to le_comb9} PLL_SCAN_RECONFIG_COUNTER_REMAP_LCELL=1"} *)
-module  pll_reconf_pllrcfg_sgp
+module  pll_reconf_pllrcfg_ev01
 	( 
 	busy,
 	clock,
@@ -63,7 +63,12 @@ module  pll_reconf_pllrcfg_sgp
 	read_param,
 	reconfig,
 	reset,
-	write_param) /* synthesis synthesis_clearbox=2 */;
+	reset_rom_address,
+	rom_address_out,
+	rom_data_in,
+	write_from_rom,
+	write_param,
+	write_rom_ena) /* synthesis synthesis_clearbox=2 */;
 	output   busy;
 	input   clock;
 	input   [2:0]  counter_param;
@@ -81,7 +86,12 @@ module  pll_reconf_pllrcfg_sgp
 	input   read_param;
 	input   reconfig;
 	input   reset;
+	input   reset_rom_address;
+	output   [7:0]  rom_address_out;
+	input   rom_data_in;
+	input   write_from_rom;
 	input   write_param;
+	output   write_rom_ena;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
@@ -93,6 +103,9 @@ module  pll_reconf_pllrcfg_sgp
 	tri0   pll_scandone;
 	tri0   read_param;
 	tri0   reconfig;
+	tri0   reset_rom_address;
+	tri0   rom_data_in;
+	tri0   write_from_rom;
 	tri0   write_param;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
@@ -102,6 +115,8 @@ module  pll_reconf_pllrcfg_sgp
 	wire  wire_le_comb10_combout;
 	wire  wire_le_comb8_combout;
 	wire  wire_le_comb9_combout;
+	reg	[7:0]	addr_from_rom;
+	reg	[7:0]	addr_from_rom2;
 	reg	areset_init_state_1;
 	reg	areset_state;
 	reg	C0_data_state;
@@ -169,6 +184,18 @@ module  pll_reconf_pllrcfg_sgp
 	reg	reconfig_wait_state;
 	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=HIGH"} *)
 	reg	reset_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_data_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_first_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_init_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_last_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_second_last_state;
+	(* ALTERA_ATTRIBUTE = {"POWER_UP_LEVEL=LOW"} *)
+	reg	rom_second_state;
 	reg	[0:0]	shift_reg0;
 	reg	[0:0]	shift_reg1;
 	reg	[0:0]	shift_reg2;
@@ -204,8 +231,9 @@ module  pll_reconf_pllrcfg_sgp
 	wire  [7:0]   wire_cntr1_q;
 	wire  [7:0]   wire_cntr12_q;
 	wire  [5:0]   wire_cntr13_q;
-	wire  [4:0]   wire_cntr14_q;
-	wire  [7:0]   wire_cntr15_q;
+	wire  [7:0]   wire_cntr14_q;
+	wire  [4:0]   wire_cntr15_q;
+	wire  [7:0]   wire_cntr16_q;
 	wire  [7:0]   wire_cntr2_q;
 	wire  [4:0]   wire_cntr3_q;
 	wire  [4:0]   wire_decode11_eq;
@@ -219,6 +247,7 @@ module  pll_reconf_pllrcfg_sgp
 	wire  [7:0]  c2_wire;
 	wire  [7:0]  c3_wire;
 	wire  [7:0]  c4_wire;
+	wire  [7:0]  const_scan_chain_size;
 	wire  [2:0]  counter_param_latch;
 	wire  [3:0]  counter_type_latch;
 	wire  [2:0]  cuda_combout_wire;
@@ -226,6 +255,7 @@ module  pll_reconf_pllrcfg_sgp
 	wire  [2:0]  encode_out;
 	wire  input_latch_enable;
 	wire  power_up;
+	wire  read_addr_counter_done;
 	wire  read_addr_counter_enable;
 	wire  [7:0]  read_addr_counter_out;
 	wire  read_addr_counter_sload;
@@ -242,6 +272,10 @@ module  pll_reconf_pllrcfg_sgp
 	wire  reconfig_width_counter_enable;
 	wire  reconfig_width_counter_sload;
 	wire  [5:0]  reconfig_width_counter_sload_value;
+	wire  rom_width_counter_done;
+	wire  rom_width_counter_enable;
+	wire  rom_width_counter_sload;
+	wire  [7:0]  rom_width_counter_sload_value;
 	wire  rotate_addr_counter_enable;
 	wire  [7:0]  rotate_addr_counter_out;
 	wire  rotate_addr_counter_sload;
@@ -289,7 +323,6 @@ module  pll_reconf_pllrcfg_sgp
 	wire  [4:0]  width_counter_sload_value;
 	wire  [4:0]  width_decoder_out;
 	wire  [7:0]  width_decoder_select;
-	wire write_from_rom;
 
 	altsyncram   altsyncram4
 	( 
@@ -377,6 +410,18 @@ module  pll_reconf_pllrcfg_sgp
 		le_comb9.lut_mask = 16'hCCCC,
 		le_comb9.sum_lutc_input = "datac",
 		le_comb9.lpm_type = "fiftyfivenm_lcell_comb";
+	// synopsys translate_off
+	initial
+		addr_from_rom = 0;
+	// synopsys translate_on
+	always @ ( posedge clock)
+		  addr_from_rom <= read_addr_counter_out;
+	// synopsys translate_off
+	initial
+		addr_from_rom2 = 0;
+	// synopsys translate_on
+	always @ ( posedge clock)
+		  addr_from_rom2 <= addr_from_rom;
 	// synopsys translate_off
 	initial
 		areset_init_state_1 = 0;
@@ -487,7 +532,7 @@ module  pll_reconf_pllrcfg_sgp
 	// synopsys translate_on
 	always @ ( posedge clock or  posedge reset)
 		if (reset == 1'b1) idle_state <= 1'b0;
-		else  idle_state <= ((((((((((idle_state & (~ read_param)) & (~ write_param)) & (~ reconfig)) & (~ write_from_rom)) | read_last_state) | (write_data_state & width_counter_done)) | (write_nominal_state & width_counter_done)) | read_last_nominal_state) | (reconfig_wait_state & reconfig_done)) | reset_state);
+		else  idle_state <= (((((((((((((idle_state & (~ read_param)) & (~ write_param)) & (~ reconfig)) & (~ write_from_rom)) | read_last_state) | (write_data_state & width_counter_done)) | (write_nominal_state & width_counter_done)) | read_last_nominal_state) | (reconfig_wait_state & reconfig_done)) | ((rom_data_state & rom_width_counter_done) & (~ reset_rom_address))) | (rom_second_last_state & (~ reset_rom_address))) | (rom_last_state & (~ reset_rom_address))) | reset_state);
 	// synopsys translate_off
 	initial
 		nominal_data0 = 0;
@@ -719,6 +764,48 @@ module  pll_reconf_pllrcfg_sgp
 	always @ ( posedge clock or  posedge reset)
 		if (reset == 1'b1) reset_state <= {1{1'b1}};
 		else  reset_state <= power_up;
+	// synopsys translate_off
+	initial
+		rom_data_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_data_state <= 1'b0;
+		else  rom_data_state <= (rom_second_state | ((rom_data_state & (~ read_addr_counter_done)) & (~ reset_rom_address)));
+	// synopsys translate_off
+	initial
+		rom_first_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_first_state <= 1'b0;
+		else  rom_first_state <= rom_init_state;
+	// synopsys translate_off
+	initial
+		rom_init_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_init_state <= 1'b0;
+		else  rom_init_state <= (((((idle_state & write_from_rom) | (rom_first_state & reset_rom_address)) | (rom_second_state & reset_rom_address)) | (rom_data_state & reset_rom_address)) | (rom_second_last_state & reset_rom_address));
+	// synopsys translate_off
+	initial
+		rom_last_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_last_state <= 1'b0;
+		else  rom_last_state <= (rom_second_last_state & (~ reset_rom_address));
+	// synopsys translate_off
+	initial
+		rom_second_last_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_second_last_state <= 1'b0;
+		else  rom_second_last_state <= ((rom_data_state & read_addr_counter_done) & (~ reset_rom_address));
+	// synopsys translate_off
+	initial
+		rom_second_state = 0;
+	// synopsys translate_on
+	always @ ( posedge clock or  posedge reset)
+		if (reset == 1'b1) rom_second_state <= 1'b0;
+		else  rom_second_state <= (rom_first_state & (~ reset_rom_address));
 	// synopsys translate_off
 	initial
 		shift_reg0 = 0;
@@ -1088,12 +1175,12 @@ module  pll_reconf_pllrcfg_sgp
 	lpm_counter   cntr14
 	( 
 	.clock(clock),
-	.cnt_en(rotate_width_counter_enable),
+	.cnt_en(rom_width_counter_enable),
 	.cout(),
-	.data(rotate_width_counter_sload_value),
+	.data(rom_width_counter_sload_value),
 	.eq(),
 	.q(wire_cntr14_q),
-	.sload(rotate_width_counter_sload)
+	.sload(rom_width_counter_sload)
 	`ifndef FORMAL_VERIFICATION
 	// synopsys translate_off
 	`endif
@@ -1113,17 +1200,17 @@ module  pll_reconf_pllrcfg_sgp
 	defparam
 		cntr14.lpm_direction = "DOWN",
 		cntr14.lpm_port_updown = "PORT_UNUSED",
-		cntr14.lpm_width = 5,
+		cntr14.lpm_width = 8,
 		cntr14.lpm_type = "lpm_counter";
 	lpm_counter   cntr15
 	( 
 	.clock(clock),
-	.cnt_en(rotate_addr_counter_enable),
+	.cnt_en(rotate_width_counter_enable),
 	.cout(),
-	.data(rotate_addr_counter_sload_value),
+	.data(rotate_width_counter_sload_value),
 	.eq(),
 	.q(wire_cntr15_q),
-	.sload(rotate_addr_counter_sload)
+	.sload(rotate_width_counter_sload)
 	`ifndef FORMAL_VERIFICATION
 	// synopsys translate_off
 	`endif
@@ -1142,10 +1229,40 @@ module  pll_reconf_pllrcfg_sgp
 	);
 	defparam
 		cntr15.lpm_direction = "DOWN",
-		cntr15.lpm_modulus = 144,
 		cntr15.lpm_port_updown = "PORT_UNUSED",
-		cntr15.lpm_width = 8,
+		cntr15.lpm_width = 5,
 		cntr15.lpm_type = "lpm_counter";
+	lpm_counter   cntr16
+	( 
+	.clock(clock),
+	.cnt_en(rotate_addr_counter_enable),
+	.cout(),
+	.data(rotate_addr_counter_sload_value),
+	.eq(),
+	.q(wire_cntr16_q),
+	.sload(rotate_addr_counter_sload)
+	`ifndef FORMAL_VERIFICATION
+	// synopsys translate_off
+	`endif
+	,
+	.aclr(1'b0),
+	.aload(1'b0),
+	.aset(1'b0),
+	.cin(1'b1),
+	.clk_en(1'b1),
+	.sclr(1'b0),
+	.sset(1'b0),
+	.updown(1'b1)
+	`ifndef FORMAL_VERIFICATION
+	// synopsys translate_on
+	`endif
+	);
+	defparam
+		cntr16.lpm_direction = "DOWN",
+		cntr16.lpm_modulus = 144,
+		cntr16.lpm_port_updown = "PORT_UNUSED",
+		cntr16.lpm_width = 8,
+		cntr16.lpm_type = "lpm_counter";
 	lpm_counter   cntr2
 	( 
 	.clock(clock),
@@ -1239,6 +1356,7 @@ module  pll_reconf_pllrcfg_sgp
 		c2_wire = 8'b01101011,
 		c3_wire = 8'b01111101,
 		c4_wire = 8'b10001111,
+		const_scan_chain_size = 8'b10001111,
 		counter_param_latch = counter_param_latch_reg,
 		counter_type_latch = counter_type_latch_reg,
 		cuda_combout_wire = {wire_le_comb10_combout, wire_le_comb9_combout, wire_le_comb8_combout},
@@ -1251,10 +1369,11 @@ module  pll_reconf_pllrcfg_sgp
 		pll_scanclk = clock,
 		pll_scanclkena = ((rotate_width_counter_enable & (~ rotate_width_counter_done)) | reconfig_seq_data_state),
 		pll_scandata = (scan_cache_out & ((rotate_width_counter_enable | reconfig_seq_data_state) | reconfig_post_state)),
-		power_up = ((((((((((((((((((((~ reset_state) & (~ idle_state)) & (~ read_init_state)) & (~ read_first_state)) & (~ read_data_state)) & (~ read_last_state)) & (~ read_init_nominal_state)) & (~ read_first_nominal_state)) & (~ read_data_nominal_state)) & (~ read_last_nominal_state)) & (~ write_init_state)) & (~ write_data_state)) & (~ write_init_nominal_state)) & (~ write_nominal_state)) & (~ reconfig_init_state)) & (~ reconfig_counter_state)) & (~ reconfig_seq_ena_state)) & (~ reconfig_seq_data_state)) & (~ reconfig_post_state)) & (~ reconfig_wait_state)),
-		read_addr_counter_enable = (((read_first_state | read_data_state) | read_first_nominal_state) | read_data_nominal_state),
+		power_up = ((((((((((((((((((((((((((~ reset_state) & (~ idle_state)) & (~ read_init_state)) & (~ read_first_state)) & (~ read_data_state)) & (~ read_last_state)) & (~ read_init_nominal_state)) & (~ read_first_nominal_state)) & (~ read_data_nominal_state)) & (~ read_last_nominal_state)) & (~ write_init_state)) & (~ write_data_state)) & (~ write_init_nominal_state)) & (~ write_nominal_state)) & (~ reconfig_init_state)) & (~ reconfig_counter_state)) & (~ reconfig_seq_ena_state)) & (~ reconfig_seq_data_state)) & (~ reconfig_post_state)) & (~ reconfig_wait_state)) & (~ rom_init_state)) & (~ rom_first_state)) & (~ rom_second_state)) & (~ rom_data_state)) & (~ rom_second_last_state)) & (~ rom_last_state)),
+		read_addr_counter_done = (((((((wire_cntr2_q[0] & wire_cntr2_q[1]) & wire_cntr2_q[2]) & wire_cntr2_q[3]) & (~ wire_cntr2_q[4])) & (~ wire_cntr2_q[5])) & (~ wire_cntr2_q[6])) & wire_cntr2_q[7]),
+		read_addr_counter_enable = ((((read_first_state | read_data_state) | read_first_nominal_state) | read_data_nominal_state) | ((rom_data_state | rom_first_state) | rom_second_state)),
 		read_addr_counter_out = wire_cntr2_q,
-		read_addr_counter_sload = (read_init_state | read_init_nominal_state),
+		read_addr_counter_sload = ((read_init_state | read_init_nominal_state) | rom_init_state),
 		read_addr_counter_sload_value = (read_addr_decoder_out & {8{(read_init_state | read_init_nominal_state)}}),
 		read_addr_decoder_out = ((((((((((((((((((((((((((((((((((({8{1'b0}} | {{6{1'b0}}, (sel_type_cplf & sel_param_c), 1'b0}) | {{5{1'b0}}, (sel_type_cplf & sel_param_low_r), {2{1'b0}}}) | {{4{1'b0}}, (sel_type_vco & sel_param_high_i_postscale), {2{1'b0}}, (sel_type_vco & sel_param_high_i_postscale)}) | {{4{1'b0}}, (sel_type_cplf & sel_param_odd_CP_unused), 1'b0, (sel_type_cplf & sel_param_odd_CP_unused), 1'b0}) | {{4{1'b0}}, {4{(sel_type_cplf & sel_param_high_i_postscale)}}}) | {{3{1'b0}}, (sel_type_n & sel_param_bypass_LF_unused), {2{1'b0}}, (sel_type_n & sel_param_bypass_LF_unused), 1'b0}) | {{3{1'b0}}, (sel_type_n & sel_param_high_i_postscale), {2{1'b0}}, {2{(sel_type_n & sel_param_high_i_postscale)}}}) | {{3{1'b0}}, {2{(sel_type_n & sel_param_odd_CP_unused)}}, 1'b0, {2{(sel_type_n & sel_param_odd_CP_unused)}}}) | {{3{1'b0}}, {3{(sel_type_n & sel_param_low_r)}}, {2{1'b0}}}) | {{3{1'b0}}, (sel_type_n & sel_param_nominal_count), {2{1'b0}}, (sel_type_n & sel_param_nominal_count), 1'b0}) | {{2{1'b0}}, (sel_type_m & sel_param_bypass_LF_unused), {2{1'b0}}, (sel_type_m & sel_param_bypass_LF_unused), {2{1'b0}}}) | {{2{1'b0}}, (sel_type_m & sel_param_high_i_postscale), {2{1'b0}}, (sel_type_m & sel_param_high_i_postscale), 1'b0, (sel_type_m & sel_param_high_i_postscale)}) | {{2{1'b0}}, (sel_type_m & sel_param_odd_CP_unused), 1'b0, {2{(sel_type_m & sel_param_odd_CP_unused)}}, 1'b0, (sel_type_m & sel_param_odd_CP_unused)}) | {{2{1'b0}}, (sel_type_m & sel_param_low_r), 1'b0, {3{(sel_type_m & sel_param_low_r)}}, 1'b0}) | {{2{1'b0}}, (sel_type_m & sel_param_nominal_count), {2{1'b0}}, (sel_type_m & sel_param_nominal_count), {2{1'b0}}}) | {{2{1'b0}}, {2{(sel_type_c0 & sel_param_bypass_LF_unused)}}, 1'b0, {2{(sel_type_c0 & sel_param_bypass_LF_unused)}}, 1'b0}) | {{2{1'b0}}, {2{(sel_type_c0 & sel_param_high_i_postscale)}}, 1'b0, {3{(sel_type_c0 & sel_param_high_i_postscale)}}}) | {{2{1'b0}}, {6{(sel_type_c0 & sel_param_odd_CP_unused)}}}) | {1'b0, (sel_type_c0 & sel_param_low_r), {6{1'b0}}}) | {1'b0, (sel_type_c1 & sel_param_bypass_LF_unused
 ), {2{1'b0}}, (sel_type_c1 & sel_param_bypass_LF_unused), {3{1'b0}}}) | {1'b0, (sel_type_c1 & sel_param_high_i_postscale), {2{1'b0}}, (sel_type_c1 & sel_param_high_i_postscale), {2{1'b0}}, (sel_type_c1 & sel_param_high_i_postscale)}) | {1'b0, (sel_type_c1 & sel_param_odd_CP_unused), 1'b0, (sel_type_c1 & sel_param_odd_CP_unused), {3{1'b0}}, (sel_type_c1 & sel_param_odd_CP_unused)}) | {1'b0, (sel_type_c1 & sel_param_low_r), 1'b0, (sel_type_c1 & sel_param_low_r), {2{1'b0}}, (sel_type_c1 & sel_param_low_r), 1'b0}) | {1'b0, (sel_type_c2 & sel_param_bypass_LF_unused), 1'b0, {2{(sel_type_c2 & sel_param_bypass_LF_unused)}}, 1'b0, (sel_type_c2 & sel_param_bypass_LF_unused), 1'b0}) | {1'b0, (sel_type_c2 & sel_param_high_i_postscale), 1'b0, {2{(sel_type_c2 & sel_param_high_i_postscale)}}, 1'b0, {2{(sel_type_c2 & sel_param_high_i_postscale)}}}) | {1'b0, {2{(sel_type_c2 & sel_param_odd_CP_unused)}}, {3{1'b0}}, {2{(sel_type_c2 & sel_param_odd_CP_unused)}}}) | {1'b0, {2{(sel_type_c2 & sel_param_low_r)}}, {2{1'b0}}, (sel_type_c2 & sel_param_low_r), {2{1'b0}}}) | {1'b0, {2{(sel_type_c3 & sel_param_bypass_LF_unused)}}, 1'b0, {2{(sel_type_c3 & sel_param_bypass_LF_unused)}}, {2{1'b0}}}) | {1'b0, {2{(sel_type_c3 & sel_param_high_i_postscale)}}, 1'b0, {2{(sel_type_c3 & sel_param_high_i_postscale)}}, 1'b0, (sel_type_c3 & sel_param_high_i_postscale)}) | {1'b0, {3{(sel_type_c3 & sel_param_odd_CP_unused)}}, 1'b0, (sel_type_c3 & sel_param_odd_CP_unused), 1'b0, (sel_type_c3 & sel_param_odd_CP_unused)}) | {1'b0, {3{(sel_type_c3 & sel_param_low_r)}}, 1'b0, {2{(sel_type_c3 & sel_param_low_r)}}, 1'b0}) | {1'b0, {6{(sel_type_c4 & sel_param_bypass_LF_unused)}}, 1'b0}) | {1'b0, {7{(sel_type_c4 & sel_param_high_i_postscale)}}}) | {(sel_type_c4 & sel_param_odd_CP_unused), {4{1'b0}}, {3{(sel_type_c4 & sel_param_odd_CP_unused)}}}) | {(sel_type_c4 & sel_param_low_r), {3{1'b0}}, (sel_type_c4 & sel_param_low_r), {3{1'b0}}}),
@@ -1269,19 +1388,24 @@ module  pll_reconf_pllrcfg_sgp
 		reconfig_width_counter_enable = reconfig_seq_data_state,
 		reconfig_width_counter_sload = reconfig_seq_ena_state,
 		reconfig_width_counter_sload_value = ({6{reconfig_seq_ena_state}} & seq_sload_value),
+		rom_address_out = (read_addr_counter_out & {8{((rom_first_state | rom_second_state) | rom_data_state)}}),
+		rom_width_counter_done = ((((((((~ wire_cntr14_q[0]) & (~ wire_cntr14_q[1])) & (~ wire_cntr14_q[2])) & (~ wire_cntr14_q[3])) & (~ wire_cntr14_q[4])) & (~ wire_cntr14_q[5])) & (~ wire_cntr14_q[6])) & (~ wire_cntr14_q[7])),
+		rom_width_counter_enable = ((rom_data_state | rom_last_state) | rom_second_last_state),
+		rom_width_counter_sload = rom_init_state,
+		rom_width_counter_sload_value = const_scan_chain_size,
 		rotate_addr_counter_enable = ((((C0_data_state | C1_data_state) | C2_data_state) | C3_data_state) | C4_data_state),
-		rotate_addr_counter_out = wire_cntr15_q,
+		rotate_addr_counter_out = wire_cntr16_q,
 		rotate_addr_counter_sload = ((((C0_ena_state | C1_ena_state) | C2_ena_state) | C3_ena_state) | C4_ena_state),
 		rotate_addr_counter_sload_value = (((((c0_wire & {8{rotate_decoder_wires[0]}}) | (c1_wire & {8{rotate_decoder_wires[1]}})) | (c2_wire & {8{rotate_decoder_wires[2]}})) | (c3_wire & {8{rotate_decoder_wires[3]}})) | (c4_wire & {8{rotate_decoder_wires[4]}})),
 		rotate_decoder_wires = wire_decode11_eq,
-		rotate_width_counter_done = (((((~ wire_cntr14_q[0]) & (~ wire_cntr14_q[1])) & (~ wire_cntr14_q[2])) & (~ wire_cntr14_q[3])) & (~ wire_cntr14_q[4])),
+		rotate_width_counter_done = (((((~ wire_cntr15_q[0]) & (~ wire_cntr15_q[1])) & (~ wire_cntr15_q[2])) & (~ wire_cntr15_q[3])) & (~ wire_cntr15_q[4])),
 		rotate_width_counter_enable = ((((C0_data_state | C1_data_state) | C2_data_state) | C3_data_state) | C4_data_state),
 		rotate_width_counter_sload = ((((C0_ena_state | C1_ena_state) | C2_ena_state) | C3_ena_state) | C4_ena_state),
 		rotate_width_counter_sload_value = 5'b10010,
-		scan_cache_address = ((((addr_counter_out & {8{addr_counter_enable}}) | (read_addr_counter_out & {8{read_addr_counter_enable}})) | (rotate_addr_counter_out & {8{rotate_addr_counter_enable}})) | (reconfig_addr_counter_out & {8{reconfig_addr_counter_enable}})),
-		scan_cache_in = shift_reg_serial_out,
+		scan_cache_address = (((((addr_counter_out & {8{addr_counter_enable}}) | (rotate_addr_counter_out & {8{rotate_addr_counter_enable}})) | (reconfig_addr_counter_out & {8{reconfig_addr_counter_enable}})) | ((read_addr_counter_out & {8{read_addr_counter_enable}}) & {8{(~ (rom_data_state | rom_first_state))}})) | ({8{(rom_width_counter_enable & ((rom_data_state | rom_second_last_state) | rom_last_state))}} & addr_from_rom2)),
+		scan_cache_in = ((shift_reg_serial_out & (~ (((rom_first_state | rom_data_state) | rom_second_last_state) | rom_last_state))) | (rom_data_in & (((rom_first_state | rom_data_state) | rom_second_last_state) | rom_last_state))),
 		scan_cache_out = wire_altsyncram4_q_a[0],
-		scan_cache_write_enable = (write_data_state | write_nominal_state),
+		scan_cache_write_enable = ((((write_data_state | write_nominal_state) | rom_data_state) | rom_second_last_state) | rom_last_state),
 		sel_param_bypass_LF_unused = (((~ counter_param_latch[0]) & (~ counter_param_latch[1])) & counter_param_latch[2]),
 		sel_param_c = (((~ counter_param_latch[0]) & counter_param_latch[1]) & (~ counter_param_latch[2])),
 		sel_param_high_i_postscale = (((~ counter_param_latch[0]) & (~ counter_param_latch[1])) & (~ counter_param_latch[2])),
@@ -1316,8 +1440,8 @@ module  pll_reconf_pllrcfg_sgp
 		width_counter_sload_value = width_decoder_out,
 		width_decoder_out = ((((({5{1'b0}} | {width_decoder_select[2], {3{1'b0}}, width_decoder_select[2]}) | {{4{1'b0}}, width_decoder_select[3]}) | {{2{1'b0}}, {3{width_decoder_select[5]}}}) | {{3{1'b0}}, width_decoder_select[6], 1'b0}) | {{2{1'b0}}, width_decoder_select[7], {2{1'b0}}}),
 		width_decoder_select = {((sel_type_cplf & sel_param_low_r) | (sel_type_cplf & sel_param_odd_CP_unused)), (sel_type_cplf & sel_param_high_i_postscale), ((((((((((((((sel_type_n & sel_param_high_i_postscale) | (sel_type_n & sel_param_low_r)) | (sel_type_m & sel_param_high_i_postscale)) | (sel_type_m & sel_param_low_r)) | (sel_type_c0 & sel_param_high_i_postscale)) | (sel_type_c0 & sel_param_low_r)) | (sel_type_c1 & sel_param_high_i_postscale)) | (sel_type_c1 & sel_param_low_r)) | (sel_type_c2 & sel_param_high_i_postscale)) | (sel_type_c2 & sel_param_low_r)) | (sel_type_c3 & sel_param_high_i_postscale)) | (sel_type_c3 & sel_param_low_r)) | (sel_type_c4 & sel_param_high_i_postscale)) | (sel_type_c4 & sel_param_low_r)), w1592w, ((sel_type_cplf & sel_param_bypass_LF_unused) | (sel_type_cplf & sel_param_c)), ((sel_type_n & sel_param_nominal_count) | (sel_type_m & sel_param_nominal_count)), w1565w, (((((((((((((((sel_type_vco & sel_param_high_i_postscale) | (sel_type_n & sel_param_bypass_LF_unused)) | (sel_type_n & sel_param_odd_CP_unused)) | (sel_type_m & sel_param_bypass_LF_unused)) | (sel_type_m & sel_param_odd_CP_unused)) | (sel_type_c0 & sel_param_bypass_LF_unused)) | (sel_type_c0 & sel_param_odd_CP_unused)) | (sel_type_c1 & sel_param_bypass_LF_unused)) | (sel_type_c1 & sel_param_odd_CP_unused)) | (sel_type_c2 & sel_param_bypass_LF_unused)) | (sel_type_c2 & sel_param_odd_CP_unused)) | (sel_type_c3 & sel_param_bypass_LF_unused)) | (sel_type_c3 & sel_param_odd_CP_unused)) | (sel_type_c4 & sel_param_bypass_LF_unused)) | (sel_type_c4 & sel_param_odd_CP_unused))},
-		write_from_rom = 1'b0;
-endmodule //pll_reconf_pllrcfg_sgp
+		write_rom_ena = ((rom_first_state | rom_second_state) | (rom_data_state & (~ rom_width_counter_done)));
+endmodule //pll_reconf_pllrcfg_ev01
 //VALID FILE
 
 
@@ -1335,6 +1459,9 @@ module pll_reconf (
 	read_param,
 	reconfig,
 	reset,
+	reset_rom_address,
+	rom_data_in,
+	write_from_rom,
 	write_param,
 	busy,
 	data_out,
@@ -1342,7 +1469,9 @@ module pll_reconf (
 	pll_configupdate,
 	pll_scanclk,
 	pll_scanclkena,
-	pll_scandata)/* synthesis synthesis_clearbox = 2 */;
+	pll_scandata,
+	rom_address_out,
+	write_rom_ena)/* synthesis synthesis_clearbox = 2 */;
 
 	input	  clock;
 	input	[2:0]  counter_param;
@@ -1354,6 +1483,9 @@ module pll_reconf (
 	input	  read_param;
 	input	  reconfig;
 	input	  reset;
+	input	  reset_rom_address;
+	input	  rom_data_in;
+	input	  write_from_rom;
 	input	  write_param;
 	output	  busy;
 	output	[8:0]  data_out;
@@ -1362,10 +1494,15 @@ module pll_reconf (
 	output	  pll_scanclk;
 	output	  pll_scanclkena;
 	output	  pll_scandata;
+	output	[7:0]  rom_address_out;
+	output	  write_rom_ena;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
 	tri0	  pll_areset_in;
+	tri0	  reset_rom_address;
+	tri0	  rom_data_in;
+	tri0	  write_from_rom;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
@@ -1377,6 +1514,8 @@ module pll_reconf (
 	wire  sub_wire4;
 	wire  sub_wire5;
 	wire  sub_wire6;
+	wire [7:0] sub_wire7;
+	wire  sub_wire8;
 	wire  busy = sub_wire0;
 	wire [8:0] data_out = sub_wire1[8:0];
 	wire  pll_areset = sub_wire2;
@@ -1384,8 +1523,10 @@ module pll_reconf (
 	wire  pll_scanclk = sub_wire4;
 	wire  pll_scanclkena = sub_wire5;
 	wire  pll_scandata = sub_wire6;
+	wire [7:0] rom_address_out = sub_wire7[7:0];
+	wire  write_rom_ena = sub_wire8;
 
-	pll_reconf_pllrcfg_sgp	pll_reconf_pllrcfg_sgp_component (
+	pll_reconf_pllrcfg_ev01	pll_reconf_pllrcfg_ev01_component (
 				.clock (clock),
 				.counter_param (counter_param),
 				.counter_type (counter_type),
@@ -1396,6 +1537,9 @@ module pll_reconf (
 				.read_param (read_param),
 				.reconfig (reconfig),
 				.reset (reset),
+				.reset_rom_address (reset_rom_address),
+				.rom_data_in (rom_data_in),
+				.write_from_rom (write_from_rom),
 				.write_param (write_param),
 				.busy (sub_wire0),
 				.data_out (sub_wire1),
@@ -1403,9 +1547,11 @@ module pll_reconf (
 				.pll_configupdate (sub_wire3),
 				.pll_scanclk (sub_wire4),
 				.pll_scanclkena (sub_wire5),
-				.pll_scandata (sub_wire6))/* synthesis synthesis_clearbox=2
+				.pll_scandata (sub_wire6),
+				.rom_address_out (sub_wire7),
+				.write_rom_ena (sub_wire8))/* synthesis synthesis_clearbox=2
 	 clearbox_macroname = altpll_reconfig
-	 clearbox_defparam = "init_from_external_rom_checkbox_checked=NO;intended_device_family=MAX 10;" */;
+	 clearbox_defparam = "init_from_external_rom_checkbox_checked=YES;intended_device_family=MAX 10;" */;
 
 endmodule
 
@@ -1417,7 +1563,7 @@ endmodule
 // Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING "MAX 10"
 // Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "0"
 // Retrieval info: PRIVATE: USE_INIT_FILE STRING "0"
-// Retrieval info: CONSTANT: INIT_FROM_EXTERNAL_ROM_CHECKBOX_CHECKED STRING "NO"
+// Retrieval info: CONSTANT: INIT_FROM_EXTERNAL_ROM_CHECKBOX_CHECKED STRING "YES"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "MAX 10"
 // Retrieval info: USED_PORT: busy 0 0 0 0 OUTPUT NODEFVAL "busy"
 // Retrieval info: USED_PORT: clock 0 0 0 0 INPUT NODEFVAL "clock"
@@ -1436,7 +1582,12 @@ endmodule
 // Retrieval info: USED_PORT: read_param 0 0 0 0 INPUT NODEFVAL "read_param"
 // Retrieval info: USED_PORT: reconfig 0 0 0 0 INPUT NODEFVAL "reconfig"
 // Retrieval info: USED_PORT: reset 0 0 0 0 INPUT NODEFVAL "reset"
+// Retrieval info: USED_PORT: reset_rom_address 0 0 0 0 INPUT GND "reset_rom_address"
+// Retrieval info: USED_PORT: rom_address_out 0 0 8 0 OUTPUT NODEFVAL "rom_address_out[7..0]"
+// Retrieval info: USED_PORT: rom_data_in 0 0 0 0 INPUT GND "rom_data_in"
+// Retrieval info: USED_PORT: write_from_rom 0 0 0 0 INPUT GND "write_from_rom"
 // Retrieval info: USED_PORT: write_param 0 0 0 0 INPUT NODEFVAL "write_param"
+// Retrieval info: USED_PORT: write_rom_ena 0 0 0 0 OUTPUT NODEFVAL "write_rom_ena"
 // Retrieval info: CONNECT: @clock 0 0 0 0 clock 0 0 0 0
 // Retrieval info: CONNECT: @counter_param 0 0 3 0 counter_param 0 0 3 0
 // Retrieval info: CONNECT: @counter_type 0 0 4 0 counter_type 0 0 4 0
@@ -1447,6 +1598,9 @@ endmodule
 // Retrieval info: CONNECT: @read_param 0 0 0 0 read_param 0 0 0 0
 // Retrieval info: CONNECT: @reconfig 0 0 0 0 reconfig 0 0 0 0
 // Retrieval info: CONNECT: @reset 0 0 0 0 reset 0 0 0 0
+// Retrieval info: CONNECT: @reset_rom_address 0 0 0 0 reset_rom_address 0 0 0 0
+// Retrieval info: CONNECT: @rom_data_in 0 0 0 0 rom_data_in 0 0 0 0
+// Retrieval info: CONNECT: @write_from_rom 0 0 0 0 write_from_rom 0 0 0 0
 // Retrieval info: CONNECT: @write_param 0 0 0 0 write_param 0 0 0 0
 // Retrieval info: CONNECT: busy 0 0 0 0 @busy 0 0 0 0
 // Retrieval info: CONNECT: data_out 0 0 9 0 @data_out 0 0 9 0
@@ -1455,6 +1609,8 @@ endmodule
 // Retrieval info: CONNECT: pll_scanclk 0 0 0 0 @pll_scanclk 0 0 0 0
 // Retrieval info: CONNECT: pll_scanclkena 0 0 0 0 @pll_scanclkena 0 0 0 0
 // Retrieval info: CONNECT: pll_scandata 0 0 0 0 @pll_scandata 0 0 0 0
+// Retrieval info: CONNECT: rom_address_out 0 0 8 0 @rom_address_out 0 0 8 0
+// Retrieval info: CONNECT: write_rom_ena 0 0 0 0 @write_rom_ena 0 0 0 0
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll_reconf.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll_reconf.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL pll_reconf.cmp FALSE

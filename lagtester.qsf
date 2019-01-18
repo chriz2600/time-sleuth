@@ -35,7 +35,6 @@
 #
 # -------------------------------------------------------------------------- #
 
-
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M02SCE144C8G
 set_global_assignment -name TOP_LEVEL_ENTITY lagtester
@@ -53,10 +52,18 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
-set_global_assignment -name QSYS_FILE source/osc/osc.qsys
+
+########################################################
+# source files
+########################################################
+set_global_assignment -name SDC_FILE lagtester.sdc
 set_global_assignment -name VERILOG_FILE source/lagtester.v
+set_global_assignment -name QSYS_FILE source/osc/osc.qsys
 set_global_assignment -name QIP_FILE source/pll/pll.qip
 set_global_assignment -name QIP_FILE source/pll/pll_reconf.qip
+set_global_assignment -name VERILOG_FILE source/pll/pll_main.v
+set_global_assignment -name VERILOG_FILE source/pll/pll_reconf_rom.v
+set_global_assignment -name VERILOG_FILE source/misc/edge_detect.v
 
 ########################################################
 # pin assignments
@@ -64,3 +71,37 @@ set_global_assignment -name QIP_FILE source/pll/pll_reconf.qip
 set_location_assignment PIN_27 -to clock
 set_location_assignment PIN_33 -to DVI_CLOCK
 
+set_location_assignment PIN_4 -to RES_CONFIG[0]
+set_location_assignment PIN_5 -to RES_CONFIG[1]
+set_location_assignment PIN_6 -to RES_CONFIG[2]
+
+set_location_assignment PIN_79 -to DVI_RED[7]
+set_location_assignment PIN_78 -to DVI_RED[6]
+set_location_assignment PIN_76 -to DVI_RED[5]
+set_location_assignment PIN_75 -to DVI_RED[4]
+set_location_assignment PIN_74 -to DVI_RED[3]
+set_location_assignment PIN_70 -to DVI_RED[2]
+set_location_assignment PIN_69 -to DVI_RED[1]
+set_location_assignment PIN_68 -to DVI_RED[0]
+
+set_location_assignment PIN_67 -to DVI_GREEN[7]
+set_location_assignment PIN_65 -to DVI_GREEN[6]
+set_location_assignment PIN_63 -to DVI_GREEN[5]
+set_location_assignment PIN_62 -to DVI_GREEN[4]
+set_location_assignment PIN_61 -to DVI_GREEN[3]
+set_location_assignment PIN_60 -to DVI_GREEN[2]
+set_location_assignment PIN_59 -to DVI_GREEN[1]
+set_location_assignment PIN_54 -to DVI_GREEN[0]
+
+set_location_assignment PIN_53 -to DVI_BLUE[7]
+set_location_assignment PIN_52 -to DVI_BLUE[6]
+set_location_assignment PIN_51 -to DVI_BLUE[5]
+set_location_assignment PIN_50 -to DVI_BLUE[4]
+set_location_assignment PIN_49 -to DVI_BLUE[3]
+set_location_assignment PIN_48 -to DVI_BLUE[2]
+set_location_assignment PIN_47 -to DVI_BLUE[1]
+set_location_assignment PIN_46 -to DVI_BLUE[0]
+
+set_location_assignment PIN_44 -to DVI_DE
+set_location_assignment PIN_42 -to DVI_HSYNC
+set_location_assignment PIN_41 -to DVI_VSYNC
