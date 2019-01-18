@@ -54,6 +54,7 @@ set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "50.0 %"
 set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
 set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 
 ########################################################
 # timing optimization
@@ -124,3 +125,36 @@ set_location_assignment PIN_46 -to DVI_BLUE[0]
 set_location_assignment PIN_44 -to DVI_DE
 set_location_assignment PIN_42 -to DVI_HSYNC
 set_location_assignment PIN_41 -to DVI_VSYNC
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_GREEN[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_DE
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_HSYNC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_VSYNC
