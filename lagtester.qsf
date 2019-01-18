@@ -84,6 +84,9 @@ set_global_assignment -name VERILOG_FILE source/pll/pll_reconf_rom.v
 set_global_assignment -name VERILOG_FILE source/misc/edge_detect.v
 set_global_assignment -name VERILOG_FILE source/misc/data_cross.v
 set_global_assignment -name VERILOG_FILE source/video.v
+set_global_assignment -name VERILOG_FILE source/tfp410/tfp410.v
+set_global_assignment -name VERILOG_FILE source/tfp410/I2C.v
+set_global_assignment -name VHDL_FILE source/tfp410/i2c_master.vhd
 
 ########################################################
 # pin assignments
@@ -126,6 +129,11 @@ set_location_assignment PIN_44 -to DVI_DE
 set_location_assignment PIN_42 -to DVI_HSYNC
 set_location_assignment PIN_41 -to DVI_VSYNC
 
+set_location_assignment PIN_39 -to SDA
+# Error (18496): The Output SCL in pin location 28 (pad_956) is too close to PLL clock input pin (clock) in pin location 27 (pad_0) File: /build/source/lagtester.v Line: 2
+#set_location_assignment PIN_28 -to SCL
+set_location_assignment PIN_23 -to SCL
+
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[0]
@@ -158,3 +166,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_BLUE[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_DE
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_HSYNC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_VSYNC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCL
