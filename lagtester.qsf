@@ -25,7 +25,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		lag-tester_assignment_defaults.qdf
+#		lagtester_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -57,3 +57,10 @@ set_global_assignment -name QSYS_FILE source/osc/osc.qsys
 set_global_assignment -name VERILOG_FILE source/lagtester.v
 set_global_assignment -name QIP_FILE source/pll/pll.qip
 set_global_assignment -name QIP_FILE source/pll/pll_reconf.qip
+
+########################################################
+# pin assignments
+########################################################
+set_location_assignment PIN_27 -to clock
+set_location_assignment PIN_33 -to DVI_CLOCK
+
