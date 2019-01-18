@@ -1,0 +1,34 @@
+stages:
+  - build-fpga
+  #- deploy
+
+fpga-firmware:
+  stage: build-fpga
+  script:
+    - cd Core
+    - script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_sh --flow compile lagtester.qpf")" /dev/null
+    #- script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_cpf -c lagtester.cof")" /dev/null
+  artifacts:
+    paths:
+    - Core/output_files/lagtester*.pof
+    # - Core/output_files/lagtester*.sof
+    # - Core/output_files/lagtester*.rpd
+    # - Core/output_files/lagtester*.map
+  tags:
+    - quartus-lite
+  only:
+    - develop
+    - master
+
+# firmware-publish:
+#   stage: deploy
+#   script: create-index-html-ps2
+#   artifacts:
+#     expire_in: 1 sec
+#   dependencies:
+#     - esp-firmware
+#   tags:
+#     - index-gen
+#   only:
+#     - develop
+#     - master
