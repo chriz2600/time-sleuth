@@ -17,8 +17,8 @@
 --    Device Part: -
 --    Device Speed Grade: -
 --    PLL Scan Chain: Fast PLL (144 bits)
---    File Name: C:/Users/chriz/Development/lagtester/source/pll/config//default.mif
---    Generated: Sat Jan 19 15:23:19 2019
+--    File Name: C:/Users/chriz/Development/lagtester/source/pll/config//1080p.mif
+--    Generated: Sat Jan 19 15:22:55 2019
 
 WIDTH=1;
 DEPTH=144;
