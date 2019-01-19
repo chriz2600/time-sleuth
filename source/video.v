@@ -1,11 +1,11 @@
 module video(
     input clock,
-    output reg [7:0] red,
-    output reg [7:0] green,
-    output reg [7:0] blue,
-    output reg de,
-    output reg hsync,
-    output reg vsync
+    output [7:0] red,
+    output [7:0] green,
+    output [7:0] blue,
+    output de,
+    output hsync,
+    output vsync
 );
 
     localparam H_TOTAL = 800;
@@ -24,6 +24,20 @@ module video(
 
     reg [10:0] counterX = 0;
     reg [10:0] counterY = 0;
+
+    reg [7:0] red_reg;
+    reg [7:0] green_reg;
+    reg [7:0] blue_reg;
+    reg de_reg;
+    reg hsync_reg;
+    reg vsync_reg;
+
+    reg [7:0] red_reg_q;
+    reg [7:0] green_reg_q;
+    reg [7:0] blue_reg_q;
+    reg de_reg_q;
+    reg hsync_reg_q;
+    reg vsync_reg_q;
 
     /*
         H_SYNC  H_BACK_PORCH  H_ACTIVE H_FRONT_PORCH
@@ -47,18 +61,18 @@ module video(
     /* generate hsync */
     always @(posedge clock) begin
         if (counterX < H_SYNC) begin
-            hsync <= H_SYNC_POL;
+            hsync_reg <= H_SYNC_POL;
         end else begin
-            hsync <= ~H_SYNC_POL;
+            hsync_reg <= ~H_SYNC_POL;
         end
     end
 
     /* generate vsync */
     always @(posedge clock) begin
         if (counterY < V_SYNC) begin
-            vsync <= V_SYNC_POL;
+            vsync_reg <= V_SYNC_POL;
         end else begin
-            vsync <= ~V_SYNC_POL;
+            vsync_reg <= ~V_SYNC_POL;
         end
     end
 
@@ -69,10 +83,13 @@ module video(
          && counterX < H_SYNC + H_BACK_PORCH + H_ACTIVE
          && counterY < V_SYNC + V_BACK_PORCH + V_ACTIVE)
         begin
-            de <= 1'b1;
+            de_reg <= 1'b1;
             doOutputValue(counterX - (H_SYNC + H_BACK_PORCH), 8'd255);
         end else begin
-            de <= 1'b0;
+            de_reg <= 1'b0;
+            red_reg <= 1'b0;
+            green_reg <= 1'b0;
+            blue_reg <= 1'b0;
         end
     end
 
@@ -82,39 +99,55 @@ module video(
         input [7:0] val;
         begin
             if (xpos < 80) begin
-                red <= val;
-                green <= 8'd0;
-                blue <= 8'd0;
+                red_reg <= val;
+                green_reg <= 8'd0;
+                blue_reg <= 8'd0;
             end else if (xpos < 160) begin
-                red <= 8'd0;
-                green <= val;
-                blue <= 8'd0;
+                red_reg <= 8'd0;
+                green_reg <= val;
+                blue_reg <= 8'd0;
             end else if (xpos < 240) begin
-                red <= 8'd0;
-                green <= 8'd0;
-                blue <= val;
+                red_reg <= 8'd0;
+                green_reg <= 8'd0;
+                blue_reg <= val;
             end else if (xpos < 320) begin
-                red <= val;
-                green <= val;
-                blue <= val;
+                red_reg <= val;
+                green_reg <= val;
+                blue_reg <= val;
             end else if (xpos < 400) begin
-                red <= 8'd0;
-                green <= 8'd0;
-                blue <= 8'd0;
+                red_reg <= 8'd0;
+                green_reg <= 8'd0;
+                blue_reg <= 8'd0;
             end else if (xpos < 480) begin
-                red <= 8'd0;
-                green <= val;
-                blue <= val;
+                red_reg <= 8'd0;
+                green_reg <= val;
+                blue_reg <= val;
             end else if (xpos < 560) begin
-                red <= val;
-                green <= val;
-                blue <= 8'd0;
+                red_reg <= val;
+                green_reg <= val;
+                blue_reg <= 8'd0;
             end else begin
-                red <= val;
-                green <= 8'd0;
-                blue <= val;
+                red_reg <= val;
+                green_reg <= 8'd0;
+                blue_reg <= val;
             end
         end
     endtask
+
+    delayline #(
+        .CYCLES(2),
+        .WIDTH(27)
+    ) vout_delay (
+        .clock(clock),
+        .in({ de_reg, hsync_reg, vsync_reg, red_reg, green_reg, blue_reg }),
+        .out({ de_reg_q, hsync_reg_q, vsync_reg_q, red_reg_q, green_reg_q, blue_reg_q })
+    );
+
+    assign de = de_reg_q;
+    assign hsync = hsync_reg_q;
+    assign vsync = vsync_reg_q;
+    assign red = red_reg_q;
+    assign green = green_reg_q;
+    assign blue = blue_reg_q;
 
 endmodule

@@ -2,8 +2,8 @@
 # input clocks   #
 ##################
 create_clock -period 27Mhz -name clock [get_ports clock]
-create_generated_clock -multiply_by 14 -divide_by 15 -name data_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[0]}
-create_generated_clock -multiply_by 14 -divide_by 15 -name output_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[1]}
+create_generated_clock -multiply_by 11 -divide_by 2 -name data_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[0]}
+create_generated_clock -multiply_by 11 -divide_by 2 -name output_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[1]}
 
 ##################
 # internal clock #
@@ -23,8 +23,8 @@ set_clock_groups -exclusive -group data_clock -group int_osc_clk
 ##################
 # output delays  #
 ##################
-set tSU 2.0
-set tH 1.5
+set tSU 1.2
+set tH 1.3
 set adv_clock_delay 0.0
 set dvi_outputs [get_ports {DVI_RED* DVI_GREEN* DVI_BLUE* DVI_DE DVI_HSYNC DVI_VSYNC}]
 set_output_delay -clock output_clock -reference_pin [get_ports DVI_CLOCK] -max [expr $tSU - $adv_clock_delay] $dvi_outputs
