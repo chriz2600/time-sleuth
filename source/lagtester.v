@@ -6,6 +6,7 @@ module lagtester(
     inout wire SDA,
     inout wire SCL,
 
+    input SENSOR,
     output [7:0] DVI_RED,
     output [7:0] DVI_GREEN,
     output [7:0] DVI_BLUE,
@@ -22,11 +23,13 @@ module lagtester(
     wire pll_locked;
     wire tfp410_ready;
     reg [7:0] config_data;
+    reg sensor_input; /* synthesis keep */
     wire [7:0] config_data_crossed;
     VideoMode videoMode;
 
     always @(posedge control_clock) begin
         config_data <= { 5'd0, RES_CONFIG };
+        sensor_input <= SENSOR;
     end
 
     ///////////////////////////////////////////
@@ -88,6 +91,6 @@ module lagtester(
     );
     ///////////////////////////////////////////
 
-    assign LED = tfp410_ready;
+    assign LED = sensor_input;
 
 endmodule

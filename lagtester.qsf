@@ -144,6 +144,9 @@ set_location_assignment PIN_23 -to SCL
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDA
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SCL
 
+set_location_assignment PIN_32 -to SENSOR
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SENSOR
+
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[0]
