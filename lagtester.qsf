@@ -85,6 +85,8 @@ set_global_assignment -name VERILOG_FILE source/misc/edge_detect.v
 set_global_assignment -name VERILOG_FILE source/misc/data_cross.v
 set_global_assignment -name VERILOG_FILE source/misc/delayline.v
 set_global_assignment -name VERILOG_FILE source/video.v
+set_global_assignment -name VERILOG_FILE source/video_config.v
+set_global_assignment -name VERILOG_FILE source/typedef.v
 set_global_assignment -name VERILOG_FILE source/tfp410/tfp410.v
 set_global_assignment -name VERILOG_FILE source/tfp410/I2C.v
 set_global_assignment -name VHDL_FILE source/tfp410/i2c_master.vhd
@@ -98,6 +100,11 @@ set_location_assignment PIN_33 -to DVI_CLOCK
 set_location_assignment PIN_4 -to RES_CONFIG[0]
 set_location_assignment PIN_5 -to RES_CONFIG[1]
 set_location_assignment PIN_6 -to RES_CONFIG[2]
+
+set_location_assignment PIN_40 -to TFP410_reset
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to TFP410_reset
+
+set_location_assignment PIN_115 -to LED
 
 set_location_assignment PIN_79 -to DVI_RED[7]
 set_location_assignment PIN_78 -to DVI_RED[6]
@@ -134,6 +141,8 @@ set_location_assignment PIN_39 -to SDA
 # Error (18496): The Output SCL in pin location 28 (pad_956) is too close to PLL clock input pin (clock) in pin location 27 (pad_0) File: /build/source/lagtester.v Line: 2
 #set_location_assignment PIN_28 -to SCL
 set_location_assignment PIN_23 -to SCL
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SCL
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
@@ -169,3 +178,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_HSYNC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_VSYNC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDA
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCL
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TFP410_reset
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED

@@ -1,5 +1,6 @@
 module video(
     input clock,
+    input VideoMode videoMode,
     output [7:0] red,
     output [7:0] green,
     output [7:0] blue,
@@ -8,22 +9,8 @@ module video(
     output vsync
 );
 
-    localparam H_TOTAL = 800;
-    localparam H_ACTIVE = 640;
-    localparam H_FRONT_PORCH = 16;
-    localparam H_SYNC = 96;
-    localparam H_BACK_PORCH = 48;
-    localparam H_SYNC_POL = 1'b0;
-
-    localparam V_TOTAL = 525;
-    localparam V_ACTIVE = 480;
-    localparam V_FRONT_PORCH = 10;
-    localparam V_SYNC = 2;
-    localparam V_BACK_PORCH = 33;
-    localparam V_SYNC_POL = 1'b0;
-
-    reg [10:0] counterX = 0;
-    reg [10:0] counterY = 0;
+    reg [11:0] counterX = 0;
+    reg [11:0] counterY = 0;
 
     reg [7:0] red_reg;
     reg [7:0] green_reg;
@@ -46,11 +33,11 @@ module video(
 
     /* generate counter */
     always @(posedge clock) begin
-        if (counterX < H_TOTAL) begin
+        if (counterX < videoMode.h_total) begin
             counterX <= counterX + 1'b1;
         end else begin
             counterX <= 0;
-            if (counterY <= V_TOTAL) begin
+            if (counterY <= videoMode.v_total) begin
                 counterY <= counterY + 1'b1;
             end else begin
                 counterY <= 0;
@@ -60,31 +47,31 @@ module video(
 
     /* generate hsync */
     always @(posedge clock) begin
-        if (counterX < H_SYNC) begin
-            hsync_reg <= H_SYNC_POL;
+        if (counterX < videoMode.h_sync) begin
+            hsync_reg <= videoMode.h_sync_pol;
         end else begin
-            hsync_reg <= ~H_SYNC_POL;
+            hsync_reg <= ~videoMode.h_sync_pol;
         end
     end
 
     /* generate vsync */
     always @(posedge clock) begin
-        if (counterY < V_SYNC) begin
-            vsync_reg <= V_SYNC_POL;
+        if (counterY < videoMode.v_sync) begin
+            vsync_reg <= videoMode.v_sync_pol;
         end else begin
-            vsync_reg <= ~V_SYNC_POL;
+            vsync_reg <= ~videoMode.v_sync_pol;
         end
     end
 
     /* generate DE */
     always @(posedge clock) begin
-        if (counterX >= H_SYNC + H_BACK_PORCH
-         && counterY >= V_SYNC + V_BACK_PORCH
-         && counterX < H_SYNC + H_BACK_PORCH + H_ACTIVE
-         && counterY < V_SYNC + V_BACK_PORCH + V_ACTIVE)
+        if (counterX >= videoMode.h_sync + videoMode.h_back_porch
+         && counterY >= videoMode.v_sync + videoMode.v_back_porch
+         && counterX < videoMode.h_sync + videoMode.h_back_porch + videoMode.h_active
+         && counterY < videoMode.v_sync + videoMode.v_back_porch + videoMode.v_active)
         begin
             de_reg <= 1'b1;
-            doOutputValue(counterX - (H_SYNC + H_BACK_PORCH), 8'd255);
+            doOutputValue(counterX - (videoMode.h_sync + videoMode.h_back_porch), 8'd255);
         end else begin
             de_reg <= 1'b0;
             red_reg <= 1'b0;

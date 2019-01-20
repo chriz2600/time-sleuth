@@ -39,18 +39,19 @@ module pll_reconf_rom (
         end
 
         // RECONF
-        case (data_req)
-            // 0: begin
-            //     `include "config/1080p.v"
-            // end
-            // 2: begin
-            //     `include "config/960p.v"
-            // end
-            // 3: begin
-            //     `include "config/480i_576i.v"
-            // end
+        case (data_req[2:0])
+            // RECONF
+            3'b001: begin
+                `include "config/VGA.v"
+            end
+            3'b010: begin
+                `include "config/720p.v"
+            end
+            3'b100: begin
+                `include "config/1080p.v"
+            end
             default: begin
-                `include "config/default.v"
+                `include "config/VGA.v"
             end
         endcase
 

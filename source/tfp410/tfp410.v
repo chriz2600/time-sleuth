@@ -8,9 +8,7 @@ module TFP410(
     inout sda,
     inout scl,
     output reg ready,
-    output reg hpd_detected/*,
-
-    input ADV7513Config adv7513Config*/
+    output reg hpd_detected
 );
 
 reg [6:0] i2c_chip_addr;

@@ -23,8 +23,8 @@ set_clock_groups -exclusive -group data_clock -group int_osc_clk
 ##################
 # output delays  #
 ##################
-set tSU 1.2
-set tH 1.3
+set tSU 1.5
+set tH 1.6
 set adv_clock_delay 0.0
 set dvi_outputs [get_ports {DVI_RED* DVI_GREEN* DVI_BLUE* DVI_DE DVI_HSYNC DVI_VSYNC}]
 set_output_delay -clock output_clock -reference_pin [get_ports DVI_CLOCK] -max [expr $tSU - $adv_clock_delay] $dvi_outputs
