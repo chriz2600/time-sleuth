@@ -1,8 +1,0 @@
-# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
-# 
-preplace inst unsaved.int_osc_0 -pg 1 -lvl 1 -y 30
-preplace inst unsaved -pg 1 -lvl 1 -y 40 -regy -20
-preplace netloc EXPORT<net_container>unsaved</net_container>(MASTER)unsaved.clkout,(MASTER)int_osc_0.clkout) 1 1 1 NJ
-preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.oscena,(SLAVE)int_osc_0.oscena) 1 0 1 NJ
-levelinfo -pg 1 0 50 280
-levelinfo -hier unsaved 60 90 210

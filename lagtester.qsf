@@ -75,7 +75,6 @@ set_global_assignment -name SEED 12
 ########################################################
 set_global_assignment -name SDC_FILE lagtester.sdc
 set_global_assignment -name VERILOG_FILE source/lagtester.v
-#set_global_assignment -name QSYS_FILE source/osc/osc.qsys
 set_global_assignment -name QIP_FILE source/pll/pll.qip
 set_global_assignment -name QIP_FILE source/pll/pll_reconf.qip
 set_global_assignment -name QIP_FILE source/misc/data_fifo.qip
