@@ -18,7 +18,6 @@ module lagtester(
     output TFP410_reset,
     output LED
 );
-    wire control_clock;
     wire internal_clock;
     wire pll_locked;
     wire tfp410_ready;
@@ -27,21 +26,15 @@ module lagtester(
     wire [7:0] config_data_crossed;
     VideoMode videoMode;
 
-    always @(posedge control_clock) begin
+    always @(posedge clock) begin
         config_data <= { 5'd0, RES_CONFIG };
         sensor_input <= SENSOR;
     end
 
     ///////////////////////////////////////////
     // clocks
-    osc control_clock_gen(
-        .oscena(1'b1),
-        .clkout(control_clock)
-    );
-
     pll_main pll(
         .clock(clock),
-        .control_clock(control_clock),
         .reset(1'b0),
         .data(config_data),
 
@@ -55,7 +48,7 @@ module lagtester(
     data_cross #(
         .WIDTH(8)
     ) video_data_cross (
-        .clkIn(control_clock),
+        .clkIn(clock),
         .clkOut(internal_clock),
         .dataIn(config_data),
         .dataOut(config_data_crossed)
@@ -82,7 +75,7 @@ module lagtester(
     ///////////////////////////////////////////
     // dvi transmitter
     TFP410 tfp410(
-        .clk(control_clock),
+        .clk(clock),
         .reset(1'b1),
         .output_ready(pll_locked),
         .sda(SDA),
