@@ -33,11 +33,11 @@ module video(
 
     /* generate counter */
     always @(posedge clock) begin
-        if (counterX < videoMode.h_total) begin
+        if (counterX < videoMode.h_total - 1) begin
             counterX <= counterX + 1'b1;
         end else begin
             counterX <= 0;
-            if (counterY <= videoMode.v_total) begin
+            if (counterY < videoMode.v_total - 1) begin
                 counterY <= counterY + 1'b1;
             end else begin
                 counterY <= 0;

@@ -28,7 +28,13 @@ module lagtester(
     VideoMode videoMode;
 
     always @(posedge clock) begin
-        config_data <= { 5'd0, RES_CONFIG };
+        case (RES_CONFIG)
+            3'b001: config_data <= 8'b00000001;
+            3'b011: config_data <= 8'b00000001;
+            3'b010: config_data <= 8'b00000010;
+            3'b100: config_data <= 8'b00000100;
+            3'b110: config_data <= 8'b00000100;
+        endcase
         sensor_input <= SENSOR;
     end
 
