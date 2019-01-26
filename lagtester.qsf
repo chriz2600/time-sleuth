@@ -139,18 +139,18 @@ set_location_assignment PIN_41 -to DVI_VSYNC
 set_location_assignment PIN_39 -to SDA
 # Error (18496): The Output SCL in pin location 28 (pad_956) is too close to PLL clock input pin (clock) in pin location 27 (pad_0) File: /build/source/lagtester.v Line: 2
 #set_location_assignment PIN_28 -to SCL
-set_location_assignment PIN_23 -to SCL
+set_location_assignment PIN_24 -to SCL
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SDA
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SCL
 
-set_location_assignment PIN_32 -to SENSOR
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SENSOR
+set_location_assignment PIN_7 -to SENSOR
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to SENSOR
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RES_CONFIG[2]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[0]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[1]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[2]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[5]
