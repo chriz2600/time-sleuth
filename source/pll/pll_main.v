@@ -23,7 +23,6 @@ module pll_main(
     wire [7:0] pll_rom_address_out;
     wire pll_write_rom_ena;
     wire pll_lockloss;
-    wire [7:0] data_crossed;
 
     edge_detect pll_lockloss_check(
         .async_sig(~pll_locked),
@@ -74,7 +73,7 @@ module pll_main(
         .clock(clock),
         .address(pll_rom_address_out),
         .read_ena(pll_write_rom_ena),
-        .data(data_crossed),
+        .data(data),
         .q(pll_rom_data_in),
         .reconfig(pll_reconfig),
         .trigger_read(pll_write_from_rom),
