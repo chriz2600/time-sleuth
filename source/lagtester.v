@@ -1,3 +1,5 @@
+`include "defines.v"
+
 module lagtester(
     input clock,
 
@@ -29,11 +31,12 @@ module lagtester(
 
     always @(posedge clock) begin
         case (RES_CONFIG)
-            3'b001: config_data <= 8'b00000001;
-            3'b011: config_data <= 8'b00000001;
-            3'b010: config_data <= 8'b00000010;
-            3'b100: config_data <= 8'b00000100;
-            3'b110: config_data <= 8'b00000100;
+            3'b001: config_data <= `MODE_VGA;
+            3'b011: config_data <= `MODE_VGA;
+            3'b010: config_data <= `MODE_720p;
+            3'b100: config_data <= `MODE_1080p;
+            3'b110: config_data <= `MODE_1080p;
+            default: config_data <= `MODE_VGA;
         endcase
         sensor_input <= SENSOR;
     end
@@ -92,7 +95,7 @@ module lagtester(
     );
     ///////////////////////////////////////////
 
-    assign LED = hpd_detected;
+    assign LED = ~sensor_input;
     assign TFP410_reset = 1'b1;
 
 endmodule

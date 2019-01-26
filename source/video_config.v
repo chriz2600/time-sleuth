@@ -1,3 +1,5 @@
+`include "defines.v"
+
 module video_config(
     input clock,
     input [7:0] data_in,
@@ -19,12 +21,11 @@ module video_config(
         data_in_reg <= data_in;
 
         if (data_in_reg != data_in) begin
-            case (data_in[2:0])
+            case (data_in)
                 // RECONF
-                3'b001: _videoMode_reg <= VIDEO_MODE_VGA;
-                3'b010: _videoMode_reg <= VIDEO_MODE_720P;
-                3'b100: _videoMode_reg <= VIDEO_MODE_1080P;
-                default: _videoMode_reg <= VIDEO_MODE_VGA;
+                `MODE_VGA: _videoMode_reg <= VIDEO_MODE_VGA;
+                `MODE_720p: _videoMode_reg <= VIDEO_MODE_720P;
+                `MODE_1080p: _videoMode_reg <= VIDEO_MODE_1080P;
             endcase
         end
 

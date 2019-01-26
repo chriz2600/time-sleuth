@@ -1,0 +1,3 @@
+`define MODE_1080p 8'b00000100
+`define MODE_720p 8'b00000010
+`define MODE_VGA 8'b00000001
