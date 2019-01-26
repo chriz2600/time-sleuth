@@ -7,9 +7,11 @@ fpga-firmware:
   script:
     - script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_sh --flow compile lagtester.qpf")" /dev/null
     #- script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_cpf -c lagtester.cof")" /dev/null
+    - cp output_files/lagtester.pof .
   artifacts:
+    name: lagtester-firmware
     paths:
-    - output_files/lagtester*.pof
+    - lagtester.pof
     # - output_files/lagtester*.sof
     # - output_files/lagtester*.rpd
     # - output_files/lagtester*.map
