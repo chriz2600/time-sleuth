@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+source .setup
+
+if [ "$1" ] ; then
+    PGM="$1"
+fi
+
+PROGRAMMER=$(docker_run jtagconfig --enum | tr -d '\r' | head -n 1 | sed 's/1) //')
+docker_run quartus_pgm -c "$PROGRAMMER" -m jtag -o "pv;${PGM}"

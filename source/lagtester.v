@@ -21,6 +21,7 @@ module lagtester(
     wire internal_clock;
     wire pll_locked;
     wire tfp410_ready;
+    wire hpd_detected;
     reg [7:0] config_data;
     reg sensor_input; /* synthesis keep */
     wire [7:0] config_data_crossed;
@@ -80,11 +81,12 @@ module lagtester(
         .output_ready(pll_locked),
         .sda(SDA),
         .scl(SCL),
-        .ready(tfp410_ready)
+        .ready(tfp410_ready),
+        .hpd_detected(hpd_detected)
     );
     ///////////////////////////////////////////
 
-    assign LED = tfp410_ready;
+    assign LED = hpd_detected;
     assign TFP410_reset = 1'b1;
 
 endmodule

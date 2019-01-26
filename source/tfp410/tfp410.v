@@ -187,7 +187,7 @@ task init;
 
     begin
         case (subcmd_counter)
-            0: write_i2c(CHIP_ADDR, 16'h_08_FF); // CTL_1_MODE
+            0: write_i2c(CHIP_ADDR, 16'h_08_BF); // CTL_1_MODE
             1: write_i2c(CHIP_ADDR, 16'h_09_00); // CTL_2_MODE
             2: write_i2c(CHIP_ADDR, 16'h_0A_80); // CTL_3_MODE
             3: write_i2c(CHIP_ADDR, 16'h_33_00); // DE_CTL
