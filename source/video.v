@@ -48,13 +48,17 @@ module video(
 
     /* frame counter */
     always @(posedge clock) begin
-        if (counterX == 0 && counterY == 0) begin
+        if (counterX == videoMode.h_sync + videoMode.h_back_porch
+         && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
             if (frameCounter < 6 - 1) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
                 frameCounter <= 0;
                 displayFields <= ~displayFields;
+                starttrigger_reg <= ~displayFields;
             end
+        end else begin
+            starttrigger_reg <= 0;
         end
     end
 
@@ -91,16 +95,6 @@ module video(
         end else begin
             de_reg <= 0;
             data_reg <= 0;
-        end
-    end
-
-    always @(posedge clock) begin
-        if (displayFields
-         && counterX == videoMode.h_sync + videoMode.h_back_porch
-         && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
-            starttrigger_reg <= 1'b1;
-        end else begin
-            starttrigger_reg <= 0;
         end
     end
 

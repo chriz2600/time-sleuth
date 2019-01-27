@@ -25,7 +25,6 @@ module lagtester(
     wire tfp410_ready;
     wire hpd_detected;
     wire starttrigger;
-    wire reset_counter;
     wire [7:0] config_data_crossed;
 
     reg [7:0] config_data;
@@ -34,7 +33,9 @@ module lagtester(
     
     localparam CLOCK_DIVIDER = 270;
     
+    reg reset_counter;
     reg [8:0] counter;
+    reg [24:0] raw_counter /* synthesis noprune */;
     reg counter_trigger = 0 /* synthesis noprune */;
     reg reset_bcdcounter = 0 /* synthesis noprune */;
     wire [19:0] bcdcount /* synthesis keep */;
@@ -64,10 +65,12 @@ module lagtester(
     */
     always @(posedge clock) begin
         if (reset_counter) begin
+            raw_counter <= 0;
             counter <= 0;
             counter_trigger <= 0;
             reset_bcdcounter <= 1;
         end else begin
+            raw_counter <= raw_counter + 1'b1;
             reset_bcdcounter <= 0;
             if (counter < CLOCK_DIVIDER - 1) begin
                 counter <= counter + 1'b1;
