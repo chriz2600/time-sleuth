@@ -28,7 +28,8 @@ module lagtester(
     wire [7:0] config_data_crossed;
 
     reg [7:0] config_data;
-    reg sensor_input /* synthesis noprune */;
+    reg prev_sensor_input = 0 /* synthesis noprune */;
+    reg sensor_input = 0 /* synthesis noprune */;
     VideoMode videoMode;
     
     localparam CLOCK_DIVIDER = 270;
@@ -39,6 +40,7 @@ module lagtester(
     reg counter_trigger = 0 /* synthesis noprune */;
     reg reset_bcdcounter = 0 /* synthesis noprune */;
     wire [19:0] bcdcount /* synthesis keep */;
+    reg [19:0] bcdcount_out = 0 /* synthesis noprune */;
 
     always @(posedge clock) begin
         case (RES_CONFIG)
@@ -49,7 +51,8 @@ module lagtester(
             3'b110: config_data <= `MODE_1080p;
             default: config_data <= `MODE_VGA;
         endcase
-        sensor_input <= SENSOR;
+        sensor_input <= ~SENSOR;
+        prev_sensor_input <= sensor_input;
     end
 
     Flag_CrossDomain reset_control(
@@ -87,6 +90,12 @@ module lagtester(
         .reset(reset_bcdcounter),
         .bcdcount(bcdcount)
     );
+
+    always @(posedge clock) begin
+        if (~prev_sensor_input && sensor_input) begin
+            bcdcount_out <= bcdcount;
+        end
+    end
 
     ///////////////////////////////////////////
     // clocks
@@ -143,7 +152,7 @@ module lagtester(
     );
     ///////////////////////////////////////////
 
-    assign LED = ~sensor_input;
+    assign LED = sensor_input;
     assign TFP410_reset = 1'b1;
 
 endmodule

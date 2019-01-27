@@ -4,6 +4,7 @@
 create_clock -period 27Mhz -name clock [get_ports clock]
 create_generated_clock -multiply_by 11 -divide_by 2 -name data_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[0]}
 create_generated_clock -multiply_by 11 -divide_by 2 -phase 0 -name output_clock -source {pll|pll|altpll_component|auto_generated|pll1|inclk[0]} {pll|pll|altpll_component|auto_generated|pll1|clk[1]}
+create_generated_clock -name bcd_trigger -source [get_ports clock] -divide_by 270 -multiply_by 1 "counter_trigger"
 
 derive_pll_clocks
 derive_clock_uncertainty

@@ -27,6 +27,8 @@ module video(
     reg displayFields = 0;
     reg starttrigger_reg = 0;
 
+    localparam FRAME_COUNTER = 6;
+
     /*
         H_SYNC  H_BACK_PORCH  H_ACTIVE H_FRONT_PORCH
         V_SYNC  V_BACK_PORCH  V_ACTIVE V_FRONT_PORCH
@@ -50,7 +52,7 @@ module video(
     always @(posedge clock) begin
         if (counterX == videoMode.h_sync + videoMode.h_back_porch
          && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
-            if (frameCounter < 6 - 1) begin
+            if (frameCounter < FRAME_COUNTER - 1) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
                 frameCounter <= 0;
