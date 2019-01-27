@@ -13,6 +13,9 @@ derive_clock_uncertainty
 ##################
 set_false_path -from [get_ports {RES_CONFIG*}]
 
+set_clock_groups -exclusive -group clock -group data_clock
+set_clock_groups -exclusive -group clock -group output_clock
+
 ##################
 # output delays  #
 ##################

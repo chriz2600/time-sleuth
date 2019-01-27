@@ -6,7 +6,8 @@ module video(
     output [7:0] blue,
     output de,
     output hsync,
-    output vsync
+    output vsync,
+    output starttrigger
 );
 
     reg [11:0] counterX = 0;
@@ -24,6 +25,7 @@ module video(
 
     reg [31:0] frameCounter = 0;
     reg displayFields = 0;
+    reg starttrigger_reg = 0;
 
     /*
         H_SYNC  H_BACK_PORCH  H_ACTIVE H_FRONT_PORCH
@@ -92,16 +94,25 @@ module video(
         end
     end
 
+    always @(posedge clock) begin
+        if (displayFields
+         && counterX == videoMode.h_sync + videoMode.h_back_porch
+         && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
+            starttrigger_reg <= 1'b1;
+        end else begin
+            starttrigger_reg <= 0;
+        end
+    end
 
     task doOutputValue;
         input [11:0] xpos;
         input [11:0] ypos;
         begin
             if (displayFields && 
-                (xpos > videoMode.h_field_start && xpos < videoMode.h_field_end && 
-                   ((ypos > videoMode.v_field1_start && ypos < videoMode.v_field1_end)
-                 || (ypos > videoMode.v_field2_start && ypos < videoMode.v_field2_end)
-                 || (ypos > videoMode.v_field3_start && ypos < videoMode.v_field3_end)))) 
+                (xpos >= videoMode.h_field_start && xpos < videoMode.h_field_end && 
+                   ((ypos >= videoMode.v_field1_start && ypos < videoMode.v_field1_end)
+                 || (ypos >= videoMode.v_field2_start && ypos < videoMode.v_field2_end)
+                 || (ypos >= videoMode.v_field3_start && ypos < videoMode.v_field3_end)))) 
             begin
                 data_reg <= 24'h_FF_FF_FF;
             // end else TEXT
@@ -126,5 +137,6 @@ module video(
     assign red = data_reg_q[23:16];
     assign green = data_reg_q[15:8];
     assign blue = data_reg_q[7:0];
+    assign starttrigger = starttrigger_reg;
 
 endmodule

@@ -24,10 +24,20 @@ module lagtester(
     wire pll_locked;
     wire tfp410_ready;
     wire hpd_detected;
-    reg [7:0] config_data;
-    reg sensor_input /* synthesis keep */;
+    wire starttrigger;
+    wire reset_counter;
     wire [7:0] config_data_crossed;
+
+    reg [7:0] config_data;
+    reg sensor_input /* synthesis noprune */;
     VideoMode videoMode;
+    
+    localparam CLOCK_DIVIDER = 270;
+    
+    reg [8:0] counter;
+    reg counter_trigger = 0 /* synthesis noprune */;
+    reg reset_bcdcounter = 0 /* synthesis noprune */;
+    wire [19:0] bcdcount /* synthesis keep */;
 
     always @(posedge clock) begin
         case (RES_CONFIG)
@@ -40,6 +50,40 @@ module lagtester(
         endcase
         sensor_input <= SENSOR;
     end
+
+    Flag_CrossDomain reset_control(
+        .clkA(internal_clock),
+        .FlagIn_clkA(starttrigger),
+        .clkB(clock),
+        .FlagOut_clkB(reset_counter)
+    );
+
+    /* 
+        create trigger for the bcd counter,
+        27MHz / 270, so trigger every 0.01 ms
+    */
+    always @(posedge clock) begin
+        if (reset_counter) begin
+            counter <= 0;
+            counter_trigger <= 0;
+            reset_bcdcounter <= 1;
+        end else begin
+            reset_bcdcounter <= 0;
+            if (counter < CLOCK_DIVIDER - 1) begin
+                counter <= counter + 1'b1;
+                counter_trigger <= 0;
+            end else begin
+                counter <= 0;
+                counter_trigger <= 1;
+            end
+        end
+    end
+
+    bcdcounter bcdcounter(
+        .trigger(counter_trigger),
+        .reset(reset_bcdcounter),
+        .bcdcount(bcdcount)
+    );
 
     ///////////////////////////////////////////
     // clocks
@@ -78,7 +122,8 @@ module lagtester(
         .blue(DVI_BLUE),
         .de(DVI_DE),
         .hsync(DVI_HSYNC),
-        .vsync(DVI_VSYNC)
+        .vsync(DVI_VSYNC),
+        .starttrigger(starttrigger)
     );
     ///////////////////////////////////////////
 
