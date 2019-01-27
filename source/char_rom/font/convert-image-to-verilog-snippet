@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+from PIL import Image
+from math import floor
+import sys
+
+if len(sys.argv) < 2:
+    print("usage: %s <image-to-convert>" % sys.argv[0])
+    exit(0)
+
+im = Image.open(sys.argv[1])
+pix = im.load()
+(width, height) = im.size
+offset = 0x20 * 16
+out = ""
+addr = 0
+max_addr = 1536
+pxl = 0
+charWidth = 8
+charHeight = 16
+charsPerLine = im.width / charWidth
+charsPerColumn = im.height / charHeight
+
+x = 0
+y = 0
+for addr in range(max_addr):
+    xbase = (floor(addr / charsPerLine) * charWidth) % im.width
+    y = (addr % charHeight) + (floor(addr / floor(charHeight * charsPerLine)) * charHeight)
+    if addr % charHeight == 0:
+        print("// -- code x%x" % (floor(addr / charHeight) + floor(offset / 16)))
+    for pxl in range(charWidth):
+        x = xbase + pxl
+        #print("%d: %d/%d" % (addr, x, y))
+        if pix[x,y] == 0:
+            out = out + "1"
+        else:
+            out = out + "0"
+    print("%04d: q_reg <= 8'b%s;" % (addr + offset, out))
+    out = ""

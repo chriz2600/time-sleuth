@@ -25,7 +25,7 @@ module lagtester(
     wire tfp410_ready;
     wire hpd_detected;
     reg [7:0] config_data;
-    reg sensor_input; /* synthesis keep */
+    reg sensor_input /* synthesis keep */;
     wire [7:0] config_data_crossed;
     VideoMode videoMode;
 

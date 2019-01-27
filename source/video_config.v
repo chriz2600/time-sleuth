@@ -12,8 +12,8 @@ module video_config(
     VideoMode _videoMode_reg;
     VideoMode videoMode_reg;
     initial begin
-        _videoMode_reg = VIDEO_MODE_VGA;
-        videoMode_reg = VIDEO_MODE_VGA;
+        _videoMode_reg = VIDEO_MODE_1080P;
+        videoMode_reg = VIDEO_MODE_1080P;
     end
     assign videoMode = videoMode_reg;
 
@@ -31,4 +31,5 @@ module video_config(
 
         videoMode_reg <= _videoMode_reg;
     end
+
 endmodule
