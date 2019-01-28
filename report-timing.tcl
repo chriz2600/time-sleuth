@@ -1,6 +1,6 @@
 project_open lagtester
 
-create_timing_netlist -model slow
+create_timing_netlist -model fast
 read_sdc
 update_timing_netlist
 
@@ -21,5 +21,13 @@ report_min_pulse_width \
     -multi_corner \
     -file "output_files/worst_case_min_pulse_width.rpt"
 
+set domain_list [get_clock_fmax_info]
+foreach domain $domain_list {
+    set name [lindex $domain 0]
+    set fmax [lindex $domain 1]
+    set restricted_fmax [lindex $domain 2]
+puts "Clock $name : Fmax = $fmax (Restricted Fmax = \
+ $restricted_fmax)"
+}
 
 project_close
