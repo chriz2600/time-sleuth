@@ -82,7 +82,7 @@ module video(
                 counterY <= 0;
             end
             // addr for res_line
-            res_line_addr <= counterY - (videoMode.v_sync + videoMode.v_back_porch);
+            res_line_addr <= (visible_counterY + 1) >> videoMode.res_divider;
         end
     end 
 
@@ -162,8 +162,8 @@ module video(
                  || (ypos >= videoMode.v_field3_start && ypos < videoMode.v_field3_end))))
             begin
                 data_reg <= 24'h_FF_FF_FF;
-            end else if (ypos < 16 && xpos >= 1024) begin // resolution info
-                if (res_line[xpos - 1024]) begin
+            end else if (ypos < (16 << videoMode.res_divider) && (xpos >> videoMode.res_divider) >= videoMode.h_res_start) begin // resolution info
+                if (res_line[(xpos >> videoMode.res_divider) - videoMode.h_res_start]) begin
                     data_reg <= 24'h_FF_FF_FF;
                 end else begin
                     data_reg <= 0;
