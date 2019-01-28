@@ -120,15 +120,9 @@ module lagtester(
         .dataOut(config_data_crossed)
     );
 
-    video_config video_config(
-        .clock(internal_clock),
-        .data_in(config_data_crossed),
-        .videoMode(videoMode)
-    );
-
     video video(
         .clock(internal_clock),
-        .videoMode(videoMode),
+        .config_data(config_data_crossed),
         .red(DVI_RED),
         .green(DVI_GREEN),
         .blue(DVI_BLUE),

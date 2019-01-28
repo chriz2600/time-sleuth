@@ -7,14 +7,14 @@ module video_config(
 );
     `include "config/video_modes.v"
 
-    reg [7:0] data_in_reg = 0;
+    reg [7:0] data_in_reg;
 
-    VideoMode _videoMode_reg;
+    // VideoMode _videoMode_reg;
     VideoMode videoMode_reg;
-    initial begin
-        _videoMode_reg = VIDEO_MODE_1080P;
-        videoMode_reg = VIDEO_MODE_1080P;
-    end
+    // initial begin
+    //     _videoMode_reg = VIDEO_MODE_1080P;
+    //     videoMode_reg = VIDEO_MODE_1080P;
+    // end
     assign videoMode = videoMode_reg;
 
     always @(posedge clock) begin
@@ -23,13 +23,25 @@ module video_config(
         if (data_in_reg != data_in) begin
             case (data_in)
                 // RECONF
-                `MODE_VGA: _videoMode_reg <= VIDEO_MODE_VGA;
-                `MODE_720p: _videoMode_reg <= VIDEO_MODE_720P;
-                `MODE_1080p: _videoMode_reg <= VIDEO_MODE_1080P;
+                // `MODE_VGA: _videoMode_reg <= VIDEO_MODE_VGA;
+                // `MODE_720p: _videoMode_reg <= VIDEO_MODE_720P;
+                // `MODE_1080p: _videoMode_reg <= VIDEO_MODE_1080P;
+                `MODE_VGA: videoMode_reg <= VIDEO_MODE_VGA;
+                `MODE_720p: videoMode_reg <= VIDEO_MODE_720P;
+                `MODE_1080p: videoMode_reg <= VIDEO_MODE_1080P;
             endcase
         end
 
-        videoMode_reg <= _videoMode_reg;
+        // videoMode_reg <= _videoMode_reg;
     end
+
+    // delayline #(
+    //     .CYCLES(8),
+    //     .WIDTH($bits(VideoMode))
+    // ) counter_delay (
+    //     .clock(clock),
+    //     .in(_videoMode_reg),
+    //     .out(videoMode_reg)
+    // );
 
 endmodule

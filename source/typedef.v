@@ -1,4 +1,6 @@
 typedef struct packed {
+    reg [7:0] id;
+    
     reg [11:0] h_total;
     reg [11:0] h_active;
     reg [11:0] h_front_porch;

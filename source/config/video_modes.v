@@ -1,5 +1,8 @@
 
+`include "../defines.v"
+
 const VideoMode VIDEO_MODE_VGA = {
+    `MODE_VGA,   // id
     12'd_800,   // h_total
     12'd_640,   // h_active
     12'd_16,    // h_front_porch
@@ -24,6 +27,7 @@ const VideoMode VIDEO_MODE_VGA = {
 };
 
 // const VideoMode VIDEO_MODE_480P = {
+//     `MODE_480p,  // id
 //     12'd_858,   // h_total
 //     12'd_720,   // h_active
 //     12'd_16,    // h_front_porch
@@ -48,6 +52,7 @@ const VideoMode VIDEO_MODE_VGA = {
 // };
 
 const VideoMode VIDEO_MODE_720P = {
+    `MODE_720p,  // id
     12'd_1650,  // h_total
     12'd_1280,  // h_active
     12'd_110,   // h_front_porch
@@ -72,6 +77,7 @@ const VideoMode VIDEO_MODE_720P = {
 };
 
 const VideoMode VIDEO_MODE_1080P = {
+    `MODE_1080p, // id
     12'd_2200,  // h_total
     12'd_1920,  // h_active
     12'd_88,    // h_front_porch
