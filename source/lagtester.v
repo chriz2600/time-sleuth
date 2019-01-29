@@ -34,12 +34,14 @@ module lagtester(
     
     localparam CLOCK_DIVIDER = 270;
     
+    reg waiting;
     reg reset_counter;
     reg [8:0] counter;
     reg [24:0] raw_counter /* synthesis noprune */;
     reg counter_trigger = 0 /* synthesis noprune */;
     reg reset_bcdcounter = 0 /* synthesis noprune */;
     wire [19:0] bcdcount /* synthesis keep */;
+    //wire [19:0] bcdcount_crossed /* synthesis keep */;
     reg [19:0] bcdcount_out = 0 /* synthesis noprune */;
 
     always @(posedge clock) begin
@@ -75,12 +77,11 @@ module lagtester(
         end else begin
             raw_counter <= raw_counter + 1'b1;
             reset_bcdcounter <= 0;
-            if (counter < CLOCK_DIVIDER - 1) begin
-                counter <= counter + 1'b1;
-                counter_trigger <= 0;
-            end else begin
+            if (counter == CLOCK_DIVIDER - 1) begin
                 counter <= 0;
-                counter_trigger <= 1;
+                counter_trigger <= ~counter_trigger;
+            end else begin
+                counter <= counter + 1'b1;
             end
         end
     end
@@ -91,9 +92,21 @@ module lagtester(
         .bcdcount(bcdcount)
     );
 
+    // data_cross #(
+    //     .WIDTH(20)
+    // ) bcdcounter_cross (
+    //     .clkIn(counter_trigger),
+    //     .clkOut(clock),
+    //     .dataIn(bcdcount),
+    //     .dataOut(bcdcount_crossed)
+    // );
+
     always @(posedge clock) begin
-        if (~prev_sensor_input && sensor_input) begin
+        if (reset_counter) begin
+            waiting <= 1;
+        end else if (waiting && ~prev_sensor_input && sensor_input) begin
             bcdcount_out <= bcdcount;
+            waiting <= 0;
         end
     end
 
