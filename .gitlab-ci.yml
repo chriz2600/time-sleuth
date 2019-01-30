@@ -20,6 +20,7 @@ fpga-firmware:
   only:
     - develop
     - master
+    - experimental
 
 # firmware-publish:
 #   stage: deploy

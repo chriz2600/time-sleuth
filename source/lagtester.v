@@ -32,7 +32,7 @@ module lagtester(
     reg sensor_input = 0 /* synthesis noprune */;
     VideoMode videoMode;
     
-    localparam CLOCK_DIVIDER = 270;
+    localparam CLOCK_DIVIDER = 27;
     
     reg waiting;
     reg reset_counter;
@@ -40,9 +40,9 @@ module lagtester(
     reg [24:0] raw_counter /* synthesis noprune */;
     reg counter_trigger = 0 /* synthesis noprune */;
     reg reset_bcdcounter = 0 /* synthesis noprune */;
-    wire [19:0] bcdcount /* synthesis keep */;
+    wire [23:0] bcdcount /* synthesis keep */;
     //wire [19:0] bcdcount_crossed /* synthesis keep */;
-    reg [19:0] bcdcount_out = 0 /* synthesis noprune */;
+    reg [23:0] bcdcount_out = 0 /* synthesis noprune */;
 
     always @(posedge clock) begin
         case (RES_CONFIG)
@@ -77,11 +77,12 @@ module lagtester(
         end else begin
             raw_counter <= raw_counter + 1'b1;
             reset_bcdcounter <= 0;
-            if (counter == CLOCK_DIVIDER - 1) begin
-                counter <= 0;
-                counter_trigger <= ~counter_trigger;
-            end else begin
+            if (counter < CLOCK_DIVIDER - 1) begin
                 counter <= counter + 1'b1;
+                counter_trigger <= 0;
+            end else begin
+                counter <= 0;
+                counter_trigger <= 1;
             end
         end
     end
@@ -123,7 +124,7 @@ module lagtester(
     );
 
     ///////////////////////////////////////////
-    // video
+    // video generator
     data_cross #(
         .WIDTH(8)
     ) video_data_cross (

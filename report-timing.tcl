@@ -1,6 +1,6 @@
 project_open lagtester
 
-create_timing_netlist -model fast
+create_timing_netlist -model slow
 read_sdc
 update_timing_netlist
 

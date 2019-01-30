@@ -46,6 +46,12 @@ module video(
         .q(res_line)
     );
 
+    lagdisplay lagdisplay(
+        .clock(clock),
+        .addr(lagdisplay_addr),
+        .q(lagdisplay_line)
+    );
+
     reg [23:0] data_reg;
     reg de_reg;
     reg hsync_reg;
@@ -64,6 +70,14 @@ module video(
 
     reg [3:0] res_line_addr;
     reg [39:0] res_line /* synthesis noprune */;
+    reg [11:0] res_line_end_pos;
+    reg [11:0] res_line_counterX;
+
+    reg [3:0] lagdisplay_addr;
+    reg [111:0] lagdisplay_line;
+    reg [11:0] lagdisplay_start_pos;
+    reg [11:0] lagdisplay_end_pos;
+    reg [11:0] lagdisplay_counterX;
 
     /*
         H_SYNC  H_BACK_PORCH  H_ACTIVE H_FRONT_PORCH
@@ -82,7 +96,11 @@ module video(
                 counterY <= 0;
             end
             // addr for res_line
-            res_line_addr <= (visible_counterY + 1) >> videoMode.res_divider;
+            res_line_addr <= (visible_counterY + 1'b1) >> videoMode.res_divider;
+            res_line_end_pos <= (12'd16 << videoMode.res_divider);
+            lagdisplay_addr <= (visible_counterY + 1'b1 - videoMode.v_lag_start) >> videoMode.lag_divider;
+            lagdisplay_start_pos <= videoMode.v_lag_start;
+            lagdisplay_end_pos <= (videoMode.v_lag_start + (12'd16 << videoMode.lag_divider));
         end
     end 
 
@@ -92,6 +110,9 @@ module video(
         visible_counterY <= counterY - (videoMode.v_sync + videoMode.v_back_porch);
         visible_counterX_delayed <= visible_counterX;
         visible_counterY_delayed <= visible_counterY;
+        // special counter(s)
+        res_line_counterX <= (visible_counterX >> videoMode.res_divider);
+        lagdisplay_counterX <= (visible_counterX >> videoMode.lag_divider) - videoMode.h_lag_start;
     end
 
     /* frame counter */
@@ -162,8 +183,22 @@ module video(
                  || (ypos >= videoMode.v_field3_start && ypos < videoMode.v_field3_end))))
             begin
                 data_reg <= 24'h_FF_FF_FF;
-            end else if (ypos < (16 << videoMode.res_divider) && (xpos >> videoMode.res_divider) >= videoMode.h_res_start) begin // resolution info
-                if (res_line[(xpos >> videoMode.res_divider) - videoMode.h_res_start]) begin
+            end else if (
+                    ypos < res_line_end_pos 
+                && (xpos >> videoMode.res_divider) >= videoMode.h_res_start
+            ) begin // resolution info
+                if (res_line[res_line_counterX - videoMode.h_res_start]) begin
+                    data_reg <= 24'h_FF_FF_FF;
+                end else begin
+                    data_reg <= 0;
+                end
+            end else if (
+                   ypos >= lagdisplay_start_pos 
+                && ypos < lagdisplay_end_pos 
+                && (xpos >> videoMode.lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.lag_divider) < videoMode.h_lag_end
+            ) begin
+                if (lagdisplay_line[lagdisplay_counterX]) begin
                     data_reg <= 24'h_FF_FF_FF;
                 end else begin
                     data_reg <= 0;
