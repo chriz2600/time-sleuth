@@ -1,8 +1,8 @@
 `timescale 1 ns / 1 ns
 
 module char_rom (
-    input [10:0] address,
     input clock,
+    input [10:0] address,
     output [7:0] q
 );
 

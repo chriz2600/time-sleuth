@@ -26,6 +26,7 @@ for line in sys.stdin:
 addr = 0
 print("case (addr)")
 for x in Matrix:
-    print("%02i: q_reg <= %i'b_%s;" % (addr, len(x), x[::-1]))
+    #print("%02i: q_reg <= %i'b_%s;" % (addr, len(x), x[::-1]))
+    print("%02i: q_reg <= %i'b_%s;" % (addr, len(x), x))
     addr = addr + 1
 print("endcase")

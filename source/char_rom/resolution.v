@@ -1,7 +1,7 @@
 
 `include "../defines.v"
 
-module resolution_line(
+module resolution(
     input clock,
     input VideoMode videoMode,
     input [3:0] addr,

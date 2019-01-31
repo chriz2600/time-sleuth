@@ -41,8 +41,8 @@ module lagtester(
     reg counter_trigger = 0 /* synthesis noprune */;
     reg reset_bcdcounter = 0 /* synthesis noprune */;
     wire [23:0] bcdcount /* synthesis keep */;
-    //wire [19:0] bcdcount_crossed /* synthesis keep */;
     reg [23:0] bcdcount_out = 0 /* synthesis noprune */;
+    wire [23:0] bcdcount_crossed /* synthesis keep */;
 
     always @(posedge clock) begin
         case (RES_CONFIG)
@@ -93,15 +93,6 @@ module lagtester(
         .bcdcount(bcdcount)
     );
 
-    // data_cross #(
-    //     .WIDTH(20)
-    // ) bcdcounter_cross (
-    //     .clkIn(counter_trigger),
-    //     .clkOut(clock),
-    //     .dataIn(bcdcount),
-    //     .dataOut(bcdcount_crossed)
-    // );
-
     always @(posedge clock) begin
         if (reset_counter) begin
             waiting <= 1;
@@ -134,9 +125,19 @@ module lagtester(
         .dataOut(config_data_crossed)
     );
 
+    data_cross #(
+        .WIDTH(24)
+    ) bcdcounter_cross (
+        .clkIn(clock),
+        .clkOut(internal_clock),
+        .dataIn(bcdcount_out),
+        .dataOut(bcdcount_crossed)
+    );
+
     video video(
         .clock(internal_clock),
         .config_data(config_data_crossed),
+        .bcdcount(bcdcount_crossed),
         .red(DVI_RED),
         .green(DVI_GREEN),
         .blue(DVI_BLUE),

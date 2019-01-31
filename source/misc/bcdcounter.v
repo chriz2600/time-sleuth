@@ -19,6 +19,7 @@ module bcdcounter(
             third <= 0;
             fourth <= 0;
             fifth <= 0;
+            sixth <= 0;
         end else if (first == 4'd9) begin // xxxxx9 reached
             first <= 0;
             if (second == 4'd9) begin // xxxx99 reached
