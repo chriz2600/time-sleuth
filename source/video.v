@@ -68,16 +68,17 @@ module video(
     reg starttrigger_reg = 0;
     
     localparam FRAME_COUNTER = 6;
+    localparam LAGLINE_SIZE = 112;
 
     reg [3:0] resolution_addr;
-    reg [39:0] resolution_line /* synthesis noprune */;
+    reg [79:0] resolution_line /* synthesis noprune */;
     reg [11:0] resolution_end_pos;
     reg [11:0] resolution_counterX;
 
     reg [3:0] lagdisplay_addr;
-    reg [111:0] lagdisplay_line;
-    reg [111:0] lagdisplay_line_out;
-    reg [111:0] lagdisplay_line_out_2;
+    reg [LAGLINE_SIZE-1:0] lagdisplay_line;
+    reg [LAGLINE_SIZE-1:0] lagdisplay_line_out;
+    reg [LAGLINE_SIZE-1:0] lagdisplay_line_out_2;
     reg [11:0] lagdisplay_start_pos;
     reg [11:0] lagdisplay_end_pos;
     reg [11:0] lagdisplay_counterX;
@@ -125,11 +126,11 @@ module video(
                 char_addr_base <= lagdisplay_addr + (8'h_30 << 4);
             end
             2: lagdisplay_line_out <= lagdisplay_line;
-            
+
+            // read the numbers
             3: char_addr <= char_addr_base + (bcdcount[7:4] << 4);
             4: char_addr <= char_addr_base + (bcdcount[11:8] << 4);
             5: char_addr <= char_addr_base + (bcdcount[15:12] << 4);
-
             6: begin 
                 lagdisplay_line_out[31:24] <= char_data;
                 char_addr <= char_addr_base + (bcdcount[19:16] << 4);
@@ -141,10 +142,10 @@ module video(
             8: lagdisplay_line_out[55:48] <= char_data;
             9: lagdisplay_line_out[63:56] <= char_data;
             10: lagdisplay_line_out[71:64] <= char_data;
-            
-            11: lagdisplay_line_out_2 <= lagdisplay_line_out;
+
+            63: lagdisplay_line_out_2 <= lagdisplay_line_out;
         endcase
-    end
+    end 
 
     /* visible area counter */
     always @(posedge clock) begin
@@ -153,8 +154,8 @@ module video(
         visible_counterX_delayed <= visible_counterX;
         visible_counterY_delayed <= visible_counterY;
         // special counter(s)
-        resolution_counterX <= 12'd_39 - ((visible_counterX >> videoMode.res_divider) - videoMode.h_res_start);
-        lagdisplay_counterX <= 12'd_111 - ((visible_counterX >> videoMode.lag_divider) - videoMode.h_lag_start);
+        resolution_counterX <= 12'd_79 - ((visible_counterX >> videoMode.res_divider) - videoMode.h_res_start);
+        lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.lag_divider) - videoMode.h_lag_start);
     end
 
     /* frame counter */

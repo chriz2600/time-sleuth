@@ -557,11 +557,7 @@ always @(posedge clock) begin
         0509: q_reg <= 8'b00000000; // d
         0510: q_reg <= 8'b00000000; // e
         0511: q_reg <= 8'b00000000; // f
-        `ifdef TEST_BENCH
-            `include "../char_rom/font/8x16-font.v"
-        `else
-            `include "font/8x16-font.v"
-        `endif
+        `include "font/8x16-font.v"
     endcase
     q_reg_2 <= q_reg;
 end

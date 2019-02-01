@@ -5,10 +5,10 @@ module resolution(
     input clock,
     input VideoMode videoMode,
     input [3:0] addr,
-    output [39:0] q
+    output [79:0] q
 );
 
-    reg [39:0] q_reg;
+    reg [79:0] q_reg;
 
     always @(posedge clock) begin
         case (videoMode.id)

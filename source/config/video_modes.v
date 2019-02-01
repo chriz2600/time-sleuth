@@ -26,44 +26,13 @@ const VideoMode VIDEO_MODE_VGA = {
     12'd_480,   // v_field3_end
 
     4'd_0,      // res_divider
-    12'd_600,   // h_res_start
+    12'd_560,   // h_res_start
 
     4'd_1,      // lag_divider
-    12'd_40,    // h_lag_start
-    12'd_152,   // h_lag_end
-    12'd_82     // v_lag_start
+    12'd_20,    // h_lag_start
+    12'd_132,   // h_lag_end
+    12'd_84     // v_lag_start
 };
-
-// const VideoMode VIDEO_MODE_480P = {
-//     `MODE_480p,  // id
-//     12'd_858,   // h_total
-//     12'd_720,   // h_active
-//     12'd_16,    // h_front_porch
-//     12'd_62,    // h_sync
-//     12'd_60,    // h_back_porch
-//     1'b_0,      // h_sync_pol
-//     12'd_525,   // v_total
-//     12'd_480,   // v_active
-//     12'd_9,     // v_front_porch
-//     12'd_6,     // v_sync
-//     12'd_30,    // v_back_porch
-//     1'b_0,      // v_sync_pol
-
-//     12'd_40,    // h_field_start
-//     12'd_200,   // h_field_end
-//     12'd_0,     // v_field1_start
-//     12'd_40,    // v_field1_end
-//     12'd_220,   // v_field2_start
-//     12'd_260,   // v_field2_end
-//     12'd_440,   // v_field3_start
-//     12'd_480,   // v_field3_end
-//     4'd_0,      // res_divider
-//     12'd_600,   // h_res_start
-//     4'd_1,      // lag_divider
-//     12'd_40,    // h_lag_start
-//     12'd_152,   // h_lag_end
-//     12'd_82     // v_lag_start
-// };
 
 const VideoMode VIDEO_MODE_720P = {
     `MODE_720p,  // id
@@ -90,12 +59,12 @@ const VideoMode VIDEO_MODE_720P = {
     12'd_720,   // v_field3_end
 
     4'd_1,      // res_divider
-    12'd_600,   // h_res_start
+    12'd_560,   // h_res_start
 
     4'd_2,      // lag_divider
-    12'd_80,    // h_lag_start
-    12'd_192,   // h_lag_end
-    12'd_127    // v_lag_start
+    12'd_20,    // h_lag_start
+    12'd_132,   // h_lag_end
+    12'd_142    // v_lag_start
 };
 
 const VideoMode VIDEO_MODE_1080P = {
@@ -123,7 +92,7 @@ const VideoMode VIDEO_MODE_1080P = {
     12'd_1080,  // v_field3_end
 
     4'd_1,      // res_divider
-    12'd_920,   // h_res_start
+    12'd_880,   // h_res_start
 
     4'd_2,      // lag_divider
     12'd_30,    // h_lag_start (px / 4)
