@@ -72,7 +72,7 @@ module lagtester(
 
     /* 
         create trigger for the bcd counter,
-        27MHz / 270, so trigger every 0.01 ms
+        27MHz / 27, so trigger every 0.001 ms
     */
     always @(posedge clock) begin
         if (reset_counter) begin
