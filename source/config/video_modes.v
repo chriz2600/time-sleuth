@@ -25,12 +25,14 @@ const VideoMode VIDEO_MODE_VGA = {
     12'd_440,   // v_field3_start
     12'd_480,   // v_field3_end
 
-    4'd_0,      // res_divider
+    4'd_0,      // h_res_divider
+    4'd_0,      // h_res_divider
     12'd_560,   // h_res_start
 
-    4'd_1,      // lag_divider
+    4'd_1,      // h_lag_divider
+    4'd_1,      // v_lag_divider
     12'd_20,    // h_lag_start
-    12'd_132,   // h_lag_end
+    12'd_300,   // h_lag_end
     12'd_84     // v_lag_start
 };
 
@@ -58,22 +60,24 @@ const VideoMode VIDEO_MODE_720P = {
     12'd_660,   // v_field3_start
     12'd_720,   // v_field3_end
 
-    4'd_1,      // res_divider
+    4'd_1,      // h_res_divider
+    4'd_1,      // v_res_divider
     12'd_560,   // h_res_start
 
-    4'd_2,      // lag_divider
+    4'd_2,      // h_lag_divider
+    4'd_2,      // v_lag_divider
     12'd_20,    // h_lag_start
-    12'd_132,   // h_lag_end
+    12'd_300,   // h_lag_end
     12'd_142    // v_lag_start
 };
 
 const VideoMode VIDEO_MODE_1080P = {
     `MODE_1080p, // id
-    12'd_2200,  // h_total
-    12'd_1920,  // h_active
-    12'd_88,    // h_front_porch
-    12'd_44,    // h_sync
-    12'd_148,   // h_back_porch
+    12'd_1100,  // h_total
+    12'd_960,   // h_active
+    12'd_44,    // h_front_porch
+    12'd_22,    // h_sync
+    12'd_74,    // h_back_porch
     1'b_1,      // h_sync_pol
     12'd_1125,  // v_total
     12'd_1080,  // v_active
@@ -82,8 +86,8 @@ const VideoMode VIDEO_MODE_1080P = {
     12'd_36,    // v_back_porch
     1'b_1,      // v_sync_pol
 
-    12'd_120,   // h_field_start
-    12'd_600,   // h_field_end
+    12'd_60,   // h_field_start
+    12'd_300,   // h_field_end
     12'd_0,     // v_field1_start
     12'd_90,    // v_field1_end
     12'd_495,   // v_field2_start
@@ -91,11 +95,13 @@ const VideoMode VIDEO_MODE_1080P = {
     12'd_990,   // v_field3_start
     12'd_1080,  // v_field3_end
 
-    4'd_1,      // res_divider
+    4'd_0,      // h_res_divider
+    4'd_1,      // v_res_divider
     12'd_880,   // h_res_start
 
-    4'd_2,      // lag_divider
+    4'd_1,      // h_lag_divider
+    4'd_2,      // v_lag_divider
     12'd_30,    // h_lag_start (px / 4)
-    12'd_142,   // h_lag_end
+    12'd_310,   // h_lag_end
     12'd_240    // v_lag_start
 };

@@ -27,10 +27,12 @@ typedef struct packed {
     reg [11:0] v_field3_start;
     reg [11:0] v_field3_end;
 
-    reg [3:0] res_divider;
+    reg [3:0] h_res_divider;
+    reg [3:0] v_res_divider;
     reg [11:0] h_res_start;
 
-    reg [3:0] lag_divider;
+    reg [3:0] h_lag_divider;
+    reg [3:0] v_lag_divider;
     reg [11:0] h_lag_start;
     reg [11:0] h_lag_end;
     reg [11:0] v_lag_start;

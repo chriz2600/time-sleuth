@@ -18,7 +18,7 @@
 --    Device Speed Grade: -
 --    PLL Scan Chain: Fast PLL (144 bits)
 --    File Name: C:/Users/chriz/Development/lagtester/source/pll/config//1080p.mif
---    Generated: Sat Jan 19 15:22:55 2019
+--    Generated: Sun Feb 03 01:21:00 2019
 
 WIDTH=1;
 DEPTH=144;
@@ -82,22 +82,22 @@ CONTENT BEGIN
 	52   :   1;
 	53   :   1;
 	54   :   0; -- clk0 counter: Bypass = 0 (1 bit(s))
-	55   :   0; -- clk0 counter: High Count = 2 (8 bit(s))
+	55   :   0; -- clk0 counter: High Count = 4 (8 bit(s))
 	56   :   0;
 	57   :   0;
 	58   :   0;
 	59   :   0;
-	60   :   0;
-	61   :   1;
+	60   :   1;
+	61   :   0;
 	62   :   0;
 	63   :   0; -- clk0 counter: Odd Division = 0 (1 bit(s))
-	64   :   0; -- clk0 counter: Low Count = 2 (8 bit(s))
+	64   :   0; -- clk0 counter: Low Count = 4 (8 bit(s))
 	65   :   0;
 	66   :   0;
 	67   :   0;
 	68   :   0;
-	69   :   0;
-	70   :   1;
+	69   :   1;
+	70   :   0;
 	71   :   0;
 	72   :   0; -- clk1 counter: Bypass = 0 (1 bit(s))
 	73   :   0; -- clk1 counter: High Count = 2 (8 bit(s))

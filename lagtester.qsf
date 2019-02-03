@@ -87,6 +87,7 @@ set_global_assignment -name VERILOG_FILE source/misc/data_cross.v
 set_global_assignment -name VERILOG_FILE source/misc/delayline.v
 set_global_assignment -name VERILOG_FILE source/misc/Flag_CrossDomain.v
 set_global_assignment -name VERILOG_FILE source/misc/bcdcounter.v
+set_global_assignment -name VERILOG_FILE source/misc/Binary_to_BCD.v
 set_global_assignment -name VERILOG_FILE source/video.v
 set_global_assignment -name VERILOG_FILE source/video_config.v
 set_global_assignment -name VERILOG_FILE source/typedef.v

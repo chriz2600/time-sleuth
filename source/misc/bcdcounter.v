@@ -54,3 +54,5 @@ module bcdcounter(
 
     assign bcdcount = { sixth, fifth, fourth, third, second, first };
 endmodule
+
+

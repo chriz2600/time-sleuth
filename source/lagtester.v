@@ -21,30 +21,36 @@ module lagtester(
     output LED
 );
     wire internal_clock;
+    wire internal_clock2;
     wire pll_locked;
     wire tfp410_ready;
     wire hpd_detected;
     wire starttrigger;
     wire [7:0] config_data_crossed;
 
+    reg [7:0] prev_config_data;
     reg [7:0] config_data;
-    reg prev_sensor_input = 0 /* synthesis noprune */;
-    reg sensor_input = 0 /* synthesis noprune */;
+    reg prev_sensor_input = 0;
+    reg sensor_input = 0;
     VideoMode videoMode;
     
     localparam CLOCK_DIVIDER = 27;
+    localparam MAX_BCDCOUNT = 24'h_99_99_99;
     
     reg waiting;
     reg reset_counter;
     reg [8:0] counter;
-    reg [24:0] raw_counter /* synthesis noprune */;
-    reg counter_trigger = 0 /* synthesis noprune */;
-    reg reset_bcdcounter = 0 /* synthesis noprune */;
-    wire [23:0] bcdcount /* synthesis keep */;
-    reg [23:0] bcdcount_out = 0 /* synthesis noprune */;
-    wire [23:0] bcdcount_crossed /* synthesis keep */;
+    reg [24:0] raw_counter;
+    reg counter_trigger = 0;
+    reg reset_bcdcounter = 0;
+    wire [23:0] bcdcount;
+    reg [19:0] bcdcount_out = 0;
+    reg [19:0] bcdcount_min = MAX_BCDCOUNT;
+    reg [19:0] bcdcount_max = 0;
+    wire [59:0] bcdcount_crossed;
 
     always @(posedge clock) begin
+        prev_config_data <= config_data;
         case (RES_CONFIG)
             3'b001: config_data <= `MODE_VGA;
             3'b011: config_data <= `MODE_VGA;
@@ -96,8 +102,18 @@ module lagtester(
     always @(posedge clock) begin
         if (reset_counter) begin
             waiting <= 1;
+        end else if (prev_config_data != config_data) begin
+            bcdcount_out <= 0;
+            bcdcount_max <= 0;
+            bcdcount_min <= MAX_BCDCOUNT;
         end else if (waiting && ~prev_sensor_input && sensor_input) begin
-            bcdcount_out <= bcdcount;
+            bcdcount_out <= bcdcount[23:4];
+            if (bcdcount[23:4] < bcdcount_min) begin
+                bcdcount_min <= bcdcount[23:4];
+            end
+            if (bcdcount[23:4] > bcdcount_max) begin
+                bcdcount_max <= bcdcount[23:4];
+            end
             waiting <= 0;
         end
     end
@@ -126,11 +142,11 @@ module lagtester(
     );
 
     data_cross #(
-        .WIDTH(24)
+        .WIDTH(59)
     ) bcdcounter_cross (
         .clkIn(clock),
         .clkOut(internal_clock),
-        .dataIn(bcdcount_out),
+        .dataIn({ bcdcount_max, bcdcount_min, bcdcount_out }),
         .dataOut(bcdcount_crossed)
     );
 

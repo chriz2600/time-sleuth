@@ -1,7 +1,7 @@
 module video(
     input clock,
     input [7:0] config_data,
-    input [23:0] bcdcount,
+    input [59:0] bcdcount,
     output [7:0] red,
     output [7:0] green,
     output [7:0] blue,
@@ -68,10 +68,10 @@ module video(
     reg starttrigger_reg = 0;
     
     localparam FRAME_COUNTER = 6;
-    localparam LAGLINE_SIZE = 112;
+    localparam LAGLINE_SIZE = 280;
 
     reg [3:0] resolution_addr;
-    reg [79:0] resolution_line /* synthesis noprune */;
+    reg [79:0] resolution_line;
     reg [11:0] resolution_end_pos;
     reg [11:0] resolution_counterX;
 
@@ -116,34 +116,69 @@ module video(
         case (counterX)
             0: begin
                 // addr for resolution_line
-                resolution_addr <= (visible_counterY + 1'b1) >> videoMode.res_divider;
-                lagdisplay_addr <= (visible_counterY + 1'b1 - videoMode.v_lag_start) >> videoMode.lag_divider;
-            end
-            1: begin
-                resolution_end_pos <= (12'd16 << videoMode.res_divider);
+                resolution_addr <= (visible_counterY + 1'b1) >> videoMode.v_res_divider;
+                lagdisplay_addr <= (visible_counterY + 1'b1 - videoMode.v_lag_start) >> videoMode.v_lag_divider;
+                resolution_end_pos <= (12'd16 << videoMode.v_res_divider);
                 lagdisplay_start_pos <= videoMode.v_lag_start;
-                lagdisplay_end_pos <= (videoMode.v_lag_start + (12'd16 << videoMode.lag_divider));
+                lagdisplay_end_pos <= (videoMode.v_lag_start + (12'd16 << videoMode.v_lag_divider));
                 char_addr_base <= lagdisplay_addr + (8'h_30 << 4);
             end
-            2: lagdisplay_line_out <= lagdisplay_line;
+        endcase
+    end
 
-            // read the numbers
-            3: char_addr <= char_addr_base + (bcdcount[7:4] << 4);
-            4: char_addr <= char_addr_base + (bcdcount[11:8] << 4);
-            5: char_addr <= char_addr_base + (bcdcount[15:12] << 4);
-            6: begin 
-                lagdisplay_line_out[31:24] <= char_data;
+    always @(posedge clock) begin
+        case (counterX)
+            3: lagdisplay_line_out <= lagdisplay_line;
+            // bcdcount
+            4: char_addr <= char_addr_base + (bcdcount[3:0] << 4);
+            5: char_addr <= char_addr_base + (bcdcount[7:4] << 4);
+            6: char_addr <= char_addr_base + (bcdcount[11:8] << 4);
+            7: begin 
+                lagdisplay_line_out[199:192] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[15:12] << 4);
+            end
+            8: begin 
+                lagdisplay_line_out[207:200] <= char_data;
                 char_addr <= char_addr_base + (bcdcount[19:16] << 4);
             end
-            7: begin 
-                lagdisplay_line_out[39:32] <= char_data;
-                char_addr <= char_addr_base + (bcdcount[23:20] << 4);
-            end
-            8: lagdisplay_line_out[55:48] <= char_data;
-            9: lagdisplay_line_out[63:56] <= char_data;
-            10: lagdisplay_line_out[71:64] <= char_data;
+            9: lagdisplay_line_out[223:216] <= char_data;
+            10: lagdisplay_line_out[231:224] <= char_data;
+            11: lagdisplay_line_out[239:231] <= char_data;
 
-            63: lagdisplay_line_out_2 <= lagdisplay_line_out;
+            // bcdcount_min
+            13: char_addr <= char_addr_base + (bcdcount[23:20] << 4);
+            14: char_addr <= char_addr_base + (bcdcount[27:24] << 4);
+            15: char_addr <= char_addr_base + (bcdcount[31:28] << 4);
+            16: begin 
+                lagdisplay_line_out[143:136] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[35:32] << 4);
+            end
+            17: begin 
+                lagdisplay_line_out[152:144] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[39:36] << 4);
+            end
+            18: lagdisplay_line_out[167:160] <= char_data;
+            19: lagdisplay_line_out[175:168] <= char_data;
+            20: lagdisplay_line_out[183:176] <= char_data;
+
+            // bcdcount_max
+            22: char_addr <= char_addr_base + (bcdcount[43:40] << 4);
+            23: char_addr <= char_addr_base + (bcdcount[47:44] << 4);
+            24: char_addr <= char_addr_base + (bcdcount[51:48] << 4);
+            25: begin 
+                lagdisplay_line_out[87:80] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[55:52] << 4);
+            end
+            26: begin 
+                lagdisplay_line_out[95:88] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[59:56] << 4);
+            end
+            27: lagdisplay_line_out[111:104] <= char_data;
+            28: lagdisplay_line_out[119:112] <= char_data;
+            29: lagdisplay_line_out[127:120] <= char_data;
+
+            // output pipeline
+            31: lagdisplay_line_out_2 <= lagdisplay_line_out;
         endcase
     end 
 
@@ -154,8 +189,8 @@ module video(
         visible_counterX_delayed <= visible_counterX;
         visible_counterY_delayed <= visible_counterY;
         // special counter(s)
-        resolution_counterX <= 12'd_79 - ((visible_counterX >> videoMode.res_divider) - videoMode.h_res_start);
-        lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.lag_divider) - videoMode.h_lag_start);
+        resolution_counterX <= 12'd_79 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start);
+        lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start);
     end
 
     /* frame counter */
@@ -220,7 +255,7 @@ module video(
                 data_reg <= 24'h_FF_FF_FF;
             end else if (
                     ypos < resolution_end_pos 
-                && (xpos >> videoMode.res_divider) >= videoMode.h_res_start
+                && (xpos >> videoMode.h_res_divider) >= videoMode.h_res_start
             ) begin // resolution info
                 if (resolution_line[resolution_counterX]) begin
                     data_reg <= 24'h_FF_FF_FF;
@@ -230,8 +265,8 @@ module video(
             end else if (
                    ypos >= lagdisplay_start_pos 
                 && ypos < lagdisplay_end_pos 
-                && (xpos >> videoMode.lag_divider) >= videoMode.h_lag_start
-                && (xpos >> videoMode.lag_divider) < videoMode.h_lag_end
+                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end
             ) begin
                 if (lagdisplay_line_out_2[lagdisplay_counterX]) begin
                     data_reg <= 24'h_FF_FF_FF;
