@@ -35,7 +35,7 @@ module lagtester(
     VideoMode videoMode;
     
     localparam CLOCK_DIVIDER = 27;
-    localparam MAX_BCDCOUNT = 24'h_99_99_99;
+    localparam MAX_BCDCOUNT = 20'h_9_99_99;
     
     reg waiting;
     reg reset_counter;
@@ -44,10 +44,10 @@ module lagtester(
     reg counter_trigger = 0;
     reg reset_bcdcounter = 0;
     wire [23:0] bcdcount;
-    reg [19:0] bcdcount_out = 0;
+    reg [19:0] bcdcount_out = MAX_BCDCOUNT;
     reg [19:0] bcdcount_min = MAX_BCDCOUNT;
     reg [19:0] bcdcount_max = 0;
-    wire [59:0] bcdcount_crossed;
+    wire [79:0] bcdcount_crossed;
 
     always @(posedge clock) begin
         prev_config_data <= config_data;
@@ -99,13 +99,46 @@ module lagtester(
         .bcdcount(bcdcount)
     );
 
+    ///////////////////////////////////////////////////////
+    reg [19:0] avg_counter;
+    reg [31:0] avg_counter_reg;
+    reg [31:0] avg_counter_reg_avg;
+    reg [23:0] avg_counter_bcd;
+    reg [19:0] avg_counter_bcd_reg = MAX_BCDCOUNT;
+    reg avg_counter_start;
+    reg avg_counter_ready;
+    reg [4:0] avg_loop;
+    always @(posedge counter_trigger or posedge reset_bcdcounter) begin
+        if (reset_bcdcounter) begin
+            avg_counter <= 0;
+        end else begin
+            avg_counter <= avg_counter + 1'b1;
+        end
+    end
+
+    Binary_to_BCD #(
+        .INPUT_WIDTH(20),
+        .DECIMAL_DIGITS(6)
+    ) Binary_to_BCD (
+        .i_Clock(clock),
+        .i_Start(avg_counter_start),
+        .i_Binary(avg_counter_reg_avg[19:0]),
+        .o_BCD(avg_counter_bcd),
+        .o_DV(avg_counter_ready)
+    );
+    ///////////////////////////////////////////////////////
+
     always @(posedge clock) begin
         if (reset_counter) begin
             waiting <= 1;
         end else if (prev_config_data != config_data) begin
-            bcdcount_out <= 0;
+            bcdcount_out <= MAX_BCDCOUNT;
             bcdcount_max <= 0;
             bcdcount_min <= MAX_BCDCOUNT;
+            avg_counter_reg_avg <= 0;
+            avg_counter_reg <= 0;
+            avg_loop <= 0;
+            avg_counter_bcd_reg <= MAX_BCDCOUNT;
         end else if (waiting && ~prev_sensor_input && sensor_input) begin
             bcdcount_out <= bcdcount[23:4];
             if (bcdcount[23:4] < bcdcount_min) begin
@@ -114,7 +147,22 @@ module lagtester(
             if (bcdcount[23:4] > bcdcount_max) begin
                 bcdcount_max <= bcdcount[23:4];
             end
+            if (avg_counter != 0) begin
+                if (avg_loop == 31) begin
+                    avg_counter_reg_avg <= avg_counter_reg >> 5;
+                    avg_counter_reg <= 0;
+                    avg_loop <= 0;
+                    avg_counter_start <= 1'b1;
+                end else begin
+                    avg_counter_reg <= avg_counter_reg + avg_counter;
+                    avg_loop <= avg_loop + 1'b1;
+                    avg_counter_start <= 1'b0;
+                end
+            end
             waiting <= 0;
+        end
+        if (avg_counter_ready) begin
+            avg_counter_bcd_reg <= avg_counter_bcd[23:4];
         end
     end
 
@@ -142,11 +190,11 @@ module lagtester(
     );
 
     data_cross #(
-        .WIDTH(59)
+        .WIDTH(80)
     ) bcdcounter_cross (
         .clkIn(clock),
         .clkOut(internal_clock),
-        .dataIn({ bcdcount_max, bcdcount_min, bcdcount_out }),
+        .dataIn({ avg_counter_bcd_reg, bcdcount_max, bcdcount_min, bcdcount_out }),
         .dataOut(bcdcount_crossed)
     );
 

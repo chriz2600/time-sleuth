@@ -1,7 +1,7 @@
 module video(
     input clock,
     input [7:0] config_data,
-    input [59:0] bcdcount,
+    input [79:0] bcdcount,
     output [7:0] red,
     output [7:0] green,
     output [7:0] blue,
@@ -67,6 +67,7 @@ module video(
     reg displayFields = 0;
     reg starttrigger_reg = 0;
     
+    localparam MAX_BCDCOUNT = 20'h_9_99_99;
     localparam FRAME_COUNTER = 6;
     localparam LAGLINE_SIZE = 280;
 
@@ -78,7 +79,7 @@ module video(
     reg [3:0] lagdisplay_addr;
     reg [LAGLINE_SIZE-1:0] lagdisplay_line;
     reg [LAGLINE_SIZE-1:0] lagdisplay_line_out;
-    reg [LAGLINE_SIZE-1:0] lagdisplay_line_out_2;
+    //reg [LAGLINE_SIZE-1:0] lagdisplay_line_out_2;
     reg [11:0] lagdisplay_start_pos;
     reg [11:0] lagdisplay_end_pos;
     reg [11:0] lagdisplay_counterX;
@@ -177,8 +178,24 @@ module video(
             28: lagdisplay_line_out[119:112] <= char_data;
             29: lagdisplay_line_out[127:120] <= char_data;
 
+            // avg_counter
+            31: char_addr <= char_addr_base + (bcdcount[63:60] << 4);
+            32: char_addr <= char_addr_base + (bcdcount[67:64] << 4);
+            33: char_addr <= char_addr_base + (bcdcount[71:68] << 4);
+            34: begin 
+                lagdisplay_line_out[31:24] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[75:72] << 4);
+            end
+            35: begin 
+                lagdisplay_line_out[39:32] <= char_data;
+                char_addr <= char_addr_base + (bcdcount[79:76] << 4);
+            end
+            36: lagdisplay_line_out[55:48] <= char_data;
+            37: lagdisplay_line_out[63:56] <= char_data;
+            38: lagdisplay_line_out[71:64] <= char_data;
+
             // output pipeline
-            31: lagdisplay_line_out_2 <= lagdisplay_line_out;
+            // 40: lagdisplay_line_out_2 <= lagdisplay_line_out;
         endcase
     end 
 
@@ -268,7 +285,7 @@ module video(
                 && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
                 && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end
             ) begin
-                if (lagdisplay_line_out_2[lagdisplay_counterX]) begin
+                if (lagdisplay_line_out[lagdisplay_counterX]) begin
                     data_reg <= 24'h_FF_FF_FF;
                 end else begin
                     data_reg <= 0;
