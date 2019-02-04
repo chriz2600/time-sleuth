@@ -6,6 +6,20 @@ Hardware by [**citrus3000psi**](https://twitter.com/citrus3000psi)
 
 Kicad project can be found here: [github.com/citrus3000psi/Time-Sleuth](https://github.com/citrus3000psi/Time-Sleuth).
 
+## Firmware
+
+Latest Firmware: [fpga-firmware.zip](https://gitlab.com/chriz2600/lagtester/-/jobs/artifacts/master/download?job=fpga-firmware)
+
+To program the firmware, a USB Blaster programmer is needed, e.g. from [ebay](https://www.ebay.com/i/272455039767?chn=ps)
+
+Software to program the FPGA:
+
+- [Linux 64 Bit](http://download.altera.com/akdlm/software/acdsinst/18.1std/625/ib_installers/QuartusProgrammerSetup-18.1.0.625-linux.run)
+
+- [Windows 64 Bit](http://download.altera.com/akdlm/software/acdsinst/18.1std/625/ib_installers/QuartusProgrammerSetup-18.1.0.625-windows.exe)
+
+- [Windows 32 Bit](http://download.altera.com/akdlm/software/acdsinst/18.1std/625/ib_installers/QuartusProgrammerSetup-18.1.0.625-windows32.exe)
+
 ## Operation
 
 Time Sleuth generates a flicker pattern and then measures the time it takes from the start of the first pattern to the moment it shows up on screen using a photo transistor.
