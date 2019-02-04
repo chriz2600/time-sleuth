@@ -1,3 +1,5 @@
+`include "../defines.v"
+
 module pll_reconf_rom (
     input clock,
     input [7:0] address,

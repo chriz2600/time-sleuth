@@ -80,7 +80,7 @@ module Binary_to_BCD(
               end
             else
               begin
-                r_Loop_Count <= r_Loop_Count + 1;
+                r_Loop_Count <= r_Loop_Count + 1'b1;
                 r_SM_Main    <= s_ADD;
               end
           end
@@ -93,7 +93,7 @@ module Binary_to_BCD(
           begin
             if (w_BCD_Digit > 4)
               begin                                     
-                r_BCD[(r_Digit_Index*4)+:4] <= w_BCD_Digit + 3;  
+                r_BCD[(r_Digit_Index*4)+:4] <= w_BCD_Digit + 2'd3;  
               end
              
             r_SM_Main <= s_CHECK_DIGIT_INDEX; 
@@ -110,7 +110,7 @@ module Binary_to_BCD(
               end
             else
               begin
-                r_Digit_Index <= r_Digit_Index + 1;
+                r_Digit_Index <= r_Digit_Index + 1'b1;
                 r_SM_Main     <= s_ADD;
               end
           end
