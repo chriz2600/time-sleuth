@@ -141,11 +141,17 @@ module lagtester(
             avg_counter_bcd_reg <= MAX_BCDCOUNT;
         end else if (waiting && ~prev_sensor_input && sensor_input) begin
             bcdcount_out <= bcdcount[23:4];
-            if (bcdcount[23:4] < bcdcount_min) begin
-                bcdcount_min <= bcdcount[23:4];
-            end
-            if (bcdcount[23:4] > bcdcount_max) begin
+            if (avg_loop == 0) begin
+                // reset min and max at the start of the averaging period
                 bcdcount_max <= bcdcount[23:4];
+                bcdcount_min <= bcdcount[23:4];
+            end else begin             
+                if (bcdcount[23:4] < bcdcount_min) begin
+                    bcdcount_min <= bcdcount[23:4];
+                end
+                if (bcdcount[23:4] > bcdcount_max) begin
+                    bcdcount_max <= bcdcount[23:4];
+                end
             end
             if (avg_counter != 0) begin
                 if (avg_loop == 31) begin
