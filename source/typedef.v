@@ -34,7 +34,6 @@ typedef struct packed {
     reg [3:0] h_lag_divider;
     reg [3:0] v_lag_divider;
     reg [11:0] h_lag_start;
-    reg [11:0] h_lag_end;
     reg [11:0] v_lag_start;
 } VideoMode;
 

@@ -69,23 +69,21 @@ module video(
     
     localparam MAX_BCDCOUNT = 20'h_9_99_99;
     localparam FRAME_COUNTER = 6;
-    localparam LAGLINE_SIZE = 280;
+    localparam LAGLINE_SIZE = 512;
 
     reg [3:0] resolution_addr;
-    reg [79:0] resolution_line;
+    reg [191:0] resolution_line;
     reg [11:0] resolution_end_pos;
     reg [11:0] resolution_counterX;
 
     reg [3:0] lagdisplay_addr;
     reg [LAGLINE_SIZE-1:0] lagdisplay_line;
     reg [LAGLINE_SIZE-1:0] lagdisplay_line_out;
-    //reg [LAGLINE_SIZE-1:0] lagdisplay_line_out_2;
     reg [11:0] lagdisplay_start_pos;
     reg [11:0] lagdisplay_end_pos;
     reg [11:0] lagdisplay_counterX;
 
-    reg [10:0] char_addr;
-    reg [10:0] char_addr_base;
+    reg [7:0] char_addr;
     reg [7:0] char_data;
     char_rom char_rom_inst(
         .clock(clock),
@@ -122,7 +120,6 @@ module video(
                 resolution_end_pos <= (12'd16 << videoMode.v_res_divider);
                 lagdisplay_start_pos <= videoMode.v_lag_start;
                 lagdisplay_end_pos <= (videoMode.v_lag_start + (12'd16 << videoMode.v_lag_divider));
-                char_addr_base <= lagdisplay_addr + (8'h_30 << 4);
             end
             2: begin
                 trigger_write_lag <= 1;
@@ -160,37 +157,37 @@ module video(
                     end
                 end
                 2: begin
-                    char_addr <= char_addr_base + (bcdcount[3:0] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[3:0] << 4);
                     idwc();
                 end
                 3: begin
-                    char_addr <= char_addr_base + (bcdcount[7:4] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[7:4] << 4);
                     idwc();
                 end
                 4: begin
-                    char_addr <= char_addr_base + (bcdcount[11:8] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[11:8] << 4);
                     idwc();
                 end
                 5: begin
-                    lagdisplay_line_out[199:192] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[15:12] << 4);
+                    lagdisplay_line_out[319:312] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[15:12] << 4);
                     idwc();
                 end
                 6: begin
-                    lagdisplay_line_out[207:200] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[19:16] << 4);
+                    lagdisplay_line_out[327:320] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[19:16] << 4);
                     idwc();
                 end
                 7: begin
-                    lagdisplay_line_out[223:216] <= char_data;
+                    lagdisplay_line_out[343:336] <= char_data;
                     idwc();
                 end
                 8: begin
-                    lagdisplay_line_out[231:224] <= char_data;
+                    lagdisplay_line_out[351:344] <= char_data;
                     idwc();
                 end
                 9: begin
-                    lagdisplay_line_out[239:231] <= char_data;
+                    lagdisplay_line_out[360:352] <= char_data;
                     idwc();
                 end
                 // bcdcount_min
@@ -202,37 +199,37 @@ module video(
                     end
                 end
                 11: begin
-                    char_addr <= char_addr_base + (bcdcount[23:20] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[23:20] << 4);
                     idwc();
                 end
                 12: begin
-                    char_addr <= char_addr_base + (bcdcount[27:24] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[27:24] << 4);
                     idwc();
                 end
                 13: begin
-                    char_addr <= char_addr_base + (bcdcount[31:28] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[31:28] << 4);
                     idwc();
                 end
                 14: begin
-                    lagdisplay_line_out[143:136] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[35:32] << 4);
+                    lagdisplay_line_out[199:192] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[35:32] << 4);
                     idwc();
                 end
                 15: begin
-                    lagdisplay_line_out[152:144] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[39:36] << 4);
+                    lagdisplay_line_out[207:200] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[39:36] << 4);
                     idwc();
                 end
                 16: begin
-                    lagdisplay_line_out[167:160] <= char_data;
+                    lagdisplay_line_out[223:216] <= char_data;
                     idwc();
                 end
                 17: begin
-                    lagdisplay_line_out[175:168] <= char_data;
+                    lagdisplay_line_out[231:224] <= char_data;
                     idwc();
                 end
                 18: begin
-                    lagdisplay_line_out[183:176] <= char_data;
+                    lagdisplay_line_out[239:232] <= char_data;
                     idwc();
                 end
 
@@ -245,37 +242,37 @@ module video(
                     end
                 end
                 20: begin
-                    char_addr <= char_addr_base + (bcdcount[43:40] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[43:40] << 4);
                     idwc();
                 end
                 21: begin
-                    char_addr <= char_addr_base + (bcdcount[47:44] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[47:44] << 4);
                     idwc();
                 end
                 22: begin
-                    char_addr <= char_addr_base + (bcdcount[51:48] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[51:48] << 4);
                     idwc();
                 end
                 23: begin
-                    lagdisplay_line_out[87:80] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[55:52] << 4);
+                    lagdisplay_line_out[127:120] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[55:52] << 4);
                     idwc();
                 end
                 24: begin
-                    lagdisplay_line_out[95:88] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[59:56] << 4);
+                    lagdisplay_line_out[136:128] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[59:56] << 4);
                     idwc();
                 end
                 25: begin
-                    lagdisplay_line_out[111:104] <= char_data;
+                    lagdisplay_line_out[151:144] <= char_data;
                     idwc();
                 end
                 26: begin
-                    lagdisplay_line_out[119:112] <= char_data;
+                    lagdisplay_line_out[159:152] <= char_data;
                     idwc();
                 end
                 27: begin
-                    lagdisplay_line_out[127:120] <= char_data;
+                    lagdisplay_line_out[167:160] <= char_data;
                     idwc();
                 end
 
@@ -288,37 +285,37 @@ module video(
                     end
                 end
                 29: begin
-                    char_addr <= char_addr_base + (bcdcount[63:60] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[63:60] << 4);
                     idwc();
                 end
                 30: begin
-                    char_addr <= char_addr_base + (bcdcount[67:64] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[67:64] << 4);
                     idwc();
                 end
                 31: begin
-                    char_addr <= char_addr_base + (bcdcount[71:68] << 4);
+                    char_addr <= lagdisplay_addr + (bcdcount[71:68] << 4);
                     idwc();
                 end
                 32: begin
-                    lagdisplay_line_out[31:24] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[75:72] << 4);
+                    lagdisplay_line_out[7:0] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[75:72] << 4);
                     idwc();
                 end
                 33: begin
-                    lagdisplay_line_out[39:32] <= char_data;
-                    char_addr <= char_addr_base + (bcdcount[79:76] << 4);
+                    lagdisplay_line_out[15:8] <= char_data;
+                    char_addr <= lagdisplay_addr + (bcdcount[79:76] << 4);
                     idwc();
                 end
                 34: begin
-                    lagdisplay_line_out[55:48] <= char_data;
+                    lagdisplay_line_out[31:24] <= char_data;
                     idwc();
                 end
                 35: begin
-                    lagdisplay_line_out[63:56] <= char_data;
+                    lagdisplay_line_out[39:32] <= char_data;
                     idwc();
                 end
                 36: begin
-                    lagdisplay_line_out[71:64] <= char_data;
+                    lagdisplay_line_out[47:40] <= char_data;
                     idwc();
                 end
             endcase
@@ -332,7 +329,7 @@ module video(
         visible_counterX_delayed <= visible_counterX;
         visible_counterY_delayed <= visible_counterY;
         // special counter(s)
-        resolution_counterX <= 12'd_79 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start);
+        resolution_counterX <= 12'd_191 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start);
         lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start);
     end
 
@@ -406,12 +403,45 @@ module video(
                     data_reg <= 0;
                 end
             end else if (
-                   ypos >= lagdisplay_start_pos 
-                && ypos < lagdisplay_end_pos 
+                   ypos >= lagdisplay_start_pos
+                && ypos < lagdisplay_end_pos
                 && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
-                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end
+                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_start + 80
             ) begin
                 if (lagdisplay_line_out[lagdisplay_counterX]) begin
+                    data_reg <= 24'h_FF_FF_FF;
+                end else begin
+                    data_reg <= 0;
+                end
+            end else if (
+                   ypos >= lagdisplay_start_pos + (12'd16 << videoMode.v_lag_divider)
+                && ypos < lagdisplay_end_pos + (12'd16 << videoMode.v_lag_divider)
+                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_start + 120
+            ) begin
+                if (lagdisplay_line_out[lagdisplay_counterX - 80]) begin
+                    data_reg <= 24'h_FF_FF_FF;
+                end else begin
+                    data_reg <= 0;
+                end
+            end else if (
+                   ypos >= lagdisplay_start_pos + (12'd32 << videoMode.v_lag_divider)
+                && ypos < lagdisplay_end_pos + (12'd32 << videoMode.v_lag_divider)
+                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_start + 192
+            ) begin
+                if (lagdisplay_line_out[lagdisplay_counterX - 200]) begin
+                    data_reg <= 24'h_FF_FF_FF;
+                end else begin
+                    data_reg <= 0;
+                end
+            end else if (
+                   ypos >= lagdisplay_start_pos + (12'd48 << videoMode.v_lag_divider)
+                && ypos < lagdisplay_end_pos + (12'd48 << videoMode.v_lag_divider)
+                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_start + 120
+            ) begin
+                if (lagdisplay_line_out[lagdisplay_counterX - 392]) begin
                     data_reg <= 24'h_FF_FF_FF;
                 end else begin
                     data_reg <= 0;
