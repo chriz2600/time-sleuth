@@ -24,7 +24,7 @@ Software to program the FPGA:
 
 Time Sleuth generates a flicker pattern and then measures the time it takes from the start of the first pattern to the moment it shows up on screen using a photo transistor.
 
-<img src="assets/time-sleuth.jpg" width="100%"/>
+<img src="assets/time-sleuth.jpg" width="70%"/>
 
 The counter measuring the lag starts at the first line of the first field. So if you're using a display, which generates the image from top to bottom (line by line, as LCD/OLED/CRT monitors/TVs will do), the first field will give you the processing lag of the screen, while the second and third field will also include the lag inherent to the line by line drawing of the image.
 
@@ -42,7 +42,7 @@ There are 4 values displayed on the screen:
 
   Average value of the last **32** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag. 
 
-<img src="assets/time-sleuth-hw.jpg" width="100%"/>
+<img src="assets/time-sleuth-hw.jpg" width="70%"/>
 
 - ***LED***
 
