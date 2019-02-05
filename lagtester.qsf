@@ -93,6 +93,7 @@ set_global_assignment -name VERILOG_FILE source/configuration.v
 set_global_assignment -name VERILOG_FILE source/measure.v
 set_global_assignment -name VERILOG_FILE source/video.v
 set_global_assignment -name VERILOG_FILE source/video/video_config.v
+set_global_assignment -name VERILOG_FILE source/video/timings.v
 set_global_assignment -name VERILOG_FILE source/typedef.v
 set_global_assignment -name VERILOG_FILE source/tfp410/tfp410.v
 set_global_assignment -name VERILOG_FILE source/tfp410/I2C.v

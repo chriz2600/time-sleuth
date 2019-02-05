@@ -10,27 +10,10 @@ module video(
     output vsync,
     output starttrigger
 );
-
-    reg [11:0] counterX = 0;
-    reg [11:0] counterY = 0;
-
-    reg [11:0] counterX_delayed = 0;
-    reg [11:0] counterY_delayed = 0;
-
-    reg [11:0] visible_counterX = 0;
-    reg [11:0] visible_counterY = 0;
-
-    reg [11:0] visible_counterX_delayed = 0;
-    reg [11:0] visible_counterY_delayed = 0;
-
-    delayline #(
-        .CYCLES(2),
-        .WIDTH(24)
-    ) counter_delay (
-        .clock(clock),
-        .in({ counterX, counterY }),
-        .out({ counterX_delayed, counterY_delayed })
-    );
+    wire [11:0] counterX;
+    wire [11:0] counterY;
+    wire [11:0] visible_counterX;
+    wire [11:0] visible_counterY;
 
     VideoMode videoMode;
 
@@ -40,6 +23,18 @@ module video(
         .videoMode(videoMode)
     );
 
+    timings timings(
+        .clock(clock),
+        .videoMode(videoMode),
+        .counterX(counterX),
+        .counterY(counterY),
+        .visible_counterX(visible_counterX),
+        .visible_counterY(visible_counterY),
+        .hsync(hsync),
+        .vsync(vsync),
+        .de(de)
+    );
+    
     resolution resolution(
         .clock(clock),
         .videoMode(videoMode),
@@ -53,16 +48,10 @@ module video(
         .q(lagdisplay_line)
     );
 
+    reg trigger_write_lag;
+    reg [5:0] write_lag_counter;
+
     reg [23:0] data_reg;
-    reg de_reg;
-    reg hsync_reg;
-    reg vsync_reg;
-
-    reg [23:0] data_reg_q;
-    reg de_reg_q;
-    reg hsync_reg_q;
-    reg vsync_reg_q;
-
     reg [31:0] frameCounter = 0;
     reg displayFields = 0;
     reg starttrigger_reg = 0;
@@ -91,25 +80,6 @@ module video(
         .q(char_data)
     );
 
-    /*
-        H_SYNC  H_BACK_PORCH  H_ACTIVE H_FRONT_PORCH
-        V_SYNC  V_BACK_PORCH  V_ACTIVE V_FRONT_PORCH
-    */
-
-    /* generate counter */
-    always @(posedge clock) begin
-        if (counterX < videoMode.h_total - 1) begin
-            counterX <= counterX + 1'b1;
-        end else begin
-            counterX <= 0;
-            if (counterY < videoMode.v_total - 1) begin
-                counterY <= counterY + 1'b1;
-            end else begin
-                counterY <= 0;
-            end
-        end
-    end 
-
     /* bcdcount */
     always @(posedge clock) begin
         case (counterX)
@@ -129,9 +99,6 @@ module video(
             end
         endcase
     end
-
-    reg trigger_write_lag;
-    reg [5:0] write_lag_counter;
 
     task idwc;
         begin
@@ -324,10 +291,6 @@ module video(
 
     /* visible area counter */
     always @(posedge clock) begin
-        visible_counterX <= counterX - (videoMode.h_sync + videoMode.h_back_porch);
-        visible_counterY <= counterY - (videoMode.v_sync + videoMode.v_back_porch);
-        visible_counterX_delayed <= visible_counterX;
-        visible_counterY_delayed <= visible_counterY;
         // special counter(s)
         resolution_counterX <= 12'd_191 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start);
         lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start);
@@ -335,8 +298,8 @@ module video(
 
     /* frame counter */
     always @(posedge clock) begin
-        if (counterX_delayed == videoMode.h_sync + videoMode.h_back_porch
-         && counterY_delayed == videoMode.v_sync + videoMode.v_back_porch) begin
+        if (counterX == videoMode.h_sync + videoMode.h_back_porch
+         && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
             if (frameCounter < FRAME_COUNTER - 1) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
@@ -349,37 +312,8 @@ module video(
         end
     end
 
-    /* generate hsync */
     always @(posedge clock) begin
-        if (counterX_delayed < videoMode.h_sync) begin
-            hsync_reg <= videoMode.h_sync_pol;
-        end else begin
-            hsync_reg <= ~videoMode.h_sync_pol;
-        end
-    end
-
-    /* generate vsync */
-    always @(posedge clock) begin
-        if (counterY_delayed < videoMode.v_sync) begin
-            vsync_reg <= videoMode.v_sync_pol;
-        end else begin
-            vsync_reg <= ~videoMode.v_sync_pol;
-        end
-    end
-
-    /* generate DE */
-    always @(posedge clock) begin
-        if (counterX_delayed >= videoMode.h_sync + videoMode.h_back_porch
-         && counterY_delayed >= videoMode.v_sync + videoMode.v_back_porch
-         && counterX_delayed < videoMode.h_sync + videoMode.h_back_porch + videoMode.h_active
-         && counterY_delayed < videoMode.v_sync + videoMode.v_back_porch + videoMode.v_active)
-        begin
-            de_reg <= 1'b1;
-            doOutputValue(visible_counterX_delayed, visible_counterY_delayed);
-        end else begin
-            de_reg <= 0;
-            data_reg <= 0;
-        end
+        doOutputValue(visible_counterX, visible_counterY);
     end
 
     task doOutputValue;
@@ -452,21 +386,9 @@ module video(
         end
     endtask
 
-    delayline #(
-        .CYCLES(2),
-        .WIDTH(27)
-    ) vout_delay (
-        .clock(clock),
-        .in({ de_reg, hsync_reg, vsync_reg, data_reg }),
-        .out({ de_reg_q, hsync_reg_q, vsync_reg_q, data_reg_q })
-    );
-
-    assign de = de_reg_q;
-    assign hsync = hsync_reg_q;
-    assign vsync = vsync_reg_q;
-    assign red = data_reg_q[23:16];
-    assign green = data_reg_q[15:8];
-    assign blue = data_reg_q[7:0];
+    assign red = data_reg[23:16];
+    assign green = data_reg[15:8];
+    assign blue = data_reg[7:0];
     assign starttrigger = starttrigger_reg;
 
 endmodule
