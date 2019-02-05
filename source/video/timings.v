@@ -30,7 +30,7 @@ module timings(
 
     /* generate visible area timings */
     always @(posedge clock) begin
-        visible_counterX <= counterX + 1'b1 - (videoMode.h_sync + videoMode.h_back_porch);
+        visible_counterX <= counterX + 1'b1 /* add one  */ - (videoMode.h_sync + videoMode.h_back_porch);
         visible_counterY <= counterY - (videoMode.v_sync + videoMode.v_back_porch);
     end
 

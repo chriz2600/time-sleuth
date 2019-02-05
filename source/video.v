@@ -1,3 +1,5 @@
+`include "defines.v"
+
 module video(
     input clock,
     input [7:0] config_data,
@@ -34,7 +36,9 @@ module video(
         .vsync(vsync),
         .de(de)
     );
-    
+
+    // ^^^^^^ clean
+
     resolution resolution(
         .clock(clock),
         .videoMode(videoMode),
@@ -56,18 +60,14 @@ module video(
     reg displayFields = 0;
     reg starttrigger_reg = 0;
     
-    localparam MAX_BCDCOUNT = 20'h_9_99_99;
-    localparam FRAME_COUNTER = 6;
-    localparam LAGLINE_SIZE = 512;
-
     reg [3:0] resolution_addr;
     reg [191:0] resolution_line;
     reg [11:0] resolution_end_pos;
     reg [11:0] resolution_counterX;
 
     reg [3:0] lagdisplay_addr;
-    reg [LAGLINE_SIZE-1:0] lagdisplay_line;
-    reg [LAGLINE_SIZE-1:0] lagdisplay_line_out;
+    reg [`LAGLINE_SIZE-1:0] lagdisplay_line;
+    reg [`LAGLINE_SIZE-1:0] lagdisplay_line_out;
     reg [11:0] lagdisplay_start_pos;
     reg [11:0] lagdisplay_end_pos;
     reg [11:0] lagdisplay_counterX;
@@ -117,7 +117,7 @@ module video(
                 end
                 // bcdcount
                 1: begin
-                    if (bcdcount[19:0] == MAX_BCDCOUNT) begin
+                    if (bcdcount[19:0] == `MAX_BCDCOUNT) begin
                         write_lag_counter <= write_lag_counter + 6'd9;
                     end else begin
                         idwc();
@@ -159,7 +159,7 @@ module video(
                 end
                 // bcdcount_min
                 10: begin
-                    if (bcdcount[39:20] == MAX_BCDCOUNT) begin
+                    if (bcdcount[39:20] == `MAX_BCDCOUNT) begin
                         write_lag_counter <= write_lag_counter + 6'd9;
                     end else begin
                         idwc();
@@ -245,7 +245,7 @@ module video(
 
                 // avg_counter
                 28: begin
-                    if (bcdcount[79:60] == MAX_BCDCOUNT) begin
+                    if (bcdcount[79:60] == `MAX_BCDCOUNT) begin
                         write_lag_counter <= write_lag_counter + 6'd9;
                     end else begin
                         idwc();
@@ -293,14 +293,14 @@ module video(
     always @(posedge clock) begin
         // special counter(s)
         resolution_counterX <= 12'd_191 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start);
-        lagdisplay_counterX <= (LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start);
+        lagdisplay_counterX <= (`LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start);
     end
 
     /* frame counter */
     always @(posedge clock) begin
         if (counterX == videoMode.h_sync + videoMode.h_back_porch
          && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
-            if (frameCounter < FRAME_COUNTER - 1) begin
+            if (frameCounter < `FRAME_COUNTER - 1) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
                 frameCounter <= 0;

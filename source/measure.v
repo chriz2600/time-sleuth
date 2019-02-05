@@ -1,3 +1,5 @@
+`include "defines.v"
+
 module measure(
     input clock,
     input reset_counter,
@@ -9,9 +11,6 @@ module measure(
     output [19:0] bcd_maximum,
     output [19:0] bcd_average
 );
-    localparam CLOCK_DIVIDER = 27;
-    localparam MAX_BCDCOUNT = 20'h_9_99_99;
-    
     wire [23:0] bcdcount;
     wire [23:0] avg_counter_bcd;
     wire avg_counter_ready;
@@ -21,15 +20,15 @@ module measure(
     reg [24:0] raw_counter;
     reg counter_trigger = 0;
     reg reset_bcdcounter = 0;
-    reg [19:0] bcdcount_out = MAX_BCDCOUNT;
-    reg [19:0] bcdcount_min = MAX_BCDCOUNT;
+    reg [19:0] bcdcount_out = `MAX_BCDCOUNT;
+    reg [19:0] bcdcount_min = `MAX_BCDCOUNT;
     reg [19:0] bcdcount_max = 0;
     reg [19:0] avg_counter;
     reg [31:0] avg_counter_reg;
     reg [31:0] avg_counter_reg_avg;
-    reg [19:0] avg_counter_bcd_reg = MAX_BCDCOUNT;
+    reg [19:0] avg_counter_bcd_reg = `MAX_BCDCOUNT;
     reg avg_counter_start;
-    reg [4:0] avg_loop;
+    reg [`AVERAGE_BITS-1:0] avg_loop;
 
     bcdcounter bcdcounter(
         .trigger(counter_trigger),
@@ -61,7 +60,7 @@ module measure(
         end else begin
             raw_counter <= raw_counter + 1'b1;
             reset_bcdcounter <= 0;
-            if (counter < CLOCK_DIVIDER - 1) begin
+            if (counter < `CLOCK_DIVIDER - 1) begin
                 counter <= counter + 1'b1;
                 counter_trigger <= 0;
             end else begin
@@ -87,13 +86,13 @@ module measure(
         if (reset_counter) begin
             waiting <= 1;
         end else if (reset_bcdoutput) begin
-            bcdcount_out <= MAX_BCDCOUNT;
+            bcdcount_out <= `MAX_BCDCOUNT;
             bcdcount_max <= 0;
-            bcdcount_min <= MAX_BCDCOUNT;
+            bcdcount_min <= `MAX_BCDCOUNT;
             avg_counter_reg_avg <= 0;
             avg_counter_reg <= 0;
             avg_loop <= 0;
-            avg_counter_bcd_reg <= MAX_BCDCOUNT;
+            avg_counter_bcd_reg <= `MAX_BCDCOUNT;
         end else if (waiting && sensor_trigger) begin
             bcdcount_out <= bcdcount[23:4];
             if (avg_loop == 0) begin
@@ -109,8 +108,8 @@ module measure(
                 end
             end
             if (avg_counter != 0) begin
-                if (avg_loop == 31) begin
-                    avg_counter_reg_avg <= avg_counter_reg >> 5;
+                if (avg_loop == (`AVERAGE_SIZE - 1)) begin
+                    avg_counter_reg_avg <= avg_counter_reg >> `AVERAGE_BITS;
                     avg_counter_reg <= 0;
                     avg_loop <= 0;
                     avg_counter_start <= 1'b1;
