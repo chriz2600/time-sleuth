@@ -9,7 +9,7 @@ fpga-firmware:
     #- script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_cpf -c lagtester.cof")" /dev/null
     - cp output_files/lagtester.pof .
   artifacts:
-    name: lagtester-firmware
+    name: time-sleuth-firmware
     paths:
     - lagtester.pof
     # - output_files/lagtester*.sof
@@ -21,6 +21,7 @@ fpga-firmware:
     - develop
     - master
     - experimental
+    - tags
 
 # firmware-publish:
 #   stage: deploy
