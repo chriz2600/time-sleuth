@@ -109,7 +109,7 @@ module measure(
             end
             if (avg_counter != 0) begin
                 if (avg_loop == (`AVERAGE_SIZE - 1)) begin
-                    avg_counter_reg_avg <= avg_counter_reg >> `AVERAGE_BITS;
+                    avg_counter_reg_avg <= (avg_counter_reg + avg_counter) >> `AVERAGE_BITS;
                     avg_counter_reg <= 0;
                     avg_loop <= 0;
                     avg_counter_start <= 1'b1;
