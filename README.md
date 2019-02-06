@@ -36,11 +36,11 @@ There are 4 values displayed on the screen:
 
 - `min/max`
 
-  Minimum and maximum value within the last averaging period.
+  Minimum and maximum value within the last averaging period. These value are reset, when a new averaging period starts.
 
 - `average`
 
-  Average value of the last **32** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag. 
+  Average value of the last **16** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag. 
 
 <img src="assets/time-sleuth-hw.jpg" width="70%"/>
 

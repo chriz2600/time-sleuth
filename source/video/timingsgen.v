@@ -1,4 +1,4 @@
-module timings(
+module timingsgen(
     input clock,
     input VideoMode videoMode,
     output reg [11:0] counterX,
