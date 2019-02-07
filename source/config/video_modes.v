@@ -22,7 +22,7 @@ const VideoMode VIDEO_MODE_480i = {
     12'd_16,    // v_back_porch_2
     12'd_858,   // v_pxl_offset_2
 
-    1'b_1,      // v_sync_pol
+    1'b_0,      // v_sync_pol
 
     12'd_80,    // h_field_start
     12'd_400,   // h_field_end
