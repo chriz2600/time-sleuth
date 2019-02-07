@@ -14,7 +14,7 @@ module resolution(
         case (videoMode.id)
             `MODE_1080p: begin `include "font/predef/1080p.v" end
             `MODE_720p: begin `include "font/predef/720p.v" end
-            `MODE_VGA: begin `include "font/predef/VGA.v" end
+            `MODE_480i: begin `include "font/predef/480i.v" end
         endcase
     end
 

@@ -18,6 +18,7 @@ module video(
     wire [11:0] visible_counterY;
     wire [191:0] resolution_line;
     wire [`LAGLINE_SIZE-1:0] lagdisplay_line;
+    wire state;
 
     VideoMode videoMode;
 
@@ -36,7 +37,8 @@ module video(
         .visible_counterY(visible_counterY),
         .hsync(hsync),
         .vsync(vsync),
-        .de(de)
+        .de(de),
+        .state(state)
     );
 
     textgen textgen(
@@ -59,6 +61,7 @@ module video(
         .visible_counterY(visible_counterY),
         .resolution_line(resolution_line),
         .lagdisplay_line(lagdisplay_line),
+        .state(state),
         .starttrigger(starttrigger),
         .data({ red, green, blue })
     );

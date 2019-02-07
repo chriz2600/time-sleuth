@@ -17,7 +17,7 @@ module video_config(
 
         if (data_in_reg != data_in) begin
             case (data_in)
-                `MODE_VGA: videoMode_reg <= VIDEO_MODE_VGA;
+                `MODE_480i: videoMode_reg <= VIDEO_MODE_480i;
                 `MODE_720p: videoMode_reg <= VIDEO_MODE_720P;
                 `MODE_1080p: videoMode_reg <= VIDEO_MODE_1080P;
             endcase

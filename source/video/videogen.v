@@ -9,6 +9,7 @@ module videogen(
     input [11:0] visible_counterY,
     input [191:0] resolution_line,
     input [`LAGLINE_SIZE-1:0] lagdisplay_line,
+    input state,
     output reg starttrigger,
     output reg [23:0] data
 );
@@ -18,7 +19,7 @@ module videogen(
     /* frame counter */
     always @(posedge clock) begin
         if (counterX == videoMode.h_sync + videoMode.h_back_porch
-         && counterY == videoMode.v_sync + videoMode.v_back_porch) begin
+         && counterY == videoMode.v_sync + (state ? videoMode.v_back_porch_2 : videoMode.v_back_porch_1)) begin
             if (frameCounter < `FRAME_COUNTER - 1) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin

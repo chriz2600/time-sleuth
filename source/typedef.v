@@ -8,11 +8,18 @@ typedef struct packed {
     reg [11:0] h_back_porch;
     reg h_sync_pol;
 
-    reg [11:0] v_total;
     reg [11:0] v_active;
     reg [11:0] v_front_porch;
     reg [11:0] v_sync;
-    reg [11:0] v_back_porch;
+
+    reg [11:0] v_total_1;
+    reg [11:0] v_back_porch_1;
+    reg [11:0] v_pxl_offset_1;
+    
+    reg [11:0] v_total_2;
+    reg [11:0] v_back_porch_2;
+    reg [11:0] v_pxl_offset_2;
+
     reg v_sync_pol;
 
     reg [11:0] h_field_start;

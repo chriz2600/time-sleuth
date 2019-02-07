@@ -43,8 +43,8 @@ module pll_reconf_rom (
         // RECONF
         case (data_req)
             // RECONF
-            `MODE_VGA: begin
-                `include "config/VGA.v"
+            `MODE_480i: begin
+                `include "config/480i.v"
             end
             `MODE_720p: begin
                 `include "config/720p.v"
