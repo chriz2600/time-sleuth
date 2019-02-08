@@ -115,6 +115,11 @@ set_location_assignment PIN_5 -to RES_CONFIG[1]
 set_location_assignment PIN_4 -to RES_CONFIG[2]
 set_location_assignment PIN_8 -to RES_CONFIG[3]
 set_location_assignment PIN_9 -to RES_CONFIG[4]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RES_CONFIG[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RES_CONFIG[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RES_CONFIG[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RES_CONFIG[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RES_CONFIG[4]
 
 set_location_assignment PIN_40 -to TFP410_reset
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to TFP410_reset
