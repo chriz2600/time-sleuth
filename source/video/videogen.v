@@ -7,7 +7,7 @@ module videogen(
     input [11:0] counterY,
     input [11:0] visible_counterX,
     input [11:0] visible_counterY,
-    input [191:0] resolution_line,
+    input [`RESLINE_SIZE-1:0] resolution_line,
     input [`LAGLINE_SIZE-1:0] lagdisplay_line,
     input state,
     output reg starttrigger,
@@ -36,7 +36,7 @@ module videogen(
         doOutputValue(
             .xpos(visible_counterX), 
             .ypos(visible_counterY),
-            .resolution_hpos(12'd_191 - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start)),
+            .resolution_hpos((`RESLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start)),
             .lagdisplay_hpos((`LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start))
         );
     end

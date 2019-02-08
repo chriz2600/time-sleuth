@@ -7,7 +7,7 @@ module textgen(
     input [11:0] visible_counterX,
     input [11:0] visible_counterY,
     input [79:0] bcdcount,
-    output [191:0] resolution_line,
+    output [`RESLINE_SIZE-1:0] resolution_line,
     output reg [`LAGLINE_SIZE-1:0] lagdisplay_line_out
 );
     wire [`LAGLINE_SIZE-1:0] lagdisplay_line;

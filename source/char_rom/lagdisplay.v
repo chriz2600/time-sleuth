@@ -9,7 +9,7 @@ module lagdisplay(
     reg [WIDTH-1:0] q_reg_2;
 
     always @(posedge clock) begin
-        `include "font/predef/lagdisplay3.v";
+        `include "font/predef/lagdisplay.v";
         q_reg_2 <= q_reg;
     end
 

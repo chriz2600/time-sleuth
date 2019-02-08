@@ -43,14 +43,20 @@ module pll_reconf_rom (
         // RECONF
         case (data_req)
             // RECONF
-            `MODE_480i: begin
-                `include "config/480i.v"
+            `MODE_1080p: begin
+                `include "config/148_5_Mhz.v"
+            end
+            `MODE_1080i: begin
+                `include "config/74_25_MHz.v"
             end
             `MODE_720p: begin
-                `include "config/720p.v"
+                `include "config/74_25_MHz.v"
             end
-            `MODE_1080p: begin
-                `include "config/1080p.v"
+            `MODE_480p: begin
+                `include "config/27_MHz.v"
+            end
+            `MODE_480i: begin
+                `include "config/27_MHz.v"
             end
         endcase
 

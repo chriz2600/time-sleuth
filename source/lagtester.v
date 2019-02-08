@@ -1,7 +1,7 @@
 module lagtester(
     input clock,
 
-    input [2:0] RES_CONFIG,
+    input [4:0] RES_CONFIG,
 
     inout wire SDA,
     inout wire SCL,

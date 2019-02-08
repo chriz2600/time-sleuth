@@ -2,7 +2,7 @@
 
 module configuration(
     input clock,
-    input [2:0] config_in,
+    input [4:0] config_in,
     output reg [7:0] config_data,
     output config_changed
 );
@@ -11,12 +11,14 @@ module configuration(
     always @(posedge clock) begin
         prev_config_data <= config_data;
         case (config_in)
-            3'b001: config_data <= `MODE_480i;
-            3'b011: config_data <= `MODE_480i;
-            3'b010: config_data <= `MODE_720p;
-            3'b100: config_data <= `MODE_1080p;
-            3'b110: config_data <= `MODE_1080p;
-            default: config_data <= `MODE_480i;
+            5'b_00001: config_data <= `MODE_1080p; // switch 1
+            5'b_00011: config_data <= `MODE_1080p; // switch 1 legacy
+            5'b_00010: config_data <= `MODE_1080i; // switch 2
+            5'b_00100: config_data <= `MODE_720p;  // switch 3
+            5'b_00110: config_data <= `MODE_720p;  // switch 3 legacy
+            5'b_01000: config_data <= `MODE_480p;  // switch 4
+            5'b_10000: config_data <= `MODE_480i;  // switch 5
+            default: config_data <= `MODE_1080p;
         endcase
     end
 

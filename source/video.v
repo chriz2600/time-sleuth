@@ -16,7 +16,7 @@ module video(
     wire [11:0] counterY;
     wire [11:0] visible_counterX;
     wire [11:0] visible_counterY;
-    wire [191:0] resolution_line;
+    wire [`RESLINE_SIZE-1:0] resolution_line;
     wire [`LAGLINE_SIZE-1:0] lagdisplay_line;
     wire state;
 
