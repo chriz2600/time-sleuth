@@ -24,8 +24,8 @@ const VideoMode VIDEO_MODE_480P = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_40,    // h_field_start
+    12'd_200,   // h_field_end
     12'd_0,     // v_field1_start
     12'd_40,    // v_field1_end
     12'd_220,   // v_field2_start
@@ -33,11 +33,11 @@ const VideoMode VIDEO_MODE_480P = {
     12'd_440,   // v_field3_start
     12'd_480,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_1,      // v_res_divider
+    4'd_0,      // h_res_divider
+    4'd_0,      // v_res_divider
     12'd_720 - `RESLINE_SIZE,   // h_res_start
 
-    4'd_2,      // h_lag_divider
+    4'd_1,      // h_lag_divider
     4'd_1,      // v_lag_divider
     12'd_110,   // h_lag_start
     12'd_50     // v_lag_start

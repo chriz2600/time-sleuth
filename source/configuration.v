@@ -18,7 +18,7 @@ module configuration(
             5'b_00110: config_data <= `MODE_720p;  // switch 3 legacy
             5'b_01000: config_data <= `MODE_480p;  // switch 4
             5'b_10000: config_data <= `MODE_480i;  // switch 5
-            default: config_data <= `MODE_1080p;
+            default: config_data <= `DEFAULT_FB_MODE;
         endcase
     end
 

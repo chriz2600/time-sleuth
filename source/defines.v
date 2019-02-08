@@ -12,3 +12,5 @@
 // averaging
 `define AVERAGE_BITS 4
 `define AVERAGE_SIZE (2 ** `AVERAGE_BITS)
+// ...
+`define DEFAULT_FB_MODE `MODE_1080p
