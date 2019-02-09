@@ -6,7 +6,8 @@
 `define MAX_BCDCOUNT 20'h_9_99_99
 // clock.frquency / CLOCK_DIVIDER = 1MHz
 `define CLOCK_DIVIDER 27
-`define FRAME_COUNTER 6
+`define FRAME_COUNTER 20
+`define FRAME_ON_COUNT 15
 `define LAGLINE_SIZE 512
 `define RESLINE_SIZE 12'd_136
 // averaging

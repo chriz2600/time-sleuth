@@ -13,20 +13,28 @@ module videogen(
     output reg starttrigger,
     output reg [23:0] data
 );
-    reg [3:0] frameCounter = 0;
+    reg [5:0] frameCounter = 0;
     reg displayFields = 0;
+    reg [2:0] metaCounter = 0;
 
     /* frame counter */
     always @(posedge clock) begin
         if (counterX == videoMode.h_sync + videoMode.h_back_porch
          && counterY == videoMode.v_sync + (state ? videoMode.v_back_porch_2 : videoMode.v_back_porch_1)) begin
-            if (frameCounter < `FRAME_COUNTER - 1) begin
+            if (frameCounter < `FRAME_COUNTER - 1 + metaCounter) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
                 frameCounter <= 0;
-                displayFields <= ~displayFields;
-                starttrigger <= ~displayFields;
             end
+
+            if (frameCounter == 0) begin
+                starttrigger <= 1;
+                displayFields <= 1;
+            end else if (frameCounter > `FRAME_ON_COUNT - 1) begin
+                displayFields <= 0;
+            end
+
+            metaCounter <= metaCounter + 1'b1;
         end else begin
             starttrigger <= 0;
         end
