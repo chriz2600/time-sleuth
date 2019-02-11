@@ -33,7 +33,11 @@
 // averaging
 `define AVERAGE_BITS 4
 `define AVERAGE_SIZE (2 ** `AVERAGE_BITS)
+
 // define slots
+
+`include "generated/slots.v"
+
 `ifndef SLOT1
     `define SLOT1 `MODE_1080p
 `endif

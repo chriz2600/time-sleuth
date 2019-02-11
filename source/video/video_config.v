@@ -17,13 +17,7 @@ module video_config(
 
         if (data_in_reg != data_in) begin
             case (data_in)
-                `include "generated/modes.v"
-                // `MODE_1080p: videoMode_reg <= VIDEO_MODE_1080P;
-                // `MODE_1080i: videoMode_reg <= VIDEO_MODE_1080I;
-                // `MODE_720p: videoMode_reg <= VIDEO_MODE_720P;
-                // `MODE_480p: videoMode_reg <= VIDEO_MODE_480P;
-                // `MODE_480i: videoMode_reg <= VIDEO_MODE_480I;
-                // `MODE_240p: videoMode_reg <= VIDEO_MODE_240P;
+                `include "../generated/video-modes.v"
             endcase
         end
     end
