@@ -32,15 +32,15 @@ The counter measuring the lag starts at the first line of the first field. So if
 
 There are 4 values displayed on the screen:
 
-- `current`
+- `current` (`cur`)
 
   Shows the value of the last measurement.
 
-- `min/max`
+- `min/max` (`m/m`)
 
   Minimum and maximum value within the last averaging period. These values are reset, when a new averaging period starts.
 
-- `average`
+- `average` (`avg`)
 
   Average value of the last **16** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag. 
 
