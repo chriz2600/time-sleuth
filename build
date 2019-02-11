@@ -2,6 +2,13 @@
 
 cd $(dirname $0)
 
+mkdir -p source/video/generated
+
+cat source/defines.v | \
+    grep '`define SLOT' | \
+    perl -e 'while (<>) { chomp;$_=~s/^\s+//g;(undef,undef,$mode)=split(/\s+/);$vmode=$mode;$vmode=~s/`//g;printf("%s: videoMode_reg <= VIDEO_%s;\n", $mode, uc($vmode));}' \
+    > source/video/generated/modes.v
+
 ./compile lagtester && \
     md5sum output_files/lagtester.pof && \
     ls -alF output_files/lagtester.pof && \

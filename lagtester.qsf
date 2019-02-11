@@ -64,9 +64,10 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
 
-#set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 16.0
-#set_global_assignment -name ROUTER_EFFORT_MULTIPLIER 8.0
-#set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name OPTIMIZATION_MODE "Aggressive Area"
+set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 16.0
+set_global_assignment -name ROUTER_EFFORT_MULTIPLIER 8.0
+#set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE Area
 #set_global_assignment -name FITTER_EFFORT "AUTO FIT"
 #set_global_assignment -name SEED 12
 #set_global_assignment -name AUTO_RAM_RECOGNITION Off

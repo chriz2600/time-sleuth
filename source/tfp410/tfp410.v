@@ -44,7 +44,7 @@ I2C I2C(
 (* syn_encoding = "safe" *) 
 reg [1:0] state;
 reg [2:0] cmd_counter;
-reg [5:0] subcmd_counter;
+reg [2:0] subcmd_counter;
 
 localparam CHIP_ADDR = 7'h38;
 localparam  s_start  = 0,
@@ -57,7 +57,7 @@ localparam  cs_pwrdown  = 3'd0,
             cs_pllcheck = 3'd3,
             cs_hpdcheck = 3'd4,
             cs_ready    = 3'd5;
-localparam  scs_start = 6'd0;
+localparam  scs_start = 3'd0;
 
 initial begin
     ready <= 0;

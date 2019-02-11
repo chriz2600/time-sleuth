@@ -1,3 +1,5 @@
+`include "defines.v"
+
 module lagtester(
     input clock,
 
@@ -24,11 +26,11 @@ module lagtester(
     wire sensor_trigger;
 
     wire config_changed;
-    wire [7:0] config_data;
+    wire [`MODE_SIZE-1:0] config_data;
+    wire [`MODE_SIZE-1:0] config_data_crossed;
 
     wire starttrigger;
     wire reset_counter;
-    wire [7:0] config_data_crossed;
     wire [79:0] bcdcount_crossed;
     wire [19:0] bcd_current;
     wire [19:0] bcd_minimum;
@@ -64,7 +66,7 @@ module lagtester(
     // config
     configuration configuration(
         .clock(clock),
-        .config_in(RES_CONFIG),
+        .config_in(~RES_CONFIG),
         .config_data(config_data),
         .config_changed(config_changed)
     );
@@ -92,7 +94,7 @@ module lagtester(
     ///////////////////////////////////////////
     // video generator
     data_cross #(
-        .WIDTH(8)
+        .WIDTH(`MODE_SIZE)
     ) video_data_cross (
         .clkIn(clock),
         .clkOut(internal_clock),

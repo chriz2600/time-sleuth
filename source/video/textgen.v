@@ -93,25 +93,25 @@ module textgen(
                     idwc();
                 end
                 5: begin
-                    lagdisplay_line_out[319:312] <= char_data;
+                    lagdisplay_line_out[7+`LL_END4+`LL_END3:0+`LL_END4+`LL_END3] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[15:12] << 4);
                     idwc();
                 end
                 6: begin
-                    lagdisplay_line_out[327:320] <= char_data;
+                    lagdisplay_line_out[15+`LL_END4+`LL_END3:8+`LL_END4+`LL_END3] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[19:16] << 4);
                     idwc();
                 end
                 7: begin
-                    lagdisplay_line_out[343:336] <= char_data;
+                    lagdisplay_line_out[31+`LL_END4+`LL_END3:24+`LL_END4+`LL_END3] <= char_data;
                     idwc();
                 end
                 8: begin
-                    lagdisplay_line_out[351:344] <= char_data;
+                    lagdisplay_line_out[39+`LL_END4+`LL_END3:32+`LL_END4+`LL_END3] <= char_data;
                     idwc();
                 end
                 9: begin
-                    lagdisplay_line_out[360:352] <= char_data;
+                    lagdisplay_line_out[47+`LL_END4+`LL_END3:40+`LL_END4+`LL_END3] <= char_data;
                     idwc();
                 end
                 // bcdcount_min
@@ -135,25 +135,25 @@ module textgen(
                     idwc();
                 end
                 14: begin
-                    lagdisplay_line_out[199:192] <= char_data;
+                    lagdisplay_line_out[79+`LL_END4:72+`LL_END4] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[35:32] << 4);
                     idwc();
                 end
                 15: begin
-                    lagdisplay_line_out[207:200] <= char_data;
+                    lagdisplay_line_out[87+`LL_END4:80+`LL_END4] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[39:36] << 4);
                     idwc();
                 end
                 16: begin
-                    lagdisplay_line_out[223:216] <= char_data;
+                    lagdisplay_line_out[103+`LL_END4:96+`LL_END4] <= char_data;
                     idwc();
                 end
                 17: begin
-                    lagdisplay_line_out[231:224] <= char_data;
+                    lagdisplay_line_out[111+`LL_END4:104+`LL_END4] <= char_data;
                     idwc();
                 end
                 18: begin
-                    lagdisplay_line_out[239:232] <= char_data;
+                    lagdisplay_line_out[119+`LL_END4:112+`LL_END4] <= char_data;
                     idwc();
                 end
 
@@ -178,25 +178,25 @@ module textgen(
                     idwc();
                 end
                 23: begin
-                    lagdisplay_line_out[127:120] <= char_data;
+                    lagdisplay_line_out[7+`LL_END4:0+`LL_END4] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[55:52] << 4);
                     idwc();
                 end
                 24: begin
-                    lagdisplay_line_out[136:128] <= char_data;
+                    lagdisplay_line_out[15+`LL_END4:8+`LL_END4] <= char_data;
                     char_addr <= lagdisplay_addr + (bcdcount[59:56] << 4);
                     idwc();
                 end
                 25: begin
-                    lagdisplay_line_out[151:144] <= char_data;
+                    lagdisplay_line_out[31+`LL_END4:24+`LL_END4] <= char_data;
                     idwc();
                 end
                 26: begin
-                    lagdisplay_line_out[159:152] <= char_data;
+                    lagdisplay_line_out[39+`LL_END4:32+`LL_END4] <= char_data;
                     idwc();
                 end
                 27: begin
-                    lagdisplay_line_out[167:160] <= char_data;
+                    lagdisplay_line_out[47+`LL_END4:40+`LL_END4] <= char_data;
                     idwc();
                 end
 

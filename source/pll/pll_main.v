@@ -1,7 +1,7 @@
 module pll_main(
     input clock,
     input reset,
-    input [7:0] data, 
+    input [`MODE_SIZE-1:0] data, 
 
     output clock_out,
     output clock_out_video,

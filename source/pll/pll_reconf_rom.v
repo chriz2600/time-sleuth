@@ -4,7 +4,7 @@ module pll_reconf_rom (
     input clock,
     input [7:0] address,
     input read_ena,
-    input [7:0] data,
+    input [`MODE_SIZE-1:0] data,
     input pll_reconf_busy,
 
     output q,
@@ -19,7 +19,7 @@ module pll_reconf_rom (
     reg doReconfig_2;
     reg doReconfig_3;
 
-    reg [7:0] data_req = 8'h_FF;
+    reg [`MODE_SIZE-1:0] data_req = 0;
 
     assign q = q_reg_2;
     assign reconfig = doReconfig_3;
@@ -43,21 +43,14 @@ module pll_reconf_rom (
         // RECONF
         case (data_req)
             // RECONF
-            `MODE_1080p: begin
-                `include "config/148_5_Mhz.v"
-            end
-            `MODE_1080i: begin
-                `include "config/74_25_MHz.v"
-            end
-            `MODE_720p: begin
-                `include "config/74_25_MHz.v"
-            end
-            `MODE_480p: begin
-                `include "config/27_MHz.v"
-            end
-            `MODE_480i: begin
-                `include "config/27_MHz.v"
-            end
+            `MODE_1080p: begin `include "config/148_5_Mhz.v" end
+            `MODE_1080i: begin `include "config/74_25_MHz.v" end
+            `MODE_720p: begin `include "config/74_25_MHz.v" end
+            `MODE_480p: begin `include "config/27_MHz.v" end
+            `MODE_480i: begin `include "config/27_MHz.v" end
+            `MODE_240p: begin `include "config/27_MHz.v" end
+            `MODE_VGA: begin `include "config/25_2_MHz.v" end
+            `MODE_960p: begin `include "config/108_MHz.v" end
         endcase
 
         // delay output, to match ROM based timing
