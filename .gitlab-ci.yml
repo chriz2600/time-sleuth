@@ -5,8 +5,7 @@ stages:
 fpga-firmware:
   stage: build-fpga
   script:
-    - script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_sh --flow compile lagtester.qpf")" /dev/null
-    #- script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_cpf -c lagtester.cof")" /dev/null
+    - script -qfc "$(printf "%q " "./build")" /dev/null
     - cp output_files/lagtester.pof .
   artifacts:
     name: time-sleuth-firmware
