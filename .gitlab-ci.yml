@@ -5,7 +5,7 @@ stages:
 fpga-firmware:
   stage: build-fpga
   script:
-    - script -qfc "$(printf "%q " "./build")" /dev/null
+    - script -qfc "$(printf "%q %q " "/bin/bash" "build")" /dev/null
     - cp output_files/lagtester.pof .
   artifacts:
     name: time-sleuth-firmware
