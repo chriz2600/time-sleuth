@@ -38,20 +38,4 @@
 
 `include "generated/slots.v"
 
-`ifndef SLOT1
-    `define SLOT1 `MODE_1080p
-`endif
-`ifndef SLOT2
-    `define SLOT2 `MODE_1080i
-`endif
-`ifndef SLOT3
-    `define SLOT3 `MODE_720p
-`endif
-`ifndef SLOT4
-    `define SLOT4 `MODE_480p
-`endif
-`ifndef SLOT5
-    `define SLOT5 `MODE_480i
-`endif
-
 `endif

@@ -3,9 +3,9 @@
 cd $(dirname $0)
 
 mkdir -p source/generated
-touch source/generated/slots.v
+if [ ! -f source/generated/slots.v ] ; then echo -e '`define SLOT1 `MODE_1080p\n`define SLOT2 `MODE_1080i\n`define SLOT3 `MODE_720p\n`define SLOT4 `MODE_480p\n`define SLOT5 `MODE_480i\n' > source/generated/slots.v ; fi
 
-cat source/defines.v | grep '`define SLOT' | ./prepare-modes.pl > source/generated/video-modes.v
+cat source/generated/slots.v | grep '`define SLOT' | ./prepare-modes.pl > source/generated/video-modes.v
 
 ./compile lagtester && \
     md5sum output_files/lagtester.pof && \
