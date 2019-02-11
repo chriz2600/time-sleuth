@@ -5,7 +5,12 @@ stages:
 fpga-firmware:
   stage: build-fpga
   script:
-    - script -qfc "$(printf "%q %q " "/bin/bash" "build")" /dev/null
+    - mkdir -p source/video/generated
+    - perl -e 'while (<>) { chomp;$_=~s/^\s+//g;(undef,undef,$mode)=split(/\s+/);$vmode=$mode;$vmode=~s/`//g;printf("%s: videoMode_reg <= VIDEO_%s;\n", $mode, uc($vmode));}' > source/video/generated/modes.v
+    - script -qfc "$(printf "%q %q " "/usr/local/bin/quartus_wrapper" "quartus_sh --flow compile lagtester.qpf")" /dev/null
+    - md5sum output_files/lagtester.pof
+    - ls -alF output_files/lagtester.pof
+    - cat output_files/lagtester.fit.rpt | grep '; Total logic elements               ;'
     - cp output_files/lagtester.pof .
   artifacts:
     name: time-sleuth-firmware
