@@ -1,5 +1,7 @@
+`include "defines.v"
+
 typedef struct packed {
-    reg [7:0] id;
+    reg [`MODE_SIZE-1:0] id;
     
     reg [11:0] h_total;
     reg [11:0] h_active;

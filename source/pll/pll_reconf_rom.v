@@ -51,6 +51,9 @@ module pll_reconf_rom (
             `MODE_240p: begin `include "config/27_MHz.v" end
             `MODE_VGA: begin `include "config/25_2_MHz.v" end
             `MODE_960p: begin `include "config/108_MHz.v" end
+            `MODE_576p: begin `include "config/27_MHz.v" end
+            `MODE_576i: begin `include "config/27_MHz.v" end
+            `MODE_288p: begin `include "config/27_MHz.v" end
         endcase
 
         // delay output, to match ROM based timing

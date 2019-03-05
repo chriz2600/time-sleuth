@@ -19,6 +19,9 @@ module resolution(
             `MODE_240p: begin `include "font/predef/240p.v" end
             `MODE_VGA: begin `include "font/predef/VGA.v" end
             `MODE_960p: begin `include "font/predef/960p.v" end
+            `MODE_576p: begin `include "font/predef/576p.v" end
+            `MODE_576i: begin `include "font/predef/576i.v" end
+            `MODE_288p: begin `include "font/predef/288p.v" end
         endcase
     end
 
