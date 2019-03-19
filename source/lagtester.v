@@ -136,7 +136,7 @@ module lagtester(
     );
     ///////////////////////////////////////////
 
-    assign LED = sensor_out;
+    assign LED = ~sensor_out;
     assign TFP410_reset = 1'b1;
 
 endmodule
