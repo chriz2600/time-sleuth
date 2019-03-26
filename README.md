@@ -26,7 +26,7 @@ Software to program the FPGA:
 
 Time Sleuth generates a flicker pattern and then measures the time it takes from the start of the first pattern to the moment it shows up on screen using a photo transistor.
 
-<img src="assets/time-sleuth.jpg" width="70%"/>
+<img src="assets/time-sleuth.jpg" width="30%"/>
 
 The counter measuring the lag starts at the first line of the first field. So if you're using a display, which generates the image from top to bottom (line by line, as LCD/OLED/CRT monitors/TVs will do), the first field will give you the processing lag of the screen, while the second and third field will also include the lag inherent to the line by line drawing of the image.
 
@@ -46,7 +46,7 @@ There are 4 values displayed on the screen:
 
   To avoid the flicker pattern to be "in sync" with the PWM frequency, the time between two fields is cyclically changed by one frame up to 8 frames.
 
-<img src="assets/time-sleuth-hw.jpg" width="30%"/>
+<img src="assets/time-sleuth-hw.jpg" width="70%"/>
 
 - ***LED***
 
