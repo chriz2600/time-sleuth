@@ -42,9 +42,11 @@ There are 4 values displayed on the screen:
 
 - `average` (`avg`)
 
-  Average value of the last **16** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag. 
+  Average value of the last **16** measurements. Most LED backlit LCD screens are using pulse width modulation for brightness adjustment and the PWM duty cycle of the backlight is often not 100% even if brightness is. So the current readings are often jumping, so `average` gives you the mean lag.
 
-<img src="assets/time-sleuth-hw.jpg" width="70%"/>
+  To avoid the flicker pattern to be "in sync" with the PWM frequency, the time between two fields is cyclically changed by one frame up to 8 frames.
+
+<img src="assets/time-sleuth-hw.jpg" width="30%"/>
 
 - ***LED***
 
@@ -52,9 +54,29 @@ There are 4 values displayed on the screen:
 
 - ***Switch***
 
-  Switches between 1080p (`1`), 720p (`2`) and VGA (`3`) output.
+  Factory firmware switches between:
+  
+  - 1080p (`1`)
+  - 1080i (`2`) 
+  - 720p (`3`)
+  - 480p (`4`)
+  - 480i (`5`)
 
-  *VGA will be changed to 480i in a future firmware revision*
+  Custom firmware can be built here: [time-sleuth.i74.de](https://time-sleuth.i74.de)
+
+  The following resolutions are available:
+
+  - 1080p
+  - 1080i
+  - 960p
+  - 720p
+  - 480p
+  - 480i
+  - 240p
+  - VGA
+  - 576p
+  - 576i
+  - 288p
 
 - ***10pin JTAG connection***
 
