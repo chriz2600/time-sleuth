@@ -22,6 +22,8 @@ module resolution(
             `MODE_576p: begin `include "font/predef/576p.v" end
             `MODE_576i: begin `include "font/predef/576i.v" end
             `MODE_288p: begin `include "font/predef/288p.v" end
+            `MODE_WUXGA: begin `include "font/predef/WUXGA.v" end
+            `MODE_UXGA: begin `include "font/predef/UXGA.v" end
         endcase
     end
 

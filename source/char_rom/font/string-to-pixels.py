@@ -24,6 +24,7 @@ for line in sys.stdin:
                     c = 1
 
 addr = 0
+print("// %s" % line.rstrip("\r\n"))
 print("case (addr)")
 for x in Matrix:
     #print("%02i: q_reg <= %i'b_%s;" % (addr, len(x), x[::-1]))
