@@ -8,7 +8,8 @@ Kicad project can be found here: [github.com/citrus3000psi/Time-Sleuth](https://
 
 ## Firmware
 
-Latest Firmware: [time-sleuth-firmware.zip](https://gitlab.com/chriz2600/lagtester/-/jobs/artifacts/master/download?job=fpga-firmware)
+- Latest Firmware: [time-sleuth-firmware.zip](https://gitlab.com/chriz2600/lagtester/-/jobs/artifacts/master/download?job=fpga-firmware)
+- Custom firmware: [time-sleuth.i74.de](https://time-sleuth.i74.de)
 
 Automatic builds are done with [gitlab-ci](https://gitlab.com/chriz2600/time-sleuth/pipelines).
 
