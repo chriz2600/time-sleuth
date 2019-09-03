@@ -3,6 +3,8 @@ stages:
   #- deploy
 
 fpga-firmware:
+  image:
+    name: chriz2600/quartus-lite:latest
   stage: build-fpga
   script:
     - mkdir -p source/generated
@@ -23,7 +25,7 @@ fpga-firmware:
     # - output_files/lagtester*.rpd
     # - output_files/lagtester*.map
   tags:
-    - quartus-lite
+    - docker
   only:
     - develop
     - master
