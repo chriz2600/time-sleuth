@@ -40,7 +40,7 @@ set_global_assignment -name DEVICE 10M02SCE144C8G
 set_global_assignment -name TOP_LEVEL_ENTITY lagtester
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "02:13:21  JANUARY 18, 2019"
-set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "19.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -64,7 +64,7 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
 
-set_global_assignment -name OPTIMIZATION_MODE "Aggressive Area"
+set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE AREA"
 set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 16.0
 set_global_assignment -name ROUTER_EFFORT_MULTIPLIER 8.0
 #set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE Area
@@ -169,7 +169,7 @@ set_location_assignment PIN_7 -to SENSOR
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to SENSOR
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_CLOCK
+set_instance_assignment -name IO_STANDARD "3.0-V LVTTL" -to DVI_CLOCK
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[0]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[1]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[2]
@@ -204,3 +204,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDA
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCL
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TFP410_reset
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED
+
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to DVI_CLOCK

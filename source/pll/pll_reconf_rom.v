@@ -43,19 +43,22 @@ module pll_reconf_rom (
         // RECONF
         case (data_req)
             // RECONF
-            `MODE_1080p: begin `include "config/148_5_Mhz.v" end
-            `MODE_1080i: begin `include "config/74_25_MHz.v" end
-            `MODE_720p: begin `include "config/74_25_MHz.v" end
-            `MODE_480p: begin `include "config/27_MHz.v" end
-            `MODE_480i: begin `include "config/27_MHz.v" end
-            `MODE_240p: begin `include "config/27_MHz.v" end
+            `MODE_1080p60: begin `include "config/148_5_Mhz.v" end
+            `MODE_1080i60: begin `include "config/74_25_MHz.v" end
+            `MODE_720p60: begin `include "config/74_25_MHz.v" end
+            `MODE_480p60: begin `include "config/27_MHz.v" end
+            `MODE_480i60: begin `include "config/27_MHz.v" end
+            `MODE_240p60: begin `include "config/27_MHz.v" end
             `MODE_VGA: begin `include "config/25_2_MHz.v" end
-            `MODE_960p: begin `include "config/108_MHz.v" end
-            `MODE_576p: begin `include "config/27_MHz.v" end
-            `MODE_576i: begin `include "config/27_MHz.v" end
-            `MODE_288p: begin `include "config/27_MHz.v" end
+            `MODE_960p60: begin `include "config/108_MHz.v" end
+            `MODE_576p50: begin `include "config/27_MHz.v" end
+            `MODE_576i50: begin `include "config/27_MHz.v" end
+            `MODE_288p50: begin `include "config/27_MHz.v" end
             `MODE_WUXGA: begin `include "config/154_MHz.v" end
             `MODE_UXGA: begin `include "config/162_MHz.v" end
+            `MODE_1080p50: begin `include "config/148_5_Mhz.v" end
+            `MODE_1080i50: begin `include "config/74_25_MHz.v" end
+            `MODE_720p50: begin `include "config/74_25_MHz.v" end
         endcase
 
         // delay output, to match ROM based timing

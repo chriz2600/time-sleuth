@@ -1,14 +1,13 @@
 stages:
   - build-fpga
-  #- deploy
 
 fpga-firmware:
   image:
-    name: chriz2600/quartus-lite:latest
+    name: registry.gitlab.com/chriz2600/quartus-lite:19.1.0
   stage: build-fpga
   script:
     - mkdir -p source/generated
-    - if [ ! -f source/generated/slots.v ] ; then echo -e '`define SLOT1 `MODE_1080p\n`define SLOT2 `MODE_1080i\n`define SLOT3 `MODE_720p\n`define SLOT4 `MODE_480p\n`define SLOT5 `MODE_480i\n' > source/generated/slots.v ; fi
+    - if [ ! -f source/generated/slots.v ] ; then echo -e '`define SLOT1 `MODE_1080p60\n`define SLOT2 `MODE_1080i60\n`define SLOT3 `MODE_720p60\n`define SLOT4 `MODE_480p60\n`define SLOT5 `MODE_480i60\n' > source/generated/slots.v ; fi
     - cat source/generated/slots.v | grep '`define SLOT'
     - cat source/generated/slots.v | grep '`define SLOT' | ./prepare-modes.pl > source/generated/video-modes.v
     - cat source/generated/video-modes.v
@@ -21,9 +20,6 @@ fpga-firmware:
     name: time-sleuth-firmware
     paths:
     - lagtester.pof
-    # - output_files/lagtester*.sof
-    # - output_files/lagtester*.rpd
-    # - output_files/lagtester*.map
   tags:
     - docker
   only:
@@ -31,16 +27,3 @@ fpga-firmware:
     - master
     - experimental
     - tags
-
-# firmware-publish:
-#   stage: deploy
-#   script: create-index-html-ps2
-#   artifacts:
-#     expire_in: 1 sec
-#   dependencies:
-#     - esp-firmware
-#   tags:
-#     - index-gen
-#   only:
-#     - develop
-#     - master
