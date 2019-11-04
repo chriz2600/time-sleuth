@@ -859,10 +859,10 @@ const VideoMode VIDEO_MODE_900P60 = {
     12'd_50,    // h_field_start
     12'd_250,   // h_field_end
     12'd_0,     // v_field1_start
-    12'd_70,    // v_field1_end
-    12'd_415,   // v_field2_start
-    12'd_485,   // v_field2_end
-    12'd_830,   // v_field3_start
+    12'd_72,    // v_field1_end
+    12'd_414,   // v_field2_start
+    12'd_486,   // v_field2_end
+    12'd_828,   // v_field3_start
     12'd_900,   // v_field3_end
 
     4'd_0,      // h_res_divider
