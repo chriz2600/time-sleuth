@@ -173,6 +173,8 @@ set_instance_assignment -name IO_STANDARD "3.0-V LVTTL" -to DVI_CLOCK
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[0]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[1]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[2]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[3]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RES_CONFIG[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DVI_RED[5]

@@ -16,6 +16,11 @@ module configuration(
             5'b_00100: config_data <= `SLOT3; // switch 3
             5'b_01000: config_data <= `SLOT4; // switch 4
             5'b_10000: config_data <= `SLOT5; // switch 5
+            5'b_11110: config_data <= `SLOT1; // switch 1
+            5'b_11101: config_data <= `SLOT2; // switch 2
+            5'b_11011: config_data <= `SLOT3; // switch 3
+            5'b_10111: config_data <= `SLOT4; // switch 4
+            5'b_01111: config_data <= `SLOT5; // switch 5
         endcase
     end
 
