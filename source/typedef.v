@@ -2,7 +2,7 @@
 
 typedef struct packed {
     reg [`MODE_SIZE-1:0] id;
-    
+
     reg [11:0] h_total;
     reg [11:0] h_active;
     reg [11:0] h_front_porch;
@@ -24,8 +24,7 @@ typedef struct packed {
 
     reg v_sync_pol;
 
-    reg [11:0] h_field_start;
-    reg [11:0] h_field_end;
+    reg [11:0] h_field_width;
 
     reg [11:0] v_field1_start;
     reg [11:0] v_field1_end;
@@ -35,11 +34,6 @@ typedef struct packed {
 
     reg [11:0] v_field3_start;
     reg [11:0] v_field3_end;
-
-    reg [3:0] h_res_divider;
-    reg [3:0] v_res_divider;
-    reg [11:0] h_res_start;
-    reg [11:0] v_res_end;
 
     reg [3:0] h_lag_divider;
     reg [3:0] v_lag_divider;

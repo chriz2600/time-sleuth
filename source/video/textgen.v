@@ -45,7 +45,7 @@ module textgen(
         case (counterX)
             0: begin
                 // addr for resolution_line
-                resolution_addr <= (visible_counterY + 1'b1) >> videoMode.v_res_divider;
+                resolution_addr <= (visible_counterY + 1'b1 - videoMode.v_lag_start) >> videoMode.v_lag_divider;
                 lagdisplay_addr <= (visible_counterY + 1'b1 - videoMode.v_lag_start) >> videoMode.v_lag_divider;
             end
             2: begin

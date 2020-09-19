@@ -24,8 +24,7 @@ const VideoMode VIDEO_MODE_VGA = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_40,    // h_field_start
-    12'd_200,   // h_field_end
+    12'd_200,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_40,    // v_field1_end
     12'd_220,   // v_field2_start
@@ -33,24 +32,19 @@ const VideoMode VIDEO_MODE_VGA = {
     12'd_440,   // v_field3_start
     12'd_480,   // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_640 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_1,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_80,   // h_lag_start
+    12'd_80 + `LL_END1, // h_lag_end1
+    12'd_80 + `LL_END2, // h_lag_end2
+    12'd_80 + `LL_END3, // h_lag_end3
+    12'd_80 + `LL_END4, // h_lag_end4
 
-    12'd_50,   // v_lag_start
-    12'd_50 + (12'd_16 << 1),   // v_lag_line1
-    12'd_50 + (12'd_32 << 1),   // v_lag_line2
-    12'd_50 + (12'd_48 << 1),   // v_lag_line3
-    12'd_50 + (12'd_64 << 1)    // v_lag_line4
+    12'd_58,   // v_lag_start
+    12'd_58 + (12'd_16 << 1),   // v_lag_line1
+    12'd_58 + (12'd_32 << 1),   // v_lag_line2
+    12'd_58 + (12'd_48 << 1),   // v_lag_line3
+    12'd_58 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_480P60 = {
@@ -76,8 +70,7 @@ const VideoMode VIDEO_MODE_480P60 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_40,    // h_field_start
-    12'd_200,   // h_field_end
+    12'd_200,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_40,    // v_field1_end
     12'd_220,   // v_field2_start
@@ -85,24 +78,19 @@ const VideoMode VIDEO_MODE_480P60 = {
     12'd_440,   // v_field3_start
     12'd_480,   // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_1,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_50,   // v_lag_start
-    12'd_50 + (12'd_16 << 1),   // v_lag_line1
-    12'd_50 + (12'd_32 << 1),   // v_lag_line2
-    12'd_50 + (12'd_48 << 1),   // v_lag_line3
-    12'd_50 + (12'd_64 << 1)    // v_lag_line4
+    12'd_58,   // v_lag_start
+    12'd_58 + (12'd_16 << 1),   // v_lag_line1
+    12'd_58 + (12'd_32 << 1),   // v_lag_line2
+    12'd_58 + (12'd_48 << 1),   // v_lag_line3
+    12'd_58 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_480I60 = {
@@ -128,8 +116,7 @@ const VideoMode VIDEO_MODE_480I60 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_20,    // v_field1_end
     12'd_110,   // v_field2_start
@@ -137,24 +124,19 @@ const VideoMode VIDEO_MODE_480I60 = {
     12'd_220,   // v_field3_start
     12'd_240,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_0,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_25,   // v_lag_start
-    12'd_25 + (12'd_16 << 0),   // v_lag_line1
-    12'd_25 + (12'd_32 << 0),   // v_lag_line2
-    12'd_25 + (12'd_48 << 0),   // v_lag_line3
-    12'd_25 + (12'd_64 << 0)    // v_lag_line4
+    12'd_29,   // v_lag_start
+    12'd_29 + (12'd_16 << 0),   // v_lag_line1
+    12'd_29 + (12'd_32 << 0),   // v_lag_line2
+    12'd_29 + (12'd_48 << 0),   // v_lag_line3
+    12'd_29 + (12'd_64 << 0)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_240P60 = {
@@ -180,8 +162,7 @@ const VideoMode VIDEO_MODE_240P60 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_20,    // v_field1_end
     12'd_110,   // v_field2_start
@@ -189,24 +170,19 @@ const VideoMode VIDEO_MODE_240P60 = {
     12'd_220,   // v_field3_start
     12'd_240,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE, // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_0,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_25,   // v_lag_start
-    12'd_25 + (12'd_16 << 0),   // v_lag_line1
-    12'd_25 + (12'd_32 << 0),   // v_lag_line2
-    12'd_25 + (12'd_48 << 0),   // v_lag_line3
-    12'd_25 + (12'd_64 << 0)    // v_lag_line4
+    12'd_29,   // v_lag_start
+    12'd_29 + (12'd_16 << 0),   // v_lag_line1
+    12'd_29 + (12'd_32 << 0),   // v_lag_line2
+    12'd_29 + (12'd_48 << 0),   // v_lag_line3
+    12'd_29 + (12'd_64 << 0)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_720P60 = {
@@ -232,8 +208,7 @@ const VideoMode VIDEO_MODE_720P60 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_60,    // v_field1_end
     12'd_330,   // v_field2_start
@@ -241,24 +216,19 @@ const VideoMode VIDEO_MODE_720P60 = {
     12'd_660,   // v_field3_start
     12'd_720,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_640 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
+    4'd_1,      // h_lag_divider
+    4'd_1,      // v_lag_divider
+    12'd_240,   // h_lag_start
+    12'd_240 + `LL_END1, // h_lag_end1
+    12'd_240 + `LL_END2, // h_lag_end2
+    12'd_240 + `LL_END3, // h_lag_end3
+    12'd_240 + `LL_END4, // h_lag_end4
 
-    4'd_2,      // h_lag_divider
-    4'd_2,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
-
-    12'd_60,   // v_lag_start
-    12'd_60 + (12'd_16 << 2),   // v_lag_line1
-    12'd_60 + (12'd_32 << 2),   // v_lag_line2
-    12'd_60 + (12'd_48 << 2),   // v_lag_line3
-    12'd_60 + (12'd_64 << 2)    // v_lag_line4
+    12'd_103,   // v_lag_start
+    12'd_103 + (12'd_16 << 1),   // v_lag_line1
+    12'd_103 + (12'd_32 << 1),   // v_lag_line2
+    12'd_103 + (12'd_48 << 1),   // v_lag_line3
+    12'd_103 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_720P50 = {
@@ -284,8 +254,7 @@ const VideoMode VIDEO_MODE_720P50 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_60,    // v_field1_end
     12'd_330,   // v_field2_start
@@ -293,24 +262,19 @@ const VideoMode VIDEO_MODE_720P50 = {
     12'd_660,   // v_field3_start
     12'd_720,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_640 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
+    4'd_1,      // h_lag_divider
+    4'd_1,      // v_lag_divider
+    12'd_240,   // h_lag_start
+    12'd_240 + `LL_END1, // h_lag_end1
+    12'd_240 + `LL_END2, // h_lag_end2
+    12'd_240 + `LL_END3, // h_lag_end3
+    12'd_240 + `LL_END4, // h_lag_end4
 
-    4'd_2,      // h_lag_divider
-    4'd_2,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
-
-    12'd_60,   // v_lag_start
-    12'd_60 + (12'd_16 << 2),   // v_lag_line1
-    12'd_60 + (12'd_32 << 2),   // v_lag_line2
-    12'd_60 + (12'd_48 << 2),   // v_lag_line3
-    12'd_60 + (12'd_64 << 2)    // v_lag_line4
+    12'd_103,   // v_lag_start
+    12'd_103 + (12'd_16 << 1),   // v_lag_line1
+    12'd_103 + (12'd_32 << 1),   // v_lag_line2
+    12'd_103 + (12'd_48 << 1),   // v_lag_line3
+    12'd_103 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_1080P60 = {
@@ -336,8 +300,7 @@ const VideoMode VIDEO_MODE_1080P60 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_60,    // h_field_start
-    12'd_300,   // h_field_end
+    12'd_300,  // h_field_width
     12'd_0,     // v_field1_start
     12'd_90,    // v_field1_end
     12'd_495,   // v_field2_start
@@ -345,24 +308,19 @@ const VideoMode VIDEO_MODE_1080P60 = {
     12'd_990,   // v_field3_start
     12'd_1080,  // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_960 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_180,    // h_lag_start
-    12'd_180 + `LL_END1, // h_lag_end1
-    12'd_180 + `LL_END2, // h_lag_end2
-    12'd_180 + `LL_END3, // h_lag_end3
-    12'd_180 + `LL_END4, // h_lag_end4
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
 
-    12'd_120,   // v_lag_start
-    12'd_120 + (12'd_16 << 2),   // v_lag_line1
-    12'd_120 + (12'd_32 << 2),   // v_lag_line2
-    12'd_120 + (12'd_48 << 2),   // v_lag_line3
-    12'd_120 + (12'd_64 << 2)    // v_lag_line4
+    12'd_138,   // v_lag_start
+    12'd_138 + (12'd_16 << 2),   // v_lag_line1
+    12'd_138 + (12'd_32 << 2),   // v_lag_line2
+    12'd_138 + (12'd_48 << 2),   // v_lag_line3
+    12'd_138 + (12'd_64 << 2)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_1080P50 = {
@@ -388,8 +346,7 @@ const VideoMode VIDEO_MODE_1080P50 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_60,    // h_field_start
-    12'd_300,   // h_field_end
+    12'd_300,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_90,    // v_field1_end
     12'd_495,   // v_field2_start
@@ -397,24 +354,19 @@ const VideoMode VIDEO_MODE_1080P50 = {
     12'd_990,   // v_field3_start
     12'd_1080,  // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_960 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_180,    // h_lag_start
-    12'd_180 + `LL_END1, // h_lag_end1
-    12'd_180 + `LL_END2, // h_lag_end2
-    12'd_180 + `LL_END3, // h_lag_end3
-    12'd_180 + `LL_END4, // h_lag_end4
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
 
-    12'd_120,   // v_lag_start
-    12'd_120 + (12'd_16 << 2),   // v_lag_line1
-    12'd_120 + (12'd_32 << 2),   // v_lag_line2
-    12'd_120 + (12'd_48 << 2),   // v_lag_line3
-    12'd_120 + (12'd_64 << 2)    // v_lag_line4
+    12'd_138,   // v_lag_start
+    12'd_138 + (12'd_16 << 2),   // v_lag_line1
+    12'd_138 + (12'd_32 << 2),   // v_lag_line2
+    12'd_138 + (12'd_48 << 2),   // v_lag_line3
+    12'd_138 + (12'd_64 << 2)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_1080I60 = {
@@ -440,8 +392,7 @@ const VideoMode VIDEO_MODE_1080I60 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_120,   // h_field_start
-    12'd_600,   // h_field_end
+    12'd_600,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_45,    // v_field1_end
     12'd_247,   // v_field2_start
@@ -449,24 +400,19 @@ const VideoMode VIDEO_MODE_1080I60 = {
     12'd_495,   // v_field3_start
     12'd_540,  // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_960 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_1,      // v_lag_divider
-    12'd_180,    // h_lag_start
-    12'd_180 + `LL_END1, // h_lag_end1
-    12'd_180 + `LL_END2, // h_lag_end2
-    12'd_180 + `LL_END3, // h_lag_end3
-    12'd_180 + `LL_END4, // h_lag_end4
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
 
-    12'd_60,   // v_lag_start
-    12'd_60 + (12'd_16 << 1),   // v_lag_line1
-    12'd_60 + (12'd_32 << 1),   // v_lag_line2
-    12'd_60 + (12'd_48 << 1),   // v_lag_line3
-    12'd_60 + (12'd_64 << 1)    // v_lag_line4
+    12'd_69,   // v_lag_start
+    12'd_69 + (12'd_16 << 1),   // v_lag_line1
+    12'd_69 + (12'd_32 << 1),   // v_lag_line2
+    12'd_69 + (12'd_48 << 1),   // v_lag_line3
+    12'd_69 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_1080I50 = {
@@ -492,8 +438,7 @@ const VideoMode VIDEO_MODE_1080I50 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_120,   // h_field_start
-    12'd_600,   // h_field_end
+    12'd_600,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_45,    // v_field1_end
     12'd_247,   // v_field2_start
@@ -501,24 +446,19 @@ const VideoMode VIDEO_MODE_1080I50 = {
     12'd_495,   // v_field3_start
     12'd_540,  // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_960 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_1,      // v_lag_divider
-    12'd_180,    // h_lag_start
-    12'd_180 + `LL_END1, // h_lag_end1
-    12'd_180 + `LL_END2, // h_lag_end2
-    12'd_180 + `LL_END3, // h_lag_end3
-    12'd_180 + `LL_END4, // h_lag_end4
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
 
-    12'd_60,   // v_lag_start
-    12'd_60 + (12'd_16 << 1),   // v_lag_line1
-    12'd_60 + (12'd_32 << 1),   // v_lag_line2
-    12'd_60 + (12'd_48 << 1),   // v_lag_line3
-    12'd_60 + (12'd_64 << 1)    // v_lag_line4
+    12'd_69,   // v_lag_start
+    12'd_69 + (12'd_16 << 1),   // v_lag_line1
+    12'd_69 + (12'd_32 << 1),   // v_lag_line2
+    12'd_69 + (12'd_48 << 1),   // v_lag_line3
+    12'd_69 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_960P60 = {
@@ -544,8 +484,7 @@ const VideoMode VIDEO_MODE_960P60 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_40,    // h_field_start
-    12'd_200,   // h_field_end
+    12'd_200,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_80,    // v_field1_end
     12'd_440,   // v_field2_start
@@ -553,24 +492,19 @@ const VideoMode VIDEO_MODE_960P60 = {
     12'd_880,   // v_field3_start
     12'd_960,   // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_640 - `RESLINE_SIZE, // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_80,   // h_lag_start
+    12'd_80 + `LL_END1, // h_lag_end1
+    12'd_80 + `LL_END2, // h_lag_end2
+    12'd_80 + `LL_END3, // h_lag_end3
+    12'd_80 + `LL_END4, // h_lag_end4
 
-    12'd_100,   // v_lag_start
-    12'd_100 + (12'd_16 << 2),   // v_lag_line1
-    12'd_100 + (12'd_32 << 2),   // v_lag_line2
-    12'd_100 + (12'd_48 << 2),   // v_lag_line3
-    12'd_100 + (12'd_64 << 2)    // v_lag_line4
+    12'd_116,   // v_lag_start
+    12'd_116 + (12'd_16 << 2),   // v_lag_line1
+    12'd_116 + (12'd_32 << 2),   // v_lag_line2
+    12'd_116 + (12'd_48 << 2),   // v_lag_line3
+    12'd_116 + (12'd_64 << 2)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_576P50 = {
@@ -596,8 +530,7 @@ const VideoMode VIDEO_MODE_576P50 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_40,    // h_field_start
-    12'd_200,   // h_field_end
+    12'd_200,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_48,    // v_field1_end
     12'd_264,   // v_field2_start
@@ -605,24 +538,19 @@ const VideoMode VIDEO_MODE_576P50 = {
     12'd_528,   // v_field3_start
     12'd_576,   // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_1,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_50,   // v_lag_start
-    12'd_50 + (12'd_16 << 1),   // v_lag_line1
-    12'd_50 + (12'd_32 << 1),   // v_lag_line2
-    12'd_50 + (12'd_48 << 1),   // v_lag_line3
-    12'd_50 + (12'd_64 << 1)    // v_lag_line4
+    12'd_76,   // v_lag_start
+    12'd_76 + (12'd_16 << 1),   // v_lag_line1
+    12'd_76 + (12'd_32 << 1),   // v_lag_line2
+    12'd_76 + (12'd_48 << 1),   // v_lag_line3
+    12'd_76 + (12'd_64 << 1)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_576I50 = {
@@ -648,8 +576,7 @@ const VideoMode VIDEO_MODE_576I50 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_24,    // v_field1_end
     12'd_132,   // v_field2_start
@@ -657,24 +584,19 @@ const VideoMode VIDEO_MODE_576I50 = {
     12'd_264,   // v_field3_start
     12'd_288,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_0,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_25,   // v_lag_start
-    12'd_25 + (12'd_16 << 0),   // v_lag_line1
-    12'd_25 + (12'd_32 << 0),   // v_lag_line2
-    12'd_25 + (12'd_48 << 0),   // v_lag_line3
-    12'd_25 + (12'd_64 << 0)    // v_lag_line4
+    12'd_38,   // v_lag_start
+    12'd_38 + (12'd_16 << 0),   // v_lag_line1
+    12'd_38 + (12'd_32 << 0),   // v_lag_line2
+    12'd_38 + (12'd_48 << 0),   // v_lag_line3
+    12'd_38 + (12'd_64 << 0)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_288P50 = {
@@ -700,8 +622,7 @@ const VideoMode VIDEO_MODE_288P50 = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_80,    // h_field_start
-    12'd_400,   // h_field_end
+    12'd_400,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_24,    // v_field1_end
     12'd_132,   // v_field2_start
@@ -709,24 +630,19 @@ const VideoMode VIDEO_MODE_288P50 = {
     12'd_264,   // v_field3_start
     12'd_288,   // v_field3_end
 
-    4'd_1,      // h_res_divider
-    4'd_0,      // v_res_divider
-    12'd_720 - `RESLINE_SIZE,   // h_res_start
-    12'd16,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_2,      // h_lag_divider
     4'd_0,      // v_lag_divider
-    12'd_110,   // h_lag_start
-    12'd_110 + `LL_END1, // h_lag_end1
-    12'd_110 + `LL_END2, // h_lag_end2
-    12'd_110 + `LL_END3, // h_lag_end3
-    12'd_110 + `LL_END4, // h_lag_end4
+    12'd_100,   // h_lag_start
+    12'd_100 + `LL_END1, // h_lag_end1
+    12'd_100 + `LL_END2, // h_lag_end2
+    12'd_100 + `LL_END3, // h_lag_end3
+    12'd_100 + `LL_END4, // h_lag_end4
 
-    12'd_25,   // v_lag_start
-    12'd_25 + (12'd_16 << 0),   // v_lag_line1
-    12'd_25 + (12'd_32 << 0),   // v_lag_line2
-    12'd_25 + (12'd_48 << 0),   // v_lag_line3
-    12'd_25 + (12'd_64 << 0)    // v_lag_line4
+    12'd_38,   // v_lag_start
+    12'd_38 + (12'd_16 << 0),   // v_lag_line1
+    12'd_38 + (12'd_32 << 0),   // v_lag_line2
+    12'd_38 + (12'd_48 << 0),   // v_lag_line3
+    12'd_38 + (12'd_64 << 0)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_WUXGA = {
@@ -752,8 +668,7 @@ const VideoMode VIDEO_MODE_WUXGA = {
 
     1'b_0,      // v_sync_pol
 
-    12'd_60,    // h_field_start
-    12'd_300,   // h_field_end
+    12'd_300,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_90,    // v_field1_end
     12'd_555,   // v_field2_start
@@ -761,24 +676,19 @@ const VideoMode VIDEO_MODE_WUXGA = {
     12'd_1110,  // v_field3_start
     12'd_1200,  // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_960 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_180,    // h_lag_start
-    12'd_180 + `LL_END1, // h_lag_end1
-    12'd_180 + `LL_END2, // h_lag_end2
-    12'd_180 + `LL_END3, // h_lag_end3
-    12'd_180 + `LL_END4, // h_lag_end4
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
 
-    12'd_125,   // v_lag_start
-    12'd_125 + (12'd_16 << 2),   // v_lag_line1
-    12'd_125 + (12'd_32 << 2),   // v_lag_line2
-    12'd_125 + (12'd_48 << 2),   // v_lag_line3
-    12'd_125 + (12'd_64 << 2)    // v_lag_line4
+    12'd_168,   // v_lag_start
+    12'd_168 + (12'd_16 << 2),   // v_lag_line1
+    12'd_168 + (12'd_32 << 2),   // v_lag_line2
+    12'd_168 + (12'd_48 << 2),   // v_lag_line3
+    12'd_168 + (12'd_64 << 2)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_UXGA = {
@@ -804,8 +714,7 @@ const VideoMode VIDEO_MODE_UXGA = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_50,    // h_field_start
-    12'd_250,   // h_field_end
+    12'd_250,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_90,    // v_field1_end
     12'd_555,   // v_field2_start
@@ -813,24 +722,19 @@ const VideoMode VIDEO_MODE_UXGA = {
     12'd_1110,  // v_field3_start
     12'd_1200,  // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_800 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_150,    // h_lag_start
-    12'd_150 + `LL_END1, // h_lag_end1
-    12'd_150 + `LL_END2, // h_lag_end2
-    12'd_150 + `LL_END3, // h_lag_end3
-    12'd_150 + `LL_END4, // h_lag_end4
+    12'd_120,    // h_lag_start
+    12'd_120 + `LL_END1, // h_lag_end1
+    12'd_120 + `LL_END2, // h_lag_end2
+    12'd_120 + `LL_END3, // h_lag_end3
+    12'd_120 + `LL_END4, // h_lag_end4
 
-    12'd_125,   // v_lag_start
-    12'd_125 + (12'd_16 << 2),   // v_lag_line1
-    12'd_125 + (12'd_32 << 2),   // v_lag_line2
-    12'd_125 + (12'd_48 << 2),   // v_lag_line3
-    12'd_125 + (12'd_64 << 2)    // v_lag_line4
+    12'd_168,   // v_lag_start
+    12'd_168 + (12'd_16 << 2),   // v_lag_line1
+    12'd_168 + (12'd_32 << 2),   // v_lag_line2
+    12'd_168 + (12'd_48 << 2),   // v_lag_line3
+    12'd_168 + (12'd_64 << 2)    // v_lag_line4
 };
 
 const VideoMode VIDEO_MODE_900P60 = {
@@ -856,8 +760,7 @@ const VideoMode VIDEO_MODE_900P60 = {
 
     1'b_1,      // v_sync_pol
 
-    12'd_50,    // h_field_start
-    12'd_250,   // h_field_end
+    12'd_250,   // h_field_width
     12'd_0,     // v_field1_start
     12'd_72,    // v_field1_end
     12'd_414,   // v_field2_start
@@ -865,22 +768,17 @@ const VideoMode VIDEO_MODE_900P60 = {
     12'd_828,   // v_field3_start
     12'd_900,   // v_field3_end
 
-    4'd_0,      // h_res_divider
-    4'd_1,      // v_res_divider
-    12'd_800 - `RESLINE_SIZE,   // h_res_start
-    12'd32,     // v_res_end (16 << videoMode.v_res_divider)
-
     4'd_1,      // h_lag_divider
     4'd_2,      // v_lag_divider
-    12'd_150,    // h_lag_start
-    12'd_150 + `LL_END1, // h_lag_end1
-    12'd_150 + `LL_END2, // h_lag_end2
-    12'd_150 + `LL_END3, // h_lag_end3
-    12'd_150 + `LL_END4, // h_lag_end4
+    12'd_120,    // h_lag_start
+    12'd_120 + `LL_END1, // h_lag_end1
+    12'd_120 + `LL_END2, // h_lag_end2
+    12'd_120 + `LL_END3, // h_lag_end3
+    12'd_120 + `LL_END4, // h_lag_end4
 
-    12'd_95,   // v_lag_start
-    12'd_95 + (12'd_16 << 2),   // v_lag_line1
-    12'd_95 + (12'd_32 << 2),   // v_lag_line2
-    12'd_95 + (12'd_48 << 2),   // v_lag_line3
-    12'd_95 + (12'd_64 << 2)    // v_lag_line4
+    12'd_107,   // v_lag_start
+    12'd_107 + (12'd_16 << 2),   // v_lag_line1
+    12'd_107 + (12'd_32 << 2),   // v_lag_line2
+    12'd_107 + (12'd_48 << 2),   // v_lag_line3
+    12'd_107 + (12'd_64 << 2)    // v_lag_line4
 };

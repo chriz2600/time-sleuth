@@ -1,5 +1,8 @@
 `include "../defines.v"
 
+`define VMODE_h_lag_start videoMode.h_lag_start
+//`define VMODE_h_lag_start ((((videoMode.h_active >> videoMode.h_lag_divider) >> videoMode.init_divider) >> 1) - (`LL_END3 >> 1))
+
 module videogen(
     input clock,
     input VideoMode videoMode,
@@ -46,8 +49,8 @@ module videogen(
             doOutputValue(
                 .xpos(visible_counterX), 
                 .ypos(visible_counterY),
-                .resolution_hpos((`RESLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_res_divider) - videoMode.h_res_start)),
-                .lagdisplay_hpos((`LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - videoMode.h_lag_start))
+                .resolution_hpos((`RESLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - (`VMODE_h_lag_start + `RESLINE_SPACER))),
+                .lagdisplay_hpos((`LAGLINE_SIZE - 1) - ((visible_counterX >> videoMode.h_lag_divider) - `VMODE_h_lag_start))
             );
         end
     end
@@ -59,15 +62,17 @@ module videogen(
         input [11:0] lagdisplay_hpos;
         begin
             if (displayFields && 
-                (xpos >= videoMode.h_field_start && xpos < videoMode.h_field_end && 
+                ((xpos < videoMode.h_field_width || xpos >= videoMode.h_active - videoMode.h_field_width)  && 
                    ((ypos >= videoMode.v_field1_start && ypos < videoMode.v_field1_end)
                  || (ypos >= videoMode.v_field2_start && ypos < videoMode.v_field2_end)
                  || (ypos >= videoMode.v_field3_start && ypos < videoMode.v_field3_end))))
             begin
                 data <= 24'h_FF_FF_FF;
             end else if (
-                    ypos < videoMode.v_res_end 
-                && (xpos >> videoMode.h_res_divider) >= videoMode.h_res_start
+                   ypos >= videoMode.v_lag_start
+                && ypos < videoMode.v_lag_start + (16 << videoMode.v_lag_divider) 
+                && (xpos >> videoMode.h_lag_divider) >= (`VMODE_h_lag_start + `RESLINE_SPACER)
+                && (xpos >> videoMode.h_lag_divider) < (`VMODE_h_lag_start + `RESLINE_SPACER + `RESLINE_SIZE)
             ) begin // resolution info
                 if (resolution_line[resolution_hpos]) begin
                     data <= 24'h_FF_FF_FF;
@@ -77,7 +82,7 @@ module videogen(
             end else if (
                    ypos >= videoMode.v_lag_start
                 && ypos < videoMode.v_lag_line1
-                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) >= `VMODE_h_lag_start
                 && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end1
             ) begin
                 if (lagdisplay_line[lagdisplay_hpos]) begin
@@ -88,7 +93,7 @@ module videogen(
             end else if (
                    ypos >= videoMode.v_lag_line1
                 && ypos < videoMode.v_lag_line2
-                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) >= `VMODE_h_lag_start
                 && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end2
             ) begin
                 if (lagdisplay_line[lagdisplay_hpos - `LL_END1]) begin
@@ -99,7 +104,7 @@ module videogen(
             end else if (
                    ypos >= videoMode.v_lag_line2
                 && ypos < videoMode.v_lag_line3
-                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) >= `VMODE_h_lag_start
                 && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end3
             ) begin
                 if (lagdisplay_line[lagdisplay_hpos - (`LL_END1 + `LL_END2)]) begin
@@ -110,7 +115,7 @@ module videogen(
             end else if (
                    ypos >= videoMode.v_lag_line3
                 && ypos < videoMode.v_lag_line4
-                && (xpos >> videoMode.h_lag_divider) >= videoMode.h_lag_start
+                && (xpos >> videoMode.h_lag_divider) >= `VMODE_h_lag_start
                 && (xpos >> videoMode.h_lag_divider) < videoMode.h_lag_end4
             ) begin
                 if (lagdisplay_line[lagdisplay_hpos - (`LL_END1 + `LL_END2 + `LL_END3)]) begin

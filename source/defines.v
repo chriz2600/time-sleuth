@@ -39,6 +39,7 @@
 `define LL_END3 12'd_160
 `define LL_END4 12'd_88
 `define RESLINE_SIZE 12'd_80
+`define RESLINE_SPACER 12'd_80
 // averaging
 `define AVERAGE_BITS 4
 `define AVERAGE_SIZE (2 ** `AVERAGE_BITS)
