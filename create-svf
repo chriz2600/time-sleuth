@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+source .setup
+
+docker_run quartus_cpf -c -q 2MHz -g 3.3 -n p output_files/lagtester.pof output_files/lagtester.svf
+
+if [ "$1" == "program" ] ; then
+    openocd -f interface/altera-usb-blaster.cfg -c init -c "svf -quiet output_files/lagtester.svf" -c shutdown
+fi

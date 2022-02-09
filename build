@@ -3,7 +3,7 @@
 cd $(dirname $0)
 
 mkdir -p source/generated
-if [ ! -f source/generated/slots.v ] ; then echo -e '`define SLOT1 `MODE_1080p60\n`define SLOT2 `MODE_1080i60\n`define SLOT3 `MODE_720p60\n`define SLOT4 `MODE_480p60\n`define SLOT5 `MODE_480i60\n' > source/generated/slots.v ; fi
+if [ ! -f source/generated/slots.v ] ; then echo -e '`define SLOT1 `MODE_1080p60\n`define SLOT2 `MODE_1080i60\n`define SLOT3 `MODE_720p60\n`define SLOT4 `MODE_480p60\n`define SLOT5 `MODE_540p60\n' > source/generated/slots.v ; fi
 
 cat source/generated/slots.v | grep '`define SLOT' | ./prepare-modes.pl > source/generated/video-modes.v
 
