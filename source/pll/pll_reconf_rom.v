@@ -61,6 +61,8 @@ module pll_reconf_rom (
             `MODE_720p50: begin `include "config/74_25_MHz.v" end
             `MODE_900p60: begin `include "config/108_MHz.v" end
             `MODE_540p60: begin `include "config/74_25_MHz.v" end
+            `MODE_1080p30: begin `include "config/74_25_MHz.v" end
+            `MODE_1080p24: begin `include "config/74_25_MHz.v" end
         endcase
 
         // delay output, to match ROM based timing

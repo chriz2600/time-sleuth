@@ -49,5 +49,8 @@ typedef struct packed {
     reg [11:0] v_lag_line2;
     reg [11:0] v_lag_line3;
     reg [11:0] v_lag_line4;
+
+    reg [5:0] frame_counter;
+    reg [5:0] frame_on_count;
 } VideoMode;
 

@@ -25,7 +25,7 @@ module videogen(
     always @(posedge clock) begin
         if (counterX == videoMode.h_sync + videoMode.h_back_porch
          && counterY == videoMode.v_sync + (state ? videoMode.v_back_porch_2 : videoMode.v_back_porch_1)) begin
-            if (frameCounter < `FRAME_COUNTER - 1 + metaCounter) begin
+            if (frameCounter < videoMode.frame_counter - 1 + metaCounter) begin
                 frameCounter <= frameCounter + 1'b1;
             end else begin
                 frameCounter <= 0;
@@ -34,7 +34,7 @@ module videogen(
             if (frameCounter == 0) begin
                 starttrigger <= 1;
                 displayFields <= 1;
-            end else if (frameCounter > `FRAME_ON_COUNT - 1) begin
+            end else if (frameCounter > videoMode.frame_on_count - 1) begin
                 displayFields <= 0;
             end
 

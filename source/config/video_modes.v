@@ -44,7 +44,10 @@ const VideoMode VIDEO_MODE_VGA = {
     12'd_58 + (12'd_16 << 1),   // v_lag_line1
     12'd_58 + (12'd_32 << 1),   // v_lag_line2
     12'd_58 + (12'd_48 << 1),   // v_lag_line3
-    12'd_58 + (12'd_64 << 1)    // v_lag_line4
+    12'd_58 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_480P60 = {
@@ -90,7 +93,10 @@ const VideoMode VIDEO_MODE_480P60 = {
     12'd_58 + (12'd_16 << 1),   // v_lag_line1
     12'd_58 + (12'd_32 << 1),   // v_lag_line2
     12'd_58 + (12'd_48 << 1),   // v_lag_line3
-    12'd_58 + (12'd_64 << 1)    // v_lag_line4
+    12'd_58 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_480I60 = {
@@ -136,7 +142,10 @@ const VideoMode VIDEO_MODE_480I60 = {
     12'd_29 + (12'd_16 << 0),   // v_lag_line1
     12'd_29 + (12'd_32 << 0),   // v_lag_line2
     12'd_29 + (12'd_48 << 0),   // v_lag_line3
-    12'd_29 + (12'd_64 << 0)    // v_lag_line4
+    12'd_29 + (12'd_64 << 0),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_240P60 = {
@@ -182,7 +191,10 @@ const VideoMode VIDEO_MODE_240P60 = {
     12'd_29 + (12'd_16 << 0),   // v_lag_line1
     12'd_29 + (12'd_32 << 0),   // v_lag_line2
     12'd_29 + (12'd_48 << 0),   // v_lag_line3
-    12'd_29 + (12'd_64 << 0)    // v_lag_line4
+    12'd_29 + (12'd_64 << 0),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_720P60 = {
@@ -228,7 +240,10 @@ const VideoMode VIDEO_MODE_720P60 = {
     12'd_103 + (12'd_16 << 1),   // v_lag_line1
     12'd_103 + (12'd_32 << 1),   // v_lag_line2
     12'd_103 + (12'd_48 << 1),   // v_lag_line3
-    12'd_103 + (12'd_64 << 1)    // v_lag_line4
+    12'd_103 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_720P50 = {
@@ -274,7 +289,10 @@ const VideoMode VIDEO_MODE_720P50 = {
     12'd_103 + (12'd_16 << 1),   // v_lag_line1
     12'd_103 + (12'd_32 << 1),   // v_lag_line2
     12'd_103 + (12'd_48 << 1),   // v_lag_line3
-    12'd_103 + (12'd_64 << 1)    // v_lag_line4
+    12'd_103 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_1080P60 = {
@@ -320,7 +338,10 @@ const VideoMode VIDEO_MODE_1080P60 = {
     12'd_138 + (12'd_16 << 2),   // v_lag_line1
     12'd_138 + (12'd_32 << 2),   // v_lag_line2
     12'd_138 + (12'd_48 << 2),   // v_lag_line3
-    12'd_138 + (12'd_64 << 2)    // v_lag_line4
+    12'd_138 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_1080P50 = {
@@ -366,7 +387,10 @@ const VideoMode VIDEO_MODE_1080P50 = {
     12'd_138 + (12'd_16 << 2),   // v_lag_line1
     12'd_138 + (12'd_32 << 2),   // v_lag_line2
     12'd_138 + (12'd_48 << 2),   // v_lag_line3
-    12'd_138 + (12'd_64 << 2)    // v_lag_line4
+    12'd_138 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_1080I60 = {
@@ -412,7 +436,10 @@ const VideoMode VIDEO_MODE_1080I60 = {
     12'd_69 + (12'd_16 << 1),   // v_lag_line1
     12'd_69 + (12'd_32 << 1),   // v_lag_line2
     12'd_69 + (12'd_48 << 1),   // v_lag_line3
-    12'd_69 + (12'd_64 << 1)    // v_lag_line4
+    12'd_69 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_1080I50 = {
@@ -458,7 +485,10 @@ const VideoMode VIDEO_MODE_1080I50 = {
     12'd_69 + (12'd_16 << 1),   // v_lag_line1
     12'd_69 + (12'd_32 << 1),   // v_lag_line2
     12'd_69 + (12'd_48 << 1),   // v_lag_line3
-    12'd_69 + (12'd_64 << 1)    // v_lag_line4
+    12'd_69 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_960P60 = {
@@ -504,7 +534,10 @@ const VideoMode VIDEO_MODE_960P60 = {
     12'd_116 + (12'd_16 << 2),   // v_lag_line1
     12'd_116 + (12'd_32 << 2),   // v_lag_line2
     12'd_116 + (12'd_48 << 2),   // v_lag_line3
-    12'd_116 + (12'd_64 << 2)    // v_lag_line4
+    12'd_116 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_576P50 = {
@@ -550,7 +583,10 @@ const VideoMode VIDEO_MODE_576P50 = {
     12'd_76 + (12'd_16 << 1),   // v_lag_line1
     12'd_76 + (12'd_32 << 1),   // v_lag_line2
     12'd_76 + (12'd_48 << 1),   // v_lag_line3
-    12'd_76 + (12'd_64 << 1)    // v_lag_line4
+    12'd_76 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_576I50 = {
@@ -596,7 +632,10 @@ const VideoMode VIDEO_MODE_576I50 = {
     12'd_38 + (12'd_16 << 0),   // v_lag_line1
     12'd_38 + (12'd_32 << 0),   // v_lag_line2
     12'd_38 + (12'd_48 << 0),   // v_lag_line3
-    12'd_38 + (12'd_64 << 0)    // v_lag_line4
+    12'd_38 + (12'd_64 << 0),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_288P50 = {
@@ -642,7 +681,10 @@ const VideoMode VIDEO_MODE_288P50 = {
     12'd_38 + (12'd_16 << 0),   // v_lag_line1
     12'd_38 + (12'd_32 << 0),   // v_lag_line2
     12'd_38 + (12'd_48 << 0),   // v_lag_line3
-    12'd_38 + (12'd_64 << 0)    // v_lag_line4
+    12'd_38 + (12'd_64 << 0),   // v_lag_line4
+
+    `FRAME_COUNTER50, // frame_counter
+    `FRAME_ON_COUNT50  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_WUXGA = {
@@ -688,7 +730,10 @@ const VideoMode VIDEO_MODE_WUXGA = {
     12'd_168 + (12'd_16 << 2),   // v_lag_line1
     12'd_168 + (12'd_32 << 2),   // v_lag_line2
     12'd_168 + (12'd_48 << 2),   // v_lag_line3
-    12'd_168 + (12'd_64 << 2)    // v_lag_line4
+    12'd_168 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_UXGA = {
@@ -734,7 +779,10 @@ const VideoMode VIDEO_MODE_UXGA = {
     12'd_168 + (12'd_16 << 2),   // v_lag_line1
     12'd_168 + (12'd_32 << 2),   // v_lag_line2
     12'd_168 + (12'd_48 << 2),   // v_lag_line3
-    12'd_168 + (12'd_64 << 2)    // v_lag_line4
+    12'd_168 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_900P60 = {
@@ -780,7 +828,10 @@ const VideoMode VIDEO_MODE_900P60 = {
     12'd_107 + (12'd_16 << 2),   // v_lag_line1
     12'd_107 + (12'd_32 << 2),   // v_lag_line2
     12'd_107 + (12'd_48 << 2),   // v_lag_line3
-    12'd_107 + (12'd_64 << 2)    // v_lag_line4
+    12'd_107 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
 };
 
 const VideoMode VIDEO_MODE_540P60 = {
@@ -826,5 +877,106 @@ const VideoMode VIDEO_MODE_540P60 = {
     12'd_69 + (12'd_16 << 1),   // v_lag_line1
     12'd_69 + (12'd_32 << 1),   // v_lag_line2
     12'd_69 + (12'd_48 << 1),   // v_lag_line3
-    12'd_69 + (12'd_64 << 1)    // v_lag_line4
+    12'd_69 + (12'd_64 << 1),   // v_lag_line4
+
+    `FRAME_COUNTER60, // frame_counter
+    `FRAME_ON_COUNT60  // frame_on_count
+};
+
+const VideoMode VIDEO_MODE_1080P30 = {
+    `MODE_1080p30,  // id
+    12'd_2200,      // h_total
+    12'd_1920,      // h_active
+    12'd_88,    // h_front_porch
+    12'd_44,    // h_sync
+    12'd_148,   // h_back_porch
+    1'b_1,      // h_sync_pol
+
+    12'd_1080,  // v_active
+    12'd_4,     // v_front_porch
+    12'd_5,     // v_sync
+
+    12'd_1125,  // v_total_1
+    12'd_36,    // v_back_porch_1
+    12'd_0,     // v_pxl_offset_1
+
+    12'd_1125,  // v_total_2
+    12'd_36,    // v_back_porch_2
+    12'd_0,     // v_pxl_offset_2
+
+    1'b_1,      // v_sync_pol
+
+    12'd_600,  // h_field_width
+    12'd_0,     // v_field1_start
+    12'd_90,    // v_field1_end
+    12'd_495,   // v_field2_start
+    12'd_585,   // v_field2_end
+    12'd_990,   // v_field3_start
+    12'd_1080,  // v_field3_end
+
+    4'd_2,      // h_lag_divider
+    4'd_2,      // v_lag_divider
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
+
+    12'd_138,   // v_lag_start
+    12'd_138 + (12'd_16 << 2),   // v_lag_line1
+    12'd_138 + (12'd_32 << 2),   // v_lag_line2
+    12'd_138 + (12'd_48 << 2),   // v_lag_line3
+    12'd_138 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER30, // frame_counter
+    `FRAME_ON_COUNT30  // frame_on_count
+};
+
+const VideoMode VIDEO_MODE_1080P24 = {
+    `MODE_1080p24,  // id
+    12'd_2750,      // h_total
+    12'd_1920,      // h_active
+    12'd_638,    // h_front_porch
+    12'd_44,    // h_sync
+    12'd_148,   // h_back_porch
+    1'b_1,      // h_sync_pol
+
+    12'd_1080,  // v_active
+    12'd_4,     // v_front_porch
+    12'd_5,     // v_sync
+
+    12'd_1125,  // v_total_1
+    12'd_36,    // v_back_porch_1
+    12'd_0,     // v_pxl_offset_1
+
+    12'd_1125,  // v_total_2
+    12'd_36,    // v_back_porch_2
+    12'd_0,     // v_pxl_offset_2
+
+    1'b_1,      // v_sync_pol
+
+    12'd_600,  // h_field_width
+    12'd_0,     // v_field1_start
+    12'd_90,    // v_field1_end
+    12'd_495,   // v_field2_start
+    12'd_585,   // v_field2_end
+    12'd_990,   // v_field3_start
+    12'd_1080,  // v_field3_end
+
+    4'd_2,      // h_lag_divider
+    4'd_2,      // v_lag_divider
+    12'd_160,    // h_lag_start
+    12'd_160 + `LL_END1, // h_lag_end1
+    12'd_160 + `LL_END2, // h_lag_end2
+    12'd_160 + `LL_END3, // h_lag_end3
+    12'd_160 + `LL_END4, // h_lag_end4
+
+    12'd_138,   // v_lag_start
+    12'd_138 + (12'd_16 << 2),   // v_lag_line1
+    12'd_138 + (12'd_32 << 2),   // v_lag_line2
+    12'd_138 + (12'd_48 << 2),   // v_lag_line3
+    12'd_138 + (12'd_64 << 2),   // v_lag_line4
+
+    `FRAME_COUNTER24, // frame_counter
+    `FRAME_ON_COUNT24  // frame_on_count
 };

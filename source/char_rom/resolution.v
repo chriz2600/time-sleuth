@@ -29,6 +29,8 @@ module resolution(
             `MODE_720p50: begin `include "font/predef/720p50.v" end
             `MODE_900p60: begin `include "font/predef/900p60.v" end
             `MODE_540p60: begin `include "font/predef/540p60.v" end
+            `MODE_1080p30: begin `include "font/predef/1080p30.v" end
+            `MODE_1080p24: begin `include "font/predef/1080p24.v" end
         endcase
     end
 
